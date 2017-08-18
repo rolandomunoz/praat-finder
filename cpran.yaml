@@ -1,0 +1,14 @@
+---
+Plugin: indexer
+Homepage: 
+Version: 0.0.1
+Maintainer: Rolando Muñoz <rmunoz@gmail.com>
+Depends:
+  praat: 6.30.0+
+  Plugins: []
+Recommends:
+License: GPL3
+Readme: README.md
+Description:
+  Short: 
+  Long: 

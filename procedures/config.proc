@@ -1,0 +1,81 @@
+# Copyright 2017 Rolando Muñoz Aramburú
+
+#Description: This script stablish a protocol to retrive and modify field information from "preferences folder files". 
+
+#! ~~~ params
+#! in:
+#!   .file$: the file directory where local variables are stored
+#! out:
+#!   .return$: a dictionary which contains the variables names and their values
+#! selection:
+#!   in:
+#!     nothing
+#!   out:
+#!     nothing
+#! ~~~
+#!
+#! Read a file with local variables and store them in a dictionary
+#!
+procedure config.init: .file$
+  .strID = Read Strings from raw text file: .file$
+  .n = Get number of strings
+  for .i to .n
+    .line$ = Get string: .i
+    .fieldName$ = replace_regex$(.line$, ": .*", "",1)
+    .fieldContent$= replace_regex$(.line$, ".*: ", "", 1)    
+    .return$[.fieldName$] = .fieldContent$ 
+  endfor
+  removeObject: .strID
+endproc
+
+#! ~~~ params
+#! in:
+#!   .fieldName$: the name of the key
+#! out:
+#!   .return$: the value
+#! selection:
+#!   in:
+#!     nothing
+#!   out:
+#!     nothing
+#! ~~~
+#!
+#! Get the value of the key
+#!
+procedure config.getField: .fieldName$
+  if variableExists("config.init.return$[""'.fieldName$'""]")
+    .return$ = config.init.return$[.fieldName$]
+  else
+    exitScript: "@config.getField: '.fieldName$' could not be found."
+  endif
+endproc
+
+#! ~~~ params
+#! in:
+#!   .fieldName$: the name of the key
+#!   .fieldContent$: a string that will be stored in the key
+#! selection:
+#!   in:
+#!     nothing
+#!   out:
+#!     nothing
+#! ~~~
+#!
+#! Get the value of the key
+#!
+procedure config.setField: .fieldName$, .fieldContent$
+  .file$ = config.init.file$
+  .strID = Read Strings from raw text file: .file$
+  .n = Get number of strings
+  for .i to .n
+    .line$ = Get string: .i
+    .f_fieldName$ = replace_regex$(.line$, ": .*", "",1)
+    if .f_fieldName$ == .fieldName$
+      .line$ = .f_fieldName$+ ": " + .fieldContent$
+      Set string: .i, .line$
+      Save as raw text file: .file$
+      .i = .n
+    endif
+  endfor
+  removeObject: .strID
+endproc
