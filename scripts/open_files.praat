@@ -14,7 +14,7 @@ beginPause: "index"
   word: "Audio extension", ".wav"
   comment: "Output:"
   comment: "Display settings..."
-  real: "Margin", number(config.init.return$["finder.margin"])
+  real: "Margin", number(config.init.return$["open_file.margin"])
 clicked = endPause: "Continue", "Quit", 1
 
 if clicked = 2
@@ -23,7 +23,7 @@ endif
 
 @config.setField: "textgrids_dir", textgrid_folder$
 @config.setField: "sounds_dir", audio_folder$
-@config.setField: "finder.margin", string$(margin)
+@config.setField: "open_file.margin", string$(margin)
 
 indexDir$ = preferencesDirectory$+ "/local/index.Table"
 
@@ -37,7 +37,7 @@ if !nrow
   exitScript: "No files in the index"
 endif
 
-row = number(config.init.return$["finder.row"])
+row = number(config.init.return$["open_file.row"])
 while 1
   row = if row > nrow then 1 else row fi
 
@@ -91,7 +91,7 @@ while 1
   if sd
     removeObject: sd
   endif
-  @config.setField: "finder.row", string$(row)
+  @config.setField: "open_file.row", string$(row)
   row = next_case
 
   if clicked = 3
