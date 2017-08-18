@@ -3,3 +3,5 @@ textgrids_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/PUCP_repositori
 tier_number: 2
 tier_name: palabra
 match_pattern: s
+finder.margin: 0.5
+finder.row: 43

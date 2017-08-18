@@ -2,8 +2,11 @@
 
 ## Static menu
 Add menu command: "Objects", "Goodies", "Indexer", "", 0, ""
-Add menu command: "Objects", "Goodies", "Index by tier number...", "Indexer", 1, "scripts/index_by_tier_number.praat"
-Add menu command: "Objects", "Goodies", "Index by tier name...", "Indexer", 1, "scripts/index_by_tier_name.praat"
+Add menu command: "Objects", "Goodies", "Index TextGrid by tier number...", "Indexer", 1, "scripts/index_by_tier_number.praat"
+Add menu command: "Objects", "Goodies", "Index TextGrid by tier name...", "Indexer", 1, "scripts/index_by_tier_name.praat"
+Add menu command: "Objects", "Goodies", "Do", "Indexer", 1, ""
+Add menu command: "Objects", "Goodies", "View & Edit files...", "Do", 2, "scripts/open_files.praat"
+
 Add menu command: "Objects", "Goodies", "-", "Indexer", 1, ""
 Add menu command: "Objects", "Goodies", "About", "Indexer", 1, "scripts/about.praat"
 

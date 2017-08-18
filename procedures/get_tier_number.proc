@@ -1,0 +1,9 @@
+# Copyright 2017 Rolando Muñoz Aramburú
+
+procedure getTierNumber
+  .n = Get number of tiers
+  for .i to .n
+    .tierName$ = Get tier name: .i
+    .return[.tierName$] = .i
+  endfor
+endproc
