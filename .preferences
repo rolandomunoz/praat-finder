@@ -1,7 +1,11 @@
 sounds_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/PUCP_repositorio/aimara/audio
 textgrids_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/PUCP_repositorio/aimara/textgrids
+sound_extension: .wav
 tier_number: 2
 tier_name: palabra
-match_pattern: s
+match_pattern: tS
 open_file.margin: 0.5
-open_file.row: 47
+open_file.row: 33
+extract_files.margin: 0.1
+extract_files.stdout_dir: /home/rolando/Desktop/test
+extract_files.keep_original_filename: 1
