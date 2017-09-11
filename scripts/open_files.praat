@@ -36,7 +36,7 @@ endif
 @config.setField: "sounds_dir", audio_folder$
 @config.setField: "open_file.margin", string$(margin)
 
-indexDir$ = preferencesDirectory$+ "/local/index.Table"
+indexDir$ = preferencesDirectory$+ "/local/query.Table"
 
 if !fileReadable(indexDir$)
   pauseScript: "finder: Create an index first"

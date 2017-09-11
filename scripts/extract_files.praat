@@ -39,7 +39,7 @@ if !fileReadable(indexDir$)
 endif
 
 index = Read from file: indexDir$
-nrow = Object_'index'.nrow
+nrow = Object_'query'.nrow
 if !nrow
   exitScript: "No files in the index"
 endif
