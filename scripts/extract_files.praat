@@ -3,7 +3,7 @@
 include ../procedures/config.proc
 include ../procedures/get_tier_number.proc
 
-@config.init: "../.preferences"
+@config.init: "../.preferences.txt"
 
 beginPause: "Split Sound and TextGrid where..."
   comment: "Input:"

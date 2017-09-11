@@ -14,7 +14,7 @@
 include ../procedures/config.proc
 include ../procedures/get_tier_number.proc
 
-@config.init: "../.preferences"
+@config.init: "../.preferences.txt"
 
 beginPause: "index"
   comment: "Input:"
