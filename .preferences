@@ -1,11 +1,11 @@
-sounds_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/PUCP_repositorio/aimara/audio
-textgrids_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/PUCP_repositorio/aimara/textgrids
+sounds_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/urarina_tmp/ura_raw data/2015_Corrientes_aug-sep_Raw data/Datos_fase 2 [Annotated data]/DR40_0004/DR40_0002
+textgrids_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/urarina/ura_data/ura_database_v1.0.0
 sound_extension: .wav
 tier_number: 2
-tier_name: palabra
+tier_name_option: 9
 match_pattern: tS
-open_file.margin: 0.5
-open_file.row: 33
+open_file.margin: 0.2
+open_file.row: 1
 extract_files.margin: 0.1
 extract_files.stdout_dir: /home/rolando/Desktop/test
 extract_files.keep_original_filename: 1
