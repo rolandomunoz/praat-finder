@@ -4,12 +4,18 @@ include ../procedures/config.proc
 include ../procedures/get_tier_number.proc
 
 @config.init: "../.preferences.txt"
+recursive_search = number(config.init.return$["create_index.recursive_search"])
 
 beginPause: "Split Sound and TextGrid where..."
   comment: "Input:"
-  comment: "The directory where the files are stored..."
-  sentence: "Audio folder", config.init.return$["sounds_dir"]
-  sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
+  if recursive_search
+    textgrid_folder$ = ""
+    audio_folder$ = ""
+  else
+    comment: "The directories where your files are stored..."
+    sentence: "Audio folder", config.init.return$["sounds_dir"]
+    sentence: "Textgrid folder", config.init.return$["textgrids_dir"]  
+  endif
   word: "Audio extension", config.init.return$["sound_extension"]
   comment: "Output:"
   comment: "The directory where the resulting files will be stored..."
@@ -24,8 +30,10 @@ if clicked = 2
   exitScript()
 endif
 
-@config.setField: "sound_extension", audio_extension$
-@config.setField: "textgrids_dir", textgrid_folder$
+if !recursive_search
+  @config.setField: "sound_extension", audio_extension$
+  @config.setField: "textgrids_dir", textgrid_folder$
+endif
 @config.setField: "sounds_dir", audio_folder$
 @config.setField: "extract_files.stdout_dir", save_in$
 @config.setField: "extract_files.file_name.margin", string$(margin)

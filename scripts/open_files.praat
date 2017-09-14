@@ -10,30 +10,38 @@
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/>.
 #
-
 include ../procedures/config.proc
 include ../procedures/get_tier_number.proc
 
 @config.init: "../.preferences.txt"
+recursive_search = number(config.init.return$["create_index.recursive_search"])
 
 beginPause: "index"
   comment: "Input:"
-  comment: "The directories where your files are stored..."
-  sentence: "Audio folder", config.init.return$["sounds_dir"]
-  sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
-  boolean: "Relative path", 1
+  if recursive_search
+    textgrid_folder$ = ""
+    audio_folder$ = ""
+  else
+    comment: "The directories where your files are stored..."
+    sentence: "Audio folder", config.init.return$["sounds_dir"]
+    sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
+  endif
+#  boolean: "Relative path", 1
   word: "Audio extension", ".wav"
   comment: "Output:"
   comment: "Display settings..."
   real: "Margin", number(config.init.return$["open_file.margin"])
+  boolean: "Add notes", 0
 clicked = endPause: "Continue", "Quit", 1
 
 if clicked = 2
   exitScript()
 endif
 
-@config.setField: "textgrids_dir", textgrid_folder$
-@config.setField: "sounds_dir", audio_folder$
+if !recursive_search
+  @config.setField: "textgrids_dir", textgrid_folder$
+  @config.setField: "sounds_dir", audio_folder$
+endif
 @config.setField: "open_file.margin", string$(margin)
 
 indexDir$ = preferencesDirectory$+ "/local/query.Table"
@@ -87,11 +95,19 @@ while 1
   Move cursor to: tmid
 
   beginPause: "finder"
+    if add_notes
+      sentence: "Notes", object$[index, row, "notes"]
+    endif
     comment: "Case: 'row'/'nrow'"
     comment: "Text: " + if length(text$)> 25 then left$(text$, 25) + "..." else text$ fi
     natural: "Next case",  if (row + 1) > nrow then 1 else row + 1 fi
   clicked = endPause: "Continue", "Save", "Quit", 1
   endeditor
+
+  if add_notes
+    selectObject: index
+    Set string value: row, "notes", notes$
+  endif
 
   if clicked = 2
     selectObject: tg
