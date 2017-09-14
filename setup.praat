@@ -2,7 +2,7 @@
 
 ## Static menu
 Add menu command: "Objects", "Goodies", "Indexer", "", 0, ""
-Add menu command: "Objects", "Goodies", "Create index", "Indexer", 1, "scripts/create_index.praat"
+Add menu command: "Objects", "Goodies", "Create index...", "Indexer", 1, "scripts/create_index.praat"
 Add menu command: "Objects", "Goodies", "-", "Indexer", 1, ""
 Add menu command: "Objects", "Goodies", "Query by tier number...", "Indexer", 1, "scripts/query_by_tier_number.praat"
 Add menu command: "Objects", "Goodies", "Query by tier name...", "Indexer", 1, "scripts/query_by_tier_name.praat"
