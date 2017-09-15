@@ -12,6 +12,9 @@ Add menu command: "Objects", "Goodies", "-", "Indexer", 1, ""
 Add menu command: "Objects", "Goodies", "Do", "Indexer", 1, ""
 Add menu command: "Objects", "Goodies", "View & Edit files...", "Do", 2, "scripts/open_files.praat"
 Add menu command: "Objects", "Goodies", "Extract files...", "Do", 2, "scripts/extract_files.praat"
+Add menu command: "Objects", "Goodies", "", "Do", 2, ""
+Add menu command: "Objects", "Goodies", "Filter query...", "Do", 2, "scripts/filter_query.praat"
+
 # Add menu command: "Objects", "Goodies", "Run script...", "Do", 2, "scripts/run_script.praat"
 
 Add menu command: "Objects", "Goodies", "-", "Indexer", 1, ""
