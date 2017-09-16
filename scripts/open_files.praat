@@ -107,6 +107,7 @@ while 1
   if add_notes
     selectObject: index
     Set string value: row, "notes", notes$
+    Save as text file: indexDir$
   endif
 
   if clicked = 2
