@@ -16,17 +16,13 @@ include ../procedures/get_tier_number.proc
 @config.init: "../.preferences.txt"
 recursive_search = number(config.init.return$["create_index.recursive_search"])
 
-beginPause: "Split Sound and TextGrid where..."
+beginPause: "Extract Sound & TextGrid"
   comment: "Input:"
-  if recursive_search
-    textgrid_folder$ = ""
-    audio_folder$ = ""
-  else
-    comment: "The directories where your files are stored..."
-    sentence: "Audio folder", config.init.return$["sounds_dir"]
-    sentence: "Textgrid folder", config.init.return$["textgrids_dir"]  
-  endif
-  word: "Audio extension", config.init.return$["sound_extension"]
+  comment: "The directories where your files are stored..."
+  sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
+  sentence: "Audio folder", config.init.return$["sounds_dir"]
+  boolean: "Relative to TextGrid paths", 1
+  word: "Audio extension", ".wav"
   comment: "Output:"
   comment: "The directory where the resulting files will be stored..."
   sentence: "Save in", config.init.return$["extract_files.stdout_dir"]
@@ -41,26 +37,25 @@ if clicked = 2
   exitScript()
 endif
 
-if !recursive_search
-  @config.setField: "sounds_dir", audio_folder$
-  @config.setField: "textgrids_dir", textgrid_folder$
-endif
+@config.setField: "sounds_dir", audio_folder$
+@config.setField: "textgrids_dir", textgrid_folder$
 @config.setField: "sound_extension", audio_extension$
 @config.setField: "extract_files.stdout_dir", save_in$
 @config.setField: "extract_files.file_name.margin", string$(margin)
 @config.setField: "extract_files.file_name.keep_original_filename", string$(keep_original_filename)
 @config.setField: "extract_files.margin", string$(margin)
 
-indexDir$ = preferencesDirectory$ + "/local/query.Table"
+queryDir$ = preferencesDirectory$ + "/local/query.Table"
 
-if !fileReadable(indexDir$)
-  pauseScript: "Create an index first"
+if !fileReadable(queryDir$)
+  pauseScript: "Create an query first"
+  exitScript()
 endif
 
-index = Read from file: indexDir$
-nrow = Object_'index'.nrow
+query = Read from file: queryDir$
+nrow = Object_'query'.nrow
 if !nrow
-  exitScript: "No files in the index"
+  exitScript: "No files in the query"
 endif
 
 repetition_digits = 4
@@ -70,24 +65,25 @@ for i to repetition_digits
 endfor
 
 for row to nrow
-  # Get info from index
-  tg_name$ = object$[index, row, "filename"]
-  if recursive_search
-    tg_dir$ = tg_name$
-    sd_dir$ = (tg_name$ - ".TextGrid") + audio_extension$
+  # Get info from query
+  tg_name$ = object$[query, row, "filename"]
+  tg_path$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
+
+  if relative_to_TextGrid_paths
+    filename$ = object$[query, row, "filename"]
+    tg_name$ = filename$ + ".TextGrid"
+    sd_path$ = (tg_path$ - tg_name$) + audio_folder$ + "/" + filename$ + audio_extension$
   else
-    base_name$ = tg_name$ - ".TextGrid"
-    sd_name$ = base_name$ + audio_extension$
-    sd_dir$ = audio_folder$ + "/" + sd_name$
-    tg_dir$ = textgrid_folder$ + "/" + tg_name$
+    sd_name$ = object$[query, row, "filename"] + audio_extension$
+    sd_path$ = audio_folder$ + "/" + sd_name$
   endif
-  text$ = object$[index, row, "text"]
-  tmin = object[index, row, "tmin"]
-  tmax = object[index, row, "tmax"]
+  text$ = object$[query, row, "text"]
+  tmin = object[query, row, "tmin"]
+  tmax = object[query, row, "tmax"]
   tmid = (tmax - tmin)*0.5 + tmin
-  if fileReadable(tg_dir$) and fileReadable(sd_dir$)
-    tg = Read from file: tg_dir$
-    sd = Open long sound file: sd_dir$
+  if fileReadable(tg_path$) and fileReadable(sd_path$)
+    tg = Read from file: tg_path$
+    sd = Open long sound file: sd_path$
     base_name$ = selected$("LongSound")
     root_name$ = if keep_original_filename then base_name$ + "_" else "" fi
 
@@ -126,5 +122,5 @@ for row to nrow
   endif
 endfor
 
-removeObject: index
+removeObject: query
 pauseScript: "Completed succsessfully"

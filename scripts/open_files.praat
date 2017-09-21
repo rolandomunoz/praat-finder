@@ -16,17 +16,12 @@ include ../procedures/get_tier_number.proc
 @config.init: "../.preferences.txt"
 recursive_search = number(config.init.return$["create_index.recursive_search"])
 
-beginPause: "index"
+beginPause: "View & Edit files"
   comment: "Input:"
-  if recursive_search
-    textgrid_folder$ = ""
-    audio_folder$ = ""
-  else
-    comment: "The directories where your files are stored..."
-    sentence: "Audio folder", config.init.return$["sounds_dir"]
-    sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
-  endif
-#  boolean: "Relative path", 1
+  comment: "The directories where your files are stored..."
+  sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
+  sentence: "Audio folder", config.init.return$["sounds_dir"]
+  boolean: "Relative to TextGrid paths", 1
   word: "Audio extension", ".wav"
   comment: "Output:"
   comment: "Display settings..."
@@ -38,49 +33,54 @@ if clicked = 2
   exitScript()
 endif
 
-if !recursive_search
-  @config.setField: "textgrids_dir", textgrid_folder$
-  @config.setField: "sounds_dir", audio_folder$
-endif
+@config.setField: "textgrids_dir", textgrid_folder$
+@config.setField: "sounds_dir", audio_folder$
 @config.setField: "open_file.margin", string$(margin)
 
-indexDir$ = preferencesDirectory$+ "/local/query.Table"
+queryDir$ = preferencesDirectory$ + "/local/query.Table"
 
-if !fileReadable(indexDir$)
-  pauseScript: "finder: Create an index first"
+if !fileReadable(queryDir$)
+  pauseScript: "finder: Make a query first"
+  exitScript()
 endif
 
-index = Read from file: indexDir$
-nrow = Object_'index'.nrow
+query = Read from file: queryDir$
+nrow = Object_'query'.nrow
 if !nrow
-  exitScript: "No files in the index"
+  pauseScript: "No files in the query"
+  exitScript()
 endif
 
 row = number(config.init.return$["open_file.row"])
 while 1
   row = if row > nrow then 1 else row fi
 
-  #Get info from index
-  text$ = object$[index, row, "text"]
-  tgName$ = object$[index, row, "filename"]
-  sdName$ = tgName$ - ".TextGrid" + audio_extension$
-  sdDir$ = audio_folder$ + "/" + sdName$
-  tgDir$ = textgrid_folder$ + "/" + tgName$
+  #Get info from the query table
+  text$ = object$[query, row, "text"]
+  tgPath$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
 
-  tmin = object[index, row, "tmin"]
-  tmax = object[index, row, "tmax"]
+  if relative_to_TextGrid_paths
+    filename$ = object$[query, row, "filename"]
+    tgName$ = filename$ + ".TextGrid"
+    sdPath$ = (tgPath$ - tgName$) + audio_folder$ + "/" + filename$ + audio_extension$
+  else
+    sdName$ = object$[query, row, "filename"] + audio_extension$
+    sdPath$ = audio_folder$ + "/" + sdName$
+  endif
+
+  tmin = object[query, row, "tmin"]
+  tmax = object[query, row, "tmax"]
   tmid = (tmax - tmin)*0.5 + tmin
-  tier$ = object$[index, row, "tier"]
+  tier$ = object$[query, row, "tier"]
 
   #Display
-  
-  tg = Read from file: tgDir$
+  tg = Read from file: tgPath$
   @getTierNumber
   tier = getTierNumber.return[tier$]
   sd = 0
   
-  if fileReadable(sdDir$)
-    sd = Open long sound file: sdDir$
+  if fileReadable(sdPath$)
+    sd = Open long sound file: sdPath$
     plusObject: tg
   endif
 
@@ -96,7 +96,7 @@ while 1
 
   beginPause: "finder"
     if add_notes
-      sentence: "Notes", object$[index, row, "notes"]
+      sentence: "Notes", object$[query, row, "notes"]
     endif
     comment: "Case: 'row'/'nrow'"
     comment: "Text: " + if length(text$)> 25 then left$(text$, 25) + "..." else text$ fi
@@ -105,14 +105,14 @@ while 1
   endeditor
 
   if add_notes
-    selectObject: index
+    selectObject: query
     Set string value: row, "notes", notes$
-    Save as text file: indexDir$
+    Save as text file: queryDir$
   endif
 
   if clicked = 2
     selectObject: tg
-    Save as text file: tgDir$
+    Save as text file: tgPath$
   endif
   
   removeObject: tg
@@ -123,7 +123,7 @@ while 1
   row = next_case
 
   if clicked = 3
-    removeObject: index
+    removeObject: query
     exitScript()
   endif
 endwhile
