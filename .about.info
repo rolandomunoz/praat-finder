@@ -1,0 +1,12 @@
+Plugin: Audio Transcriber
+Author: Rolando Muñoz A. <rmunoz@gmail.com>
+Homepage: https://gitlab.com/praat_plugins_rma/plugin_indexer
+Version: 0.0.1
+Last modified: 17-10-2017
+Description:
+  - Search contents in TextGrids and run some actions on them.
+Depends:
+  - Praat: 6.30.0+
+License: GPL3
+How to cite: 
+ - Muñoz A., Rolando (2017). Indexer[Praat plug-in]. Version 0.0.1, retrived 17 October 2017 from https://gitlab.com/praat_plugins_rma/plugin_indexer
