@@ -5,29 +5,30 @@ This Praat plug-in is a *search engine* which helps the user to find some specif
 ## Getting started
 
 #### Requirements
-Before starting, make sure that you have Praat 6.0.30 or more on your computer. If not, download the the latest version of Praat (here)[http://www.fon.hum.uva.nl/praat]. 
+Before starting, make sure that you have Praat 6.0.30 or more on your computer. If not, download the the latest version of Praat ![here](http://www.fon.hum.uva.nl/praat). 
 
-### How to install it?
+### 1. How to install it?
 
-Installing a plug-in is relatively easy.
+**Step 1:** Download the plug-in from this website. Then unzip it. 
 
-#### Step 1: Download the plug-in from this website. Then unzip it. 
+**Step 2:** Drop the plug-in folder in the *praat preference* folder.
 
-#### Step 2: Drop the plug-in folder in the *praat preference* felder.
+*On Mac* 
 
-##### On Mac
+*On Windows*
 
-##### On Windows
+*On Ubuntu* go to `/home/rolando/.praat-dir`
 
-##### On Linux
+**Step 3:** Open Praat again. In the Object menu, go to `Praat > Goodies`. You should see a submenu called `Indexer` 
 
-/home/rolando/.praat-dir
+### 2. How to use it?
 
-### How to use it?
+This plug-in is simple to use. You just need to follow three steps.
 
 #### Step 1: Create an index
 
-The first step is to take a snopshot of your TextGrids. In order to do that, use the 
+In the first step, you need to tell the plug-in to take a photo of all the TextGrids inside a folder. This is done by using the `Create an index...` command. 
+
 
 #### Step 2: Make a query
 
