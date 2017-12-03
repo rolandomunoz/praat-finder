@@ -27,11 +27,22 @@ This plug-in is simple to use. You just need to follow three steps.
 
 #### Step 1: Create an index
 
-In the first step, you need to tell the plug-in to take a photo of all the TextGrids inside a folder. This is done by using the `Create an index...` command. 
+In the first step, you need to tell the plug-in to capture all the annotations stored in TextGrid files inside a folder. This is done by using the `Create an index...` command. 
 
+If all your TextGrid files are stored below a folder, provide this path in the **Textgrid folder** field. Then, press **Continue**
+
+![Screenshot_from_2017-12-03_15-37-16](/uploads/7eead1075e7be1ac7e4c00de4db9ea2d/Screenshot_from_2017-12-03_15-37-16.png)
+
+Sometimes, TextGrid files are stored in different folders. In these cases, in **TextGrid folder**, provide the folder path which contains the TextGrid subfolders. Then, check the **Recursive search** option. 
+By doing so, all the TextGrids under the domain of the **TextGrid folder** path will be captured by the plug-in.
+
+![Screenshot_from_2017-12-03_15-58-31](/uploads/d641462c4d0a53e0b3e4a05b1342024f/Screenshot_from_2017-12-03_15-58-31.png)
+
+Empty spaces are not considered part of the annotations, so they are not tipically include in the index. If it is neccesary, you can use the **Include empty intervals** option to capture these intervals as part of the index.
 
 #### Step 2: Make a query
 
+Once a we created an index, we are ready to make queries. 
 
 #### Step 3: Do some actions!
 
