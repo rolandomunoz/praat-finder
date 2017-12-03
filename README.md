@@ -1,22 +1,27 @@
 # Indexer
 
-This is a plug-in written for Praat. It is freely distributed under the GPL license terms. It captures the annotations from all your TextGrids stored in a folder at a specific time. After that, you can use the search engine to visualize or extract those parts in your files that you are interested in. This tool is versatil and it can be use in different situations.
+This Praat plug-in is a *search engine* which helps the user to find some specific annotations stored in TextGrid files inside a folder. Once a search is done, you can visualize the occurences ony-by-one in the TextGridEditor or extract them in a folder.
 
 ## Getting started
 
 #### Requirements
-Before start, be sure that you have the the latest version of Praat. 
-
+Before starting, make sure that you have Praat 6.0.30 or more on your computer. If not, download the the latest version of Praat (here)[http://www.fon.hum.uva.nl/praat]. 
 
 ### How to install it?
 
-Intalling a plug-in is relatively easy. You just need to download the files a drop them on the *praat preference* directory. Let's go step-by-step.
+Installing a plug-in is relatively easy.
 
-#### On Mac
+#### Step 1: Download the plug-in from this website. Then unzip it. 
 
-#### On Windows
+#### Step 2: Drop the plug-in folder in the *praat preference* felder.
 
-#### On Linux
+##### On Mac
+
+##### On Windows
+
+##### On Linux
+
+/home/rolando/.praat-dir
 
 ### How to use it?
 
