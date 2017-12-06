@@ -54,13 +54,38 @@ This table is shown only for informantion purposes. You can remove it if want.
 
 #### Step 2: Make a query
 
-Once we created an index, it is now possible to make queries! By doing a query, we can tell the plug-in to group all the annotations that match a specific text.
+Once an index is created, it is time for queries! When you query something, you ask if any TextGrid file contain a specific word or a sequence of letters. 
+As we will see, this plug-in can perform different types of queries.
+
+In the plug-in menu, go to `Query by tier name...`, a dialog box will appear.
+In `Tier name`, pick the tier where the query will be made, then complete the `Search for` with the text you want find.
+Use `Mode` to adjust the type of matching. There are severeal options. You can use  *is equal to*, *contains*, *starts with* or *starts with*.
+But, you can also do a negative search using *is not equal*, *does not contain*, *does not start with* or *does not end with*. 
+For more complex searches, you can use regex.
 
 ![Screenshot_from_2017-12-04_17-22-53](/uploads/6e308dcaca58ca27bce02153c619146f/Screenshot_from_2017-12-04_17-22-53.png)
 
+When press on **Continue**, wait until a message appears.
+The message will tell you how many occurrences were found. 
+Also, a query table will be shown in Praat Objects.
+This contains details of the occurrences found. Feel free to remove it if you want.
+
+Usually, you don't need to go back to step 1 each time you make a query. Step 2 can be realised as many times as neccesary!
+
 #### Step 3: Do some actions!
 
+After making a query, you can do somes tasks.
+
+##### Browsing in your annotations
+
+![Screenshot_from_2017-12-05_23-58-59](/uploads/b0eb3d562674aab282c6a0e2bbddd1cb/Screenshot_from_2017-12-05_23-58-59.png)
+
+##### Extract your files
+
+![Screenshot_from_2017-12-05_23-59-21](/uploads/bf2053af32cf00dfe8c0c7617a657152/Screenshot_from_2017-12-05_23-59-21.png)
+
 ## Advanced features
+
 
 
 ## Some ideas to use this plug-in
