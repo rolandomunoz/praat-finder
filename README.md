@@ -1,9 +1,9 @@
 # Indexer
 
-This Praat plug-in is a *search engine* which helps the user to find some specific annotations within a set of TextGrid files stored in a directory. Once a search is done, you can visualize the occurences ony-by-one in the TextGridEditor or extract them in a folder.
+This Praat plug-in is a *search engine* which helps you to find some specific annotations within a set of TextGrid files stored in a directory. 
+Once a search is done, you can visualize the occurences ony-by-one in the TextGridEditor or extract them in a folder.
 
 ## Getting started
-
 
 ### 1. How to install it?
 
@@ -87,12 +87,20 @@ After making a query, you can do somes tasks.
 ## Advanced features
 
 
-
-## Some ideas to use this plug-in
+se this plug-in
 
 ### List all the words in a corpus
 
 ### Find specific information
+
+## Author
+
+- Rolando Muñoz Aramburú
+
+## License
+
+This project is licensed under the GNU GPL terms - see the [LICENSE.md](https://gitlab.com/praat_plugins_rma/plugin_tokenizer/blob/master/LICENSE)
+ file for details.
 
 ## How to cite this plug-in?
 
