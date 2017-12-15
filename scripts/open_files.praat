@@ -100,6 +100,7 @@ while 1
     endif
     comment: "Case: 'row'/'nrow'"
     comment: "Text: " + if length(text$)> 25 then left$(text$, 25) + "..." else text$ fi
+    comment: "File name: " + object$[query, row, "filename"]
     natural: "Next case",  if (row + 1) > nrow then 1 else row + 1 fi
   clicked = endPause: "Continue", "Save", "Quit", 1
   endeditor
