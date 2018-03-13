@@ -87,16 +87,16 @@ for row to nrow
     base_name$ = selected$("LongSound")
     root_name$ = if keep_original_filename then base_name$ + "_" else "" fi
 
-    left_margin = if (tmin-margin) > 0 then margin else 0 fi
-    right_margin = if (tmax + margin) < Object_'sd'.xmax then margin else 0 fi
-
+    left_margin = if (tmin-margin) > 0 then margin else tmin fi
+    right_margin = if (Object_'sd'.xmax - tmax) >= margin  then margin else Object_'sd'.xmax-tmax fi
+    
     ## Extract TextGrid
     selectObject: tg
     tg_extracted = Extract part: tmin, tmax, "no"
     nocheck Extend time: left_margin, "Start"
     nocheck Extend time: right_margin, "End"
     Shift times to: "start time", 0
-
+    
     if remove_empty_tiers
       runScript: "remove_empty_tiers.praat", tg_extracted
     endif
@@ -104,7 +104,6 @@ for row to nrow
     ## Extract audio
     selectObject: sd
     sd_extracted = Extract part: tmin-left_margin, tmax+right_margin, "no"
-
     file_id = 0
     repeat
       file_id += 1
@@ -117,10 +116,9 @@ for row to nrow
     Save as WAV file: file_dir$ + ".wav"
     selectObject: tg_extracted
     Save as text file: file_dir$ + ".TextGrid"
-      
     removeObject: tg, tg_extracted, sd, sd_extracted
   endif
 endfor
 
 removeObject: query
-pauseScript: "Completed succsessfully"
+writeInfoLine: "Completed succsessfully"
