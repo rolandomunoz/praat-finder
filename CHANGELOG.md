@@ -7,13 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrealised]
 
-## [0.0.1]
+## 1.0.0
 
 ### Added
   - Added commands
-    - `Index by tier number...`
-    - `Index by tier name...`
-    - `Import...`
-    - `Export...`
+    - `Create index`
+    - `Query by tier name...`
+    - `Export query...`
+    - `Import query...`
+    - `View & Edit files...`
+    - `Extract files...`
+    - `Filter query...`
     - `About`
 
