@@ -1,4 +1,4 @@
-Plugin: Audio Transcriber
+Plugin: Indexer
 Author: Rolando Muñoz A. <rmunoz@gmail.com>
 Homepage: https://gitlab.com/praat_plugins_rma/plugin_indexer
 Version: 1.0.0
