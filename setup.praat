@@ -1,5 +1,9 @@
 # Copyright 2017 Rolando Muñoz Aramburú
-
+if praatVersion < 6055
+  appendInfoLine: "Plug-in name: Indexer"
+  appendInfoLine: "Warning: This plug-in only works on Praat version above 6.0.32. Please, get a more recent version of Praat."
+  appendInfoLine: "Praat website: http://www.fon.hum.uva.nl/praat/"
+endif
 ## Static menu
 Add menu command: "Objects", "Goodies", "Indexer", "", 0, ""
 Add menu command: "Objects", "Goodies", "Create index...", "Indexer", 1, "scripts/create_index.praat"
