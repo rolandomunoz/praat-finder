@@ -31,9 +31,9 @@ beginPause: "Extract Sound & TextGrid"
   comment: "Add a margin..."
   real: "Margin", number(config.init.return$["extract_files.margin"])
   boolean: "Remove empty tiers", 0
-clicked = endPause: "Continue", "Quit", 1
+clicked = endPause: "Cancel", "Apply", "Ok", 3
 
-if clicked = 2
+if clicked = 1
   exitScript()
 endif
 
@@ -122,3 +122,7 @@ endfor
 
 removeObject: query
 writeInfoLine: "Completed succsessfully"
+
+if clicked = 2
+  runScript: "extract_files.praat"
+endif

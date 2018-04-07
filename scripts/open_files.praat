@@ -27,9 +27,9 @@ beginPause: "View & Edit files"
   comment: "Display settings..."
   real: "Margin", number(config.init.return$["open_file.margin"])
   boolean: "Add notes", 0
-clicked = endPause: "Continue", "Quit", 1
+clicked = endPause: "Cancel", "Apply", "Ok", 3
 
-if clicked = 2
+if clicked = 1
   exitScript()
 endif
 
@@ -52,7 +52,8 @@ if !nrow
 endif
 
 row = number(config.init.return$["open_file.row"])
-while 1
+pause = 1
+while pause
   row = if row > nrow then 1 else row fi
 
   #Get info from the query table
@@ -102,7 +103,7 @@ while 1
     comment: "Text: " + if length(text$)> 25 then left$(text$, 25) + "..." else text$ fi
     comment: "File name: " + object$[query, row, "filename"]
     natural: "Next case",  if (row + 1) > nrow then 1 else row + 1 fi
-  clicked = endPause: "Continue", "Save", "Quit", 1
+  clicked_finder = endPause: "Continue", "Save", "Quit", 1
   endeditor
 
   if add_notes
@@ -111,7 +112,7 @@ while 1
     Save as text file: queryDir$
   endif
 
-  if clicked = 2
+  if clicked_finder = 2
     selectObject: tg
     Save as text file: tgPath$
   endif
@@ -123,8 +124,12 @@ while 1
   @config.setField: "open_file.row", string$(row)
   row = next_case
 
-  if clicked = 3
+  if clicked_finder = 3
     removeObject: query
-    exitScript()
+    pause = 0
   endif
 endwhile
+
+if clicked = 2
+  runScript: "open_files.praat"
+endif
