@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrealised]
 
+### Added
+  - Added commands
+  - Query by tier name: update search modes
+  
+### Changed
+  - New button in dialogue box
+
 ## 1.0.0
 
 ### Added
