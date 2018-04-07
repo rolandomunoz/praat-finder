@@ -1,7 +1,7 @@
 # Copyright 2017 Rolando Muñoz Aramburú
-if praatVersion < 6033
+if praatVersion < 6039
   appendInfoLine: "Plug-in name: Indexer"
-  appendInfoLine: "Warning: This plug-in only works on Praat version above 6.0.32. Please, get a more recent version of Praat."
+  appendInfoLine: "Warning: This plug-in only works on Praat version 6.0.39 or more. Please, get a more recent version of Praat."
   appendInfoLine: "Praat website: http://www.fon.hum.uva.nl/praat/"
 endif
 ## Static menu
