@@ -28,5 +28,7 @@ if directory_name$ <> ""
     counter+=1
   endwhile
   Save as tab-separated file: directory_name$ + "/" + filename$ + suffix$ + ".txt"
+  # Print message
+  writeInfoLine: "Export query"
+  appendInfoLine: "Message: Done!"
 endif
-pauseScript: "Completed successfully"
