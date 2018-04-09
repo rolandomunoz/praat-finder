@@ -8,11 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unrealised]
 
 ### Added
-  - Added commands
   - Query by tier name: update search modes
-  
+  - Now 'Query by tier name...' can run 'Do All' commands after searching text. 
+
 ### Changed
-  - New button in dialogue box
+  - New buttons in dialogue box
+  - 'Filter query...' is now more like 'Query by tier name...'
+  - Import/Export command uses Info window to display messages
 
 ## 1.0.0
 
