@@ -25,7 +25,7 @@ beginPause: "Extract Sound & TextGrid"
   word: "Audio extension", ".wav"
   comment: "Output:"
   comment: "The directory where the resulting files will be stored..."
-  sentence: "Save in", config.init.return$["extract_files.stdout_dir"]
+  sentence: "Save in", config.init.return$["extract_files.save_in"]
   comment: "Set the filename..."
   boolean: "Keep original filename", number(config.init.return$["extract_files.keep_original_filename"])
   comment: "Add a margin..."
