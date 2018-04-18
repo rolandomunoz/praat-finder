@@ -65,19 +65,19 @@ endfor
 # Checking...
 ## Check dialogue box fields
 if textgrid_folder$ == ""
-  writeInfoLine: "Extract files"
+  writeInfoLine: "Extract Sound & TextGrid"
   appendInfoLine: "Please, complete the 'Textgrid folder' field"
   runScript: "extract_files.praat"
   exitScript()
 endif
 
 if save_in$ == ""
-  writeInfoLine: "Extract files"
+  writeInfoLine: "Extract Sound & TextGrid"
   appendInfoLine: "Please, complete the 'Save in' field"
   runScript: "extract_files.praat"
   exitScript()
 elsif startsWith(save_in$, ".")
-  writeInfoLine: "Extract files"
+  writeInfoLine: "Extract Sound & TextGrid"
   appendInfoLine: "We do not allow relative paths in the 'Save in' folder. Please, change the directory"
   runScript: "extract_files.praat"
   exitScript()
@@ -85,7 +85,7 @@ endif
 
 ## Check if a query is done
 if !fileReadable(queryDir$)
-  writeInfoLine: "Extract files"
+  writeInfoLine: "Extract Sound & TextGrid"
   appendInfoLine: "Message: Make a query first"
   exitScript()
 endif
@@ -94,7 +94,7 @@ endif
 query = Read from file: queryDir$
 nRows = object[query].nrow
 if !nRows
-  writeInfoLine: "Extract files"
+  writeInfoLine: "Extract Sound & TextGrid"
   appendInfoLine: "Message: Nothing to show. Please, make another query"
   exitScript()
 endif
@@ -163,7 +163,7 @@ for row to nRows
 endfor
 
 removeObject: query
-writeInfoLine: "Extract files"
+writeInfoLine: "Extract Sound & TextGrid"
 appendInfoLine: "Number of created files: ", fileCounter * 2
 appendInfoLine: "Number of TextGrid files: ", fileCounter
 appendInfoLine: "Number of audio files: ", fileCounter
