@@ -17,13 +17,11 @@ include ../procedures/get_tier_number.proc
 recursive_search = number(config.init.return$["create_index.recursive_search"])
 
 beginPause: "View & Edit files"
-  comment: "Input:"
   comment: "The directories where your files are stored..."
   sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
   sentence: "Audio folder", config.init.return$["sounds_dir"]
-  boolean: "Relative to TextGrid paths", 1
+  comment: "Audio settings..."
   word: "Audio extension", ".wav"
-  comment: "Output:"
   comment: "Display settings..."
   real: "Margin", number(config.init.return$["open_file.margin"])
   boolean: "Add notes", 0
@@ -33,26 +31,45 @@ if clicked = 1
   exitScript()
 endif
 
+# Save in preferences
 @config.setField: "textgrids_dir", textgrid_folder$
 @config.setField: "sounds_dir", audio_folder$
 @config.setField: "open_file.margin", string$(margin)
 
-queryDir$ = preferencesDirectory$ + "/local/query.Table"
-
-if !fileReadable(queryDir$)
-  pauseScript: "finder: Make a query first"
-  exitScript()
-endif
-
-query = Read from file: queryDir$
-nrow = Object_'query'.nrow
-if !nrow
-  pauseScript: "No files in the query"
-  exitScript()
-endif
-
+# Initial variables
+audio_folder$ = if audio_folder$ == "" then "." else audio_folder$ fi
+relative_to_TextGrid_paths= if startsWith(audio_folder$, ".") then 1 else 0 fi
 row = number(config.init.return$["open_file.row"])
 pause = 1
+queryDir$ = preferencesDirectory$ + "/local/query.Table"
+
+# Checking...
+
+## Check dialogue box fields
+if textgrid_folder$ == ""
+  writeInfoLine: "View & Edit files"
+  appendInfoLine: "Please, complete the Textgrid folder field"
+  runScript: "open_files.praat"
+  exitScript()
+endif
+
+## Check if a query is done
+if !fileReadable(queryDir$)
+  writeInfoLine: "View & Edit files"
+  appendInfoLine: "Message: Make a query first"
+  exitScript()
+endif
+
+## Check if the query table have recorded cases
+query = Read from file: queryDir$
+nrow = object[query].nrow
+if !nrow
+  writeInfoLine: "View & Edit files"
+  appendInfoLine: "Message: Nothing to show. Please, make another query."
+  exitScript()
+endif
+
+# Start pause window
 while pause
   row = if row > nrow then 1 else row fi
 
@@ -61,9 +78,9 @@ while pause
   tgPath$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
 
   if relative_to_TextGrid_paths
-    filename$ = object$[query, row, "filename"]
-    tgName$ = filename$ + ".TextGrid"
-    sdPath$ = (tgPath$ - tgName$) + audio_folder$ + "/" + filename$ + audio_extension$
+    baseName$ = object$[query, row, "filename"]
+    tgName$ = baseName$ + ".TextGrid"
+    sdPath$ = (tgPath$ - tgName$) + audio_folder$ + "/" + baseName$ + audio_extension$
   else
     sdName$ = object$[query, row, "filename"] + audio_extension$
     sdPath$ = audio_folder$ + "/" + sdName$

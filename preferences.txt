@@ -1,17 +1,17 @@
 sounds_dir: .
-textgrids_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/urarina/ura_data/2018_fieldwork_chambira/data_raw/2018-01-20
+textgrids_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/PUCP_repositorio/swadesh_list/shipibo/F1-Shipibo-Konibo
 sound_extension: .wav
 tier_number: 1
-create_index.recursive_search: 1
-query.tier_name_option: 1
-query.search_for: a
-query.mode: 3
-query.do: 1
+create_index.recursive_search: 0
+query.tier_name_option: 2
+query.search_for: 
+query.mode: 2
+query.do: 3
 filter_query.tier_name_option: 1
 filter_query.search_for: 
 filter_query.do: 1
 open_file.margin: 0.1
 open_file.row: 1
 extract_files.margin: 1
-extract_files.save_in: 
+extract_files.save_in: /media/rolando/EA46ADB846AD8643/Users/Public/Data/PUCP_repositorio/swadesh_list/shipibo/test
 extract_files.keep_original_filename: 1

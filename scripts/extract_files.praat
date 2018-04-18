@@ -21,107 +21,152 @@ beginPause: "Extract Sound & TextGrid"
   comment: "The directories where your files are stored..."
   sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
   sentence: "Audio folder", config.init.return$["sounds_dir"]
-  boolean: "Relative to TextGrid paths", 1
+  comment: "Audio settings..."
   word: "Audio extension", ".wav"
-  comment: "Output:"
+  comment: "Ouput:"
   comment: "The directory where the resulting files will be stored..."
   sentence: "Save in", config.init.return$["extract_files.save_in"]
-  comment: "Set the filename..."
-  boolean: "Keep original filename", number(config.init.return$["extract_files.keep_original_filename"])
-  comment: "Add a margin..."
+  comment: "File name..."
+  optionMenu: "Base name", number(config.init.return$["extract_files.keep_original_filename"])
+  option: "Filename"
+  option: "Matched text"
+  option: "Filename + matched text"
+  option: "Matched text + filename"
+  sentence: "File name", "<base_name>"
+  comment: "Add a margin(seconds) to the extracted files..."
   real: "Margin", number(config.init.return$["extract_files.margin"])
-  boolean: "Remove empty tiers", 0
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
 if clicked = 1
   exitScript()
 endif
 
+# Save in preferences
 @config.setField: "sounds_dir", audio_folder$
 @config.setField: "textgrids_dir", textgrid_folder$
 @config.setField: "sound_extension", audio_extension$
-@config.setField: "extract_files.stdout_dir", save_in$
+@config.setField: "extract_files.save_in", save_in$
 @config.setField: "extract_files.file_name.margin", string$(margin)
-@config.setField: "extract_files.file_name.keep_original_filename", string$(keep_original_filename)
 @config.setField: "extract_files.margin", string$(margin)
 
+# Initial variables
+stdout_fileName$ = file_name$
 queryDir$ = preferencesDirectory$ + "/local/query.Table"
-
-if !fileReadable(queryDir$)
-  pauseScript: "Create an query first"
-  exitScript()
-endif
-
-query = Read from file: queryDir$
-nrow = Object_'query'.nrow
-if !nrow
-  exitScript: "No files in the query"
-endif
-
+fileCounter = 0
 repetition_digits = 4
+audio_folder$ = if audio_folder$ == "" then "." else audio_folder$ fi
+relativePath= if startsWith(audio_folder$, ".") then 1 else 0 fi
 zero$ = ""
+
 for i to repetition_digits
   zero$ = zero$ + "0"
 endfor
 
-for row to nrow
-  # Get info from query
-  tg_name$ = object$[query, row, "filename"]
-  tg_path$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
+# Checking...
+## Check dialogue box fields
+if textgrid_folder$ == ""
+  writeInfoLine: "Extract files"
+  appendInfoLine: "Please, complete the 'Textgrid folder' field"
+  runScript: "extract_files.praat"
+  exitScript()
+endif
 
-  if relative_to_TextGrid_paths
-    filename$ = object$[query, row, "filename"]
-    tg_name$ = filename$ + ".TextGrid"
-    sd_path$ = (tg_path$ - tg_name$) + audio_folder$ + "/" + filename$ + audio_extension$
-  else
-    sd_name$ = object$[query, row, "filename"] + audio_extension$
-    sd_path$ = audio_folder$ + "/" + sd_name$
-  endif
+if save_in$ == ""
+  writeInfoLine: "Extract files"
+  appendInfoLine: "Please, complete the 'Save in' field"
+  runScript: "extract_files.praat"
+  exitScript()
+elsif startsWith(save_in$, ".")
+  writeInfoLine: "Extract files"
+  appendInfoLine: "We do not allow relative paths in the 'Save in' folder. Please, change the directory"
+  runScript: "extract_files.praat"
+  exitScript()
+endif
+
+## Check if a query is done
+if !fileReadable(queryDir$)
+  writeInfoLine: "Extract files"
+  appendInfoLine: "Message: Make a query first"
+  exitScript()
+endif
+
+## Check if the query table have recorded cases
+query = Read from file: queryDir$
+nRows = object[query].nrow
+if !nRows
+  writeInfoLine: "Extract files"
+  appendInfoLine: "Message: Nothing to show. Please, make another query"
+  exitScript()
+endif
+
+for row to nRows
+  # Get audio and annotation files paths
+  baseName$ = object$[query, row, "filename"]
+  tg$ = baseName$ + ".TextGrid"
+  sd$ = baseName$ + audio_extension$
+  tgPath$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
+
+  sdPath$ = if relativePath then (tgPath$ - tg$) + audio_folder$ else audio_folder$ fi
+  sdPath$ = sdPath$ + "/" + sd$
+  
+  # Get matched text information
   text$ = object$[query, row, "text"]
   tmin = object[query, row, "tmin"]
   tmax = object[query, row, "tmax"]
   tmid = (tmax - tmin)*0.5 + tmin
-  if fileReadable(tg_path$) and fileReadable(sd_path$)
-    tg = Read from file: tg_path$
-    sd = Open long sound file: sd_path$
-    base_name$ = selected$("LongSound")
-    root_name$ = if keep_original_filename then base_name$ + "_" else "" fi
+ 
+  # Open one by one all files
+  if fileReadable(tgPath$) and fileReadable(sdPath$)
+    tg = Read from file: tgPath$
+    sd = Open long sound file: sdPath$
 
-    left_margin = if (tmin-margin) > 0 then margin else tmin fi
-    right_margin = if (Object_'sd'.xmax - tmax) >= margin  then margin else Object_'sd'.xmax-tmax fi
+    if base_name = 1
+      stdout_basename$ = baseName$
+    elsif base_name = 2
+      stdout_basename$ = text$
+    elsif base_name = 3
+      stdout_basename$ = baseName$ + "_" + text$
+    elsif base_name = 4
+      stdout_basename$ = text$ + "_" + baseName$
+    endif
+    stdout_basename$ = replace$(stdout_fileName$, "<base_name>", stdout_basename$, 0)
+
+    leftMargin = if (tmin-margin) > 0 then margin else tmin fi
+    rightMargin = if (object[sd].xmax - tmax) >= margin then margin else object[sd].xmax-tmax fi
     
     ## Extract TextGrid
     selectObject: tg
     tg_extracted = Extract part: tmin, tmax, "no"
-    nocheck Extend time: left_margin, "Start"
-    nocheck Extend time: right_margin, "End"
+    nocheck Extend time: leftMargin, "Start"
+    nocheck Extend time: rightMargin, "End"
     Shift times to: "start time", 0
-    
-    if remove_empty_tiers
-      runScript: "remove_empty_tiers.praat", tg_extracted
-    endif
 
     ## Extract audio
     selectObject: sd
-    sd_extracted = Extract part: tmin-left_margin, tmax+right_margin, "no"
+    sd_extracted = Extract part: tmin-leftMargin, tmax+rightMargin, "no"
+    
     file_id = 0
     repeat
       file_id += 1
       tmp_zero$ = left$(zero$, repetition_digits - length(string$(file_id)))
-      file_id$ = "R" + tmp_zero$ +  string$(file_id)
-      file_dir$ = save_in$ + "/" + root_name$ + text$ + "_" + file_id$
-    until !fileReadable(file_dir$ + ".TextGrid")
+      file_id$ = tmp_zero$ +  string$(file_id)
+      fileDir$ = save_in$ + "/" + stdout_basename$ + "_" + file_id$
+    until !fileReadable(fileDir$ + ".TextGrid")
     
     selectObject: sd_extracted
-    Save as WAV file: file_dir$ + ".wav"
+    Save as WAV file: fileDir$ + ".wav"
     selectObject: tg_extracted
-    Save as text file: file_dir$ + ".TextGrid"
+    Save as text file: fileDir$ + ".TextGrid"
     removeObject: tg, tg_extracted, sd, sd_extracted
+    fileCounter+=1
   endif
 endfor
 
 removeObject: query
-writeInfoLine: "Completed succsessfully"
+writeInfoLine: "Extract files"
+appendInfoLine: "Number of created files: ", fileCounter * 2
+appendInfoLine: "Number of TextGrid files: ", fileCounter
+appendInfoLine: "Number of audio files: ", fileCounter
 
 if clicked = 2
   runScript: "extract_files.praat"
