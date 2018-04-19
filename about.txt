@@ -1,8 +1,8 @@
 Plugin: Indexer
 Author: Rolando Muñoz A. <rmunoz@gmail.com>
 Homepage: https://gitlab.com/praat_plugins_rma/plugin_indexer
-Version: 1.0.1
-Last modified: 13-03-2017
+Version: 1.1.0
+Last modified: 30-04-2017
 Description:
   - Search contents in TextGrids and run some actions on them.
 Depends:
