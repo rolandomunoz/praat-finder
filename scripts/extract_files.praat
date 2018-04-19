@@ -27,13 +27,13 @@ beginPause: "Extract Sound & TextGrid"
   comment: "The directory where the resulting files will be stored..."
   sentence: "Save in", config.init.return$["extract_files.save_in"]
   comment: "File name..."
-  optionMenu: "Base name", number(config.init.return$["extract_files.keep_original_filename"])
+  optionMenu: "Basename", number(config.init.return$["extract_files.keep_original_filename"])
   option: "Filename"
   option: "Matched text"
   option: "Filename + matched text"
   option: "Matched text + filename"
-  sentence: "File name", "<base_name>"
-  comment: "Add a margin(seconds) to the extracted files..."
+  sentence: "File name", "<basename>"
+  comment: "Add a margin(in seconds) to the extracted files..."
   real: "Margin", number(config.init.return$["extract_files.margin"])
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
@@ -101,9 +101,9 @@ endif
 
 for row to nRows
   # Get audio and annotation files paths
-  baseName$ = object$[query, row, "filename"]
-  tg$ = baseName$ + ".TextGrid"
-  sd$ = baseName$ + audio_extension$
+  basename$ = object$[query, row, "filename"]
+  tg$ = basename$ + ".TextGrid"
+  sd$ = basename$ + audio_extension$
   tgPath$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
 
   sdPath$ = if relativePath then (tgPath$ - tg$) + audio_folder$ else audio_folder$ fi
@@ -120,13 +120,13 @@ for row to nRows
     tg = Read from file: tgPath$
     sd = Open long sound file: sdPath$
 
-    if base_name = 1
-      stdout_basename$ = baseName$
-    elsif base_name = 2
-      stdout_basename$ = text$
-    elsif base_name = 3
-      stdout_basename$ = baseName$ + "_" + text$
-    elsif base_name = 4
+    if basename = 1
+      stdout_basename$ = basename$ + "_"
+    elsif basename = 2
+      stdout_basename$ = text$ + "_"
+    elsif basename = 3
+      stdout_basename$ = basename$ + "_" + text$
+    elsif basename = 4
       stdout_basename$ = text$ + "_" + baseName$
     endif
     stdout_basename$ = replace$(stdout_fileName$, "<base_name>", stdout_basename$, 0)
@@ -150,7 +150,7 @@ for row to nRows
       file_id += 1
       tmp_zero$ = left$(zero$, repetition_digits - length(string$(file_id)))
       file_id$ = tmp_zero$ +  string$(file_id)
-      fileDir$ = save_in$ + "/" + stdout_basename$ + "_" + file_id$
+      fileDir$ = save_in$ + "/" + stdout_basename$ + file_id$
     until !fileReadable(fileDir$ + ".TextGrid")
     
     selectObject: sd_extracted
