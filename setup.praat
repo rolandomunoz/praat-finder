@@ -1,4 +1,5 @@
-# Copyright 2017 Rolando Muñoz Aramburú
+# Copyright 2017 Rolando Munoz Aramburú
+
 if praatVersion < 6039
   appendInfoLine: "Plug-in name: Indexer"
   appendInfoLine: "Warning: This plug-in only works on Praat version 6.0.39 or later. Please, get a more recent version of Praat."

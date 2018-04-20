@@ -1,6 +1,6 @@
 # Extract files from a table
 #
-# Written by Rolando Muñoz A. (Aug 2017)
+# Written by Rolando Munoz A. (Aug 2017)
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

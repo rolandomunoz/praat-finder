@@ -116,5 +116,5 @@ This project is licensed under the GNU GPL terms - see the [LICENSE.md](https://
 
 ## How to cite this plug-in?
 
-`Muñoz A., Rolando (2017). Indexer[Praat plug-in]. Version 0.0.1, retrived 17 October 2017 from https://gitlab.com/praat_plugins_rma/plugin_indexer`
+`Munoz A., Rolando (2017). Indexer[Praat plug-in]. Version 0.0.1, retrived 17 October 2017 from https://gitlab.com/praat_plugins_rma/plugin_indexer`
 

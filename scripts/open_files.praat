@@ -1,6 +1,6 @@
 # Open a TextGrid and optionally a Sound in the TextGridEditor
 #
-# Written by Rolando Muñoz A. (08 Sep 2017)
+# Written by Rolando Munoz A. (08 Sep 2017)
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

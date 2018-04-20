@@ -1,4 +1,4 @@
-# Copyright 2017 Rolando Muñoz Aramburú
+# Copyright 2017 Rolando Munoz
 
 procedure getTierNumber
   .n = Get number of tiers

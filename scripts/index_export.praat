@@ -1,6 +1,6 @@
 # Export query table
 #
-# Written by Rolando Muñoz A. (14 Sep 2017)
+# Written by Rolando Munoz A. (14 Sep 2017)
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
