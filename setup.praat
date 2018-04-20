@@ -27,4 +27,4 @@ Add menu command: "Objects", "Goodies", "-", "Indexer", 1, ""
 Add menu command: "Objects", "Goodies", "About", "Indexer", 1, "scripts/about.praat"
 
 ## Create a local directory
-createDirectory: preferencesDirectory$ + "/local"
+createDirectory: "./temp"

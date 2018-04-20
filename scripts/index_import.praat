@@ -14,7 +14,7 @@ fileName$ = chooseReadFile$: "Open a tab separated file"
 if fileName$ <> ""
   tb = Read Table from tab-separated file: fileName$
   selectObject: tb
-  Save as text file: "../../local/query.Table"
+  Save as text file: "../temp/query.Table"
   writeInfoLine: "Import query"
   appendInfoLine: "Message: Done!"
 else

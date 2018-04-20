@@ -14,7 +14,7 @@ if clicked = 1
 endif
 
 # Read Query table
-table_index = Read from file: "/home/rolando/.praat-dir/local/query.Table"
+table_index = Read from file: "/home/rolando/.praat-dir/plugin_indexer/scripts/../temp/query.Table"
 number_of_rows = Get number of rows
 
 # Get the directory for each TextGrid
@@ -43,7 +43,7 @@ for i_row to number_of_rows
 
   
   
-  
+  pauseScript()
   # Save your files
   # Save as text file: textgrid_path$
   removeObject: textgrid_id

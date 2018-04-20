@@ -41,7 +41,7 @@ audio_folder$ = if audio_folder$ == "" then "." else audio_folder$ fi
 relative_to_TextGrid_paths= if startsWith(audio_folder$, ".") then 1 else 0 fi
 row = number(config.init.return$["open_file.row"])
 pause = 1
-queryDir$ = preferencesDirectory$ + "/local/query.Table"
+queryDir$ = "../temp/query.Table"
 
 # Checking...
 

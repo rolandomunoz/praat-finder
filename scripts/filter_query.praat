@@ -14,8 +14,8 @@ include ../procedures/config.proc
 include ../procedures/get_tier_number.proc
 
 @config.init: "../preferences.txt"
-if fileReadable("../../local/query.Table")
-  query = Read from file: "../../local/query.Table"
+if fileReadable("../temp/query.Table")
+  query = Read from file: "../temp/query.Table"
   Append column: "temp"
 else
   writeInfoLine: "Make a query first"
@@ -23,7 +23,7 @@ else
 endif
 
 # Open the table containig all the tier names, then remove it before being displayed by the pause window
-tb_all_tiers = Read from file: "../../local/tier_summary.Table"
+tb_all_tiers = Read from file: "../temp/tier_summary.Table"
 n = Object_'tb_all_tiers'.nrow
 for i to n
   tier_name$[i]= object$[tb_all_tiers, i, "tier"]
@@ -88,7 +88,7 @@ appendInfoLine: "Total number of occurrences: ", object[query_extracted].nrow
 if object[query_extracted].nrow
   @config.setField: "open_file.row", "1"
   selectObject: query_extracted
-  Save as text file: "../../local/query.Table"
+  Save as text file: "../temp/query.Table"
   removeObject: query_extracted
   
   scriptName$[2] = "open_files.praat"

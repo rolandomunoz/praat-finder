@@ -17,8 +17,8 @@ include ../procedures/list_recursive_path.proc
 
 beginPause: "Create index"
   sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
-  boolean: "Include empty intervals", 0
   boolean: "Recursive search", 0
+  boolean: "Include empty intervals", 0
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
 if clicked = 1
@@ -41,11 +41,11 @@ endif
 include_empty_intervals$ = if !include_empty_intervals then "no" else "yes" fi
 
 # Remove previous indexes if any
-indexList = Create Strings as file list: "fileList", "../../local/*.Table"
+indexList = Create Strings as file list: "fileList", "../temp/*.Table"
 nFiles = Get number of strings
 for i to nFiles
   filename$ = object$[indexList, i]
-  deleteFile: "../../local/" + filename$
+  deleteFile: "../temp/" + filename$
 endfor
 removeObject: indexList
 
@@ -130,7 +130,7 @@ endfor
 selectObject: index
 Append column: "notes"
 tb_tiers = Collapse rows: "tier", "", "", "", "", ""
-Save as text file: preferencesDirectory$ + "/local/tier_summary.Table"
+Save as text file: "../temp/tier_summary.Table"
 numberOfTiers = object[tb_tiers].nrow
 for i to numberOfTiers
   tier_name$= object$[tb_tiers, i, "tier"]
@@ -138,14 +138,14 @@ for i to numberOfTiers
   tb_extracted_tier = Extract rows where column (text): "tier", "is equal to", tier_name$
   case$[i]= tier_name$
   case[i]= object[tb_extracted_tier].nrow
-  Save as text file: preferencesDirectory$ + "/local/index_'tier_name$'.Table"
+  Save as text file: "../temp/index_'tier_name$'.Table"
   removeObject: tb_extracted_tier
 endfor
 removeObject: tb_tiers
 
 # Save the index
 selectObject: index
-Save as text file: preferencesDirectory$ + "/local/index.Table"
+Save as text file: "../temp/index.Table"
 
 # Print in the Info window
 writeInfoLine: "Create index..."

@@ -10,14 +10,14 @@
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/>.
 #
-if !fileReadable("../../local/query.Table")
+if !fileReadable("../temp/query.Table")
   writeInfoLine: "Open script template"
   appendInfoLine: "Message: Make a query first"
   exitScript()
 endif
 
 preferencePath$ = defaultDirectory$ + "/../preferences.txt"
-queryPath$ = preferencesDirectory$ + "/local/query.Table"
+queryPath$ = defaultDirectory$ + "/../temp/query.Table"
 
 script$ = readFile$("script_template_original.praat")
 script$ = replace$(script$, "<preferences_path>", preferencePath$, 1)

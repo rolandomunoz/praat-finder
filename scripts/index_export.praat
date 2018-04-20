@@ -10,7 +10,7 @@
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/1>.
 #
-dir$ = "../../local/query.Table"
+dir$ = "../temp/query.Table"
 
 if fileReadable(dir$)
     tb = Read from file: dir$

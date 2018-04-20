@@ -14,7 +14,7 @@ include ../procedures/config.proc
 
 @config.init: "../preferences.txt"
 
-tb_all_tiers = Read from file: "../../local/tier_summary.Table"
+tb_all_tiers = Read from file: "../temp/tier_summary.Table"
 n = Object_'tb_all_tiers'.nrow
 for i to n
   tier_name$[i]= object$[tb_all_tiers, i, "tier"]
@@ -78,10 +78,10 @@ mode$[15] = "matches (regex)"
 @config.setField: "open_file.row", "1"
 
 # Make a query
-tb_tier = Read from file: "../../local/" + "index_" + tier_name$[tier_name] + ".Table"
+tb_tier = Read from file: "../temp/" + "index_" + tier_name$[tier_name] + ".Table"
 tb_query = nowarn Extract rows where column (text): "text", mode$[mode], search_for$
 Rename: "query_" + search_for$
-Save as text file: preferencesDirectory$ + "/local/query.Table"
+Save as text file: "../temp/query.Table"
 
 # Print Search Summary content
 tb_query_unique = Collapse rows: "text", "", "", "", "", ""

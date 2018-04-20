@@ -32,7 +32,7 @@ beginPause: "Extract Sound & TextGrid"
   option: "Matched text"
   option: "Filename + matched text"
   option: "Matched text + filename"
-  sentence: "File name", "<basename>"
+  sentence: "Filename", "<basename>"
   comment: "Add a margin(in seconds) to the extracted files..."
   real: "Margin", number(config.init.return$["extract_files.margin"])
 clicked = endPause: "Cancel", "Apply", "Ok", 3
@@ -50,8 +50,8 @@ endif
 @config.setField: "extract_files.margin", string$(margin)
 
 # Initial variables
-stdout_fileName$ = file_name$
-queryDir$ = preferencesDirectory$ + "/local/query.Table"
+stdout_filename$ = filename$
+queryDir$ = "../temp/query.Table"
 fileCounter = 0
 repetition_digits = 4
 audio_folder$ = if audio_folder$ == "" then "." else audio_folder$ fi
@@ -101,9 +101,9 @@ endif
 
 for row to nRows
   # Get audio and annotation files paths
-  basename$ = object$[query, row, "filename"]
-  tg$ = basename$ + ".TextGrid"
-  sd$ = basename$ + audio_extension$
+  fileBasename$ = object$[query, row, "filename"]
+  tg$ = fileBasename$ + ".TextGrid"
+  sd$ = fileBasename$ + audio_extension$
   tgPath$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
 
   sdPath$ = if relativePath then (tgPath$ - tg$) + audio_folder$ else audio_folder$ fi
@@ -121,15 +121,15 @@ for row to nRows
     sd = Open long sound file: sdPath$
 
     if basename = 1
-      stdout_basename$ = basename$ + "_"
+      stdout_basename$ = fileBasename$ + "_"
     elsif basename = 2
       stdout_basename$ = text$ + "_"
     elsif basename = 3
-      stdout_basename$ = basename$ + "_" + text$
+      stdout_basename$ = fileBasename$ + "_" + text$ + "_"
     elsif basename = 4
-      stdout_basename$ = text$ + "_" + baseName$
+      stdout_basename$ = text$ + "_" + fileBasename$ + "_"
     endif
-    stdout_basename$ = replace$(stdout_fileName$, "<base_name>", stdout_basename$, 0)
+    stdout_basename$ = replace$(stdout_filename$, "<basename>", stdout_basename$, 0)
 
     leftMargin = if (tmin-margin) > 0 then margin else tmin fi
     rightMargin = if (object[sd].xmax - tmax) >= margin then margin else object[sd].xmax-tmax fi
