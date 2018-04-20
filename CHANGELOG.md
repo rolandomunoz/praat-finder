@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrealised]
 
-## 1.1.0 [30  -April-2018]
+## [1.1.0] 30-04-2018
 
 ### Added
   - New command: Open script template
@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
   - A bug in 'Extract files...'. Intervals are extracted with the correct margin.
 
-## 1.0.0
+## [1.0.0] 2018-03-13
 
 ### Added
   - Added commands
@@ -36,4 +36,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `Extract files...`
     - `Filter query...`
     - `About`
-
