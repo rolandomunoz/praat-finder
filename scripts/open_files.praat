@@ -22,6 +22,7 @@ beginPause: "View & Edit files"
   sentence: "Audio folder", config.init.return$["sounds_dir"]
   comment: "Audio settings..."
   word: "Audio extension", ".wav"
+  boolean: "Adjust volume", number(config.init.return$["open_file.adjust_volume"])
   comment: "Display settings..."
   real: "Margin", number(config.init.return$["open_file.margin"])
   boolean: "Add notes", 0
@@ -35,6 +36,7 @@ endif
 @config.setField: "textgrids_dir", textgrid_folder$
 @config.setField: "sounds_dir", audio_folder$
 @config.setField: "open_file.margin", string$(margin)
+@config.setField: "open_file.adjust_volume", string$(adjust_volume)
 
 # Initial variables
 audio_folder$ = if audio_folder$ == "" then "." else audio_folder$ fi
@@ -42,6 +44,8 @@ relative_to_TextGrid_paths= if startsWith(audio_folder$, ".") then 1 else 0 fi
 row = number(config.init.return$["open_file.row"])
 pause = 1
 queryDir$ = "../temp/query.Table"
+volume = 1
+adjust_volume_constant = adjust_volume
 
 # Checking...
 
@@ -72,7 +76,7 @@ endif
 # Start pause window
 while pause
   row = if row > nrow then 1 else row fi
-
+  adjust_volume = adjust_volume_constant
   #Get info from the query table
   text$ = object$[query, row, "text"]
   tgPath$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
@@ -98,8 +102,15 @@ while pause
   sd = 0
   
   if fileReadable(sdPath$)
-    sd = Open long sound file: sdPath$
+    if adjust_volume
+      sd = Read from file: sdPath$
+      Formula: "self*'volume'"
+    else
+      sd = Open long sound file: sdPath$
+    endif
     plusObject: tg
+  else
+    adjust_volume = 0
   endif
 
   View & Edit
@@ -112,7 +123,7 @@ while pause
   Zoom to selection
   Move cursor to: tmid
 
-  beginPause: "finder"
+  beginPause: "View & Edit files"
     if add_notes
       sentence: "Notes", object$[query, row, "notes"]
     endif
@@ -120,6 +131,9 @@ while pause
     comment: "Text: " + if length(text$)> 25 then left$(text$, 25) + "..." else text$ fi
     comment: "File name: " + object$[query, row, "filename"]
     natural: "Next case",  if (row + 1) > nrow then 1 else row + 1 fi
+    if adjust_volume
+      real: "Volume", volume
+    endif
   clicked_finder = endPause: "Continue", "Save", "Quit", 1
   endeditor
 
