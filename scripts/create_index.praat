@@ -153,10 +153,10 @@ selectObject: index
 Save as text file: "../temp/index.Table"
 
 # Print in the Info window
-writeInfoLine: "Create index..."
+writeInfoLine: "Create index"
 appendInfoLine: "Tiers:"
 for i to numberOfTiers
-  appendInfoLine: "  ", case$[i], ":", tab$, case[i]
+  appendInfoLine: "  ", case$[i], " (targets = ", case[i], ")"
 endfor
 
 if clicked = 2
