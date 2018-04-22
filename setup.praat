@@ -31,7 +31,7 @@ Add menu command: "Objects", "Goodies", "About", "Indexer", 1, "scripts/about.pr
 
 # Dynamic menu
 Add action command: "Table", 1, "", 0, "", 0, "Indexer", "", 0, ""
-Add action command: "Table", 1, "", 0, "", 0, "Import to Indexer", "Indexer", 0, "scripts/index_import_from_praat_objects.praat"
+Add action command: "Table", 1, "", 0, "", 0, "Import query", "Indexer", 0, "scripts/index_import_from_praat_objects.praat"
 
 ## Create a local directory
 createDirectory: "./temp"

@@ -32,9 +32,11 @@ endfor
 
 if import
   Save as text file: "../temp/query.Table"
-  writeInfoLine: "Done!"
+  writeInfoLine: "Import query"
+  appendInfoLine: "Message: Done!"
+
 else
-  writeInfoLine: "Import to Indexer"
+  writeInfoLine: "Import query"
   appendInfoLine: "Message: Cannot import table. Your table must contain (at least) the following columns:", newline$
   for i to numberOfColumns
     appendInfoLine: "- ", col$[i]
