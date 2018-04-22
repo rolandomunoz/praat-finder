@@ -2,16 +2,9 @@
 # This script runs on the TextGrid files that contain your search
 # Insert your code in the "Paste your code" section or modify this script
 
-info$ = readFile$("<preferences_path>")
-
-
-beginPause: "Run script..."
-  sentence: "TextGrid_folder", extractLine$(info$, "textgrids_dir: ")
-clicked = endPause: "Cancel", "Run script", 2
-
-if clicked = 1
-  exitScript()
-endif
+form Run script
+  sentence TextGrid_folder <TextGrid_folder>
+endform
 
 # Read Query table
 table_index = Read from file: "<query_path>"

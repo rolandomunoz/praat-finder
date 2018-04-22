@@ -16,11 +16,14 @@ if !fileReadable("../temp/query.Table")
   exitScript()
 endif
 
+pref$ = readFile$("../preferences.txt")
+tgFolder$ = extractLine$(pref$, "textgrids_dir: ")
+
 preferencePath$ = defaultDirectory$ + "/../preferences.txt"
 queryPath$ = defaultDirectory$ + "/../temp/query.Table"
 
 script$ = readFile$("script_template_original.praat")
-script$ = replace$(script$, "<preferences_path>", preferencePath$, 1)
+script$ = replace$(script$, "<TextGrid_folder>", tgFolder$, 1)
 script$ = replace$(script$, "<query_path>", queryPath$, 1)
 
 writeFile("script_template.praat", script$)
