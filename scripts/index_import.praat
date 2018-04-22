@@ -11,12 +11,39 @@
 # <http://www.gnu.org/licenses/1>.
 #
 fileName$ = chooseReadFile$: "Open a tab separated file"
-if fileName$ <> ""
-  tb = Read Table from tab-separated file: fileName$
-  selectObject: tb
+if fileName$ == ""
+  exitScript()
+endif
+tb = Read Table from tab-separated file: fileName$
+
+# Column names
+col$[1] = "tmin"
+col$[2] = "tier"
+col$[3] = "text"
+col$[4] = "tmax"
+col$[5] = "filename"
+col$[6] = "file_path"
+col$[7] = "notes"
+
+numberOfColumns = 7
+import = 1
+
+for i to numberOfColumns
+  isColumn= Get column index: col$[i]
+  if not isColumn
+    import = 0
+    i = numberOfColumns
+  endif
+endfor
+
+if import
   Save as text file: "../temp/query.Table"
   writeInfoLine: "Import query"
   appendInfoLine: "Message: Done!"
 else
-  exitScript()
+  writeInfoLine: "Import query"
+  appendInfoLine: "Message: Cannot import table. Your table must contain (at least) the following columns:", newline$
+  for i to numberOfColumns
+    appendInfoLine: "- ", col$[i]
+  endfor
 endif
