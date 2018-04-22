@@ -17,8 +17,8 @@ include ../procedures/list_recursive_path.proc
 
 beginPause: "Create index"
   sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
-  boolean: "Recursive search", 0
-  boolean: "Include empty intervals", 0
+  boolean: "Recursive search", number(config.init.return$["create_index.recursive_search"])
+  boolean: "Include empty intervals", number(config.init.return$["create_index.empty_intervals"])
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
 if clicked = 1
@@ -27,6 +27,7 @@ endif
 
 @config.setField: "textgrids_dir", textgrid_folder$
 @config.setField: "create_index.recursive_search", string$(recursive_search)
+@config.setField: "create_index.empty_intervals", string$(include_empty_intervals)
 @config.setField: "query.tier_name_option", "1"
 @config.setField: "query.search_for", ""
 @config.setField: "query.mode", "1"
@@ -61,7 +62,11 @@ nFiles = Get number of strings
 
 # If no file are listed, exit the script
 if !nFiles
+  removeObject: fileList
   writeInfoLine: "The source folder does not contain any TextGrid file"
+  if clicked = 2
+    runScript: "create_index.praat"
+  endif
   exitScript()
 endif
 
