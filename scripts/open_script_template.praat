@@ -26,5 +26,5 @@ script$ = readFile$("script_template_original.praat")
 script$ = replace$(script$, "<TextGrid_folder>", tgFolder$, 1)
 script$ = replace$(script$, "<query_path>", queryPath$, 1)
 
-writeFile("script_template.praat", script$)
-Read from file: "script_template.praat"
+writeFile("../temp/script_template.praat", script$)
+Read from file: "../temp/script_template.praat"

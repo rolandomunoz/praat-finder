@@ -3,6 +3,7 @@
 # Insert your code in the "Paste your code" section or modify this script
 
 form Run script
+  comment The directory where your TextGrid files are stored...
   sentence TextGrid_folder <TextGrid_folder>
 endform
 
@@ -35,7 +36,7 @@ for i_row to number_of_rows
   ## Do something...
 
   
-  
+  pauseScript()
   
   # Save your files
   # Save as text file: textgrid_path$
