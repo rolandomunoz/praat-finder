@@ -19,6 +19,10 @@ beginPause: "Create index"
   sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
   boolean: "Recursive search", number(config.init.return$["create_index.recursive_search"])
   boolean: "Include empty intervals", number(config.init.return$["create_index.empty_intervals"])
+  comment: "Next step..."
+  optionMenu: "Do", number(config.init.return$["create_index.do"])
+    option: "Nothing"
+    option: "Query by tier name..."
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
 if clicked = 1
@@ -26,6 +30,7 @@ if clicked = 1
 endif
 
 @config.setField: "textgrids_dir", textgrid_folder$
+@config.setField: "create_index.do", string$(do)
 @config.setField: "create_index.recursive_search", string$(recursive_search)
 @config.setField: "create_index.empty_intervals", string$(include_empty_intervals)
 @config.setField: "query.tier_name_option", "1"
@@ -158,6 +163,10 @@ appendInfoLine: "Tiers:"
 for i to numberOfTiers
   appendInfoLine: "  ", case$[i], " (targets = ", case[i], ")"
 endfor
+
+if do = 2
+  runScript: "query_by_tier_name.praat"
+endif
 
 if clicked = 2
   runScript: "create_index.praat"
