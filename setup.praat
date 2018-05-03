@@ -7,8 +7,8 @@ if praatVersion < 6039
 endif
 
 # Return to default preferences
-pref$ = readFile$("preferences_default.txt")
-writeFile: "preferences.txt", pref$
+#pref$ = readFile$("preferences_default.txt")
+#writeFile: "preferences.txt", pref$
 
 # Commands
 
