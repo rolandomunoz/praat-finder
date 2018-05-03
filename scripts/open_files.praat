@@ -43,7 +43,7 @@ audio_folder$ = if audio_folder$ == "" then "." else audio_folder$ fi
 relative_to_TextGrid_paths= if startsWith(audio_folder$, ".") then 1 else 0 fi
 row = number(config.init.return$["open_file.row"])
 pause = 1
-queryDir$ = "../temp/query.Table"
+searchDir$ = "../temp/search.Table"
 volume = 0.99
 adjust_sound_level_constant = adjust_sound_level
 
@@ -57,19 +57,19 @@ if textgrid_folder$ == ""
   exitScript()
 endif
 
-## Check if a query is done
-if !fileReadable(queryDir$)
+## Check if a search is done
+if !fileReadable(searchDir$)
   writeInfoLine: "View & Edit files"
-  appendInfoLine: "Message: Make a query first"
+  appendInfoLine: "Message: Make a search first"
   exitScript()
 endif
 
-## Check if the query table have recorded cases
-query = Read from file: queryDir$
-nrow = object[query].nrow
+## Check if the search table have recorded cases
+search = Read from file: searchDir$
+nrow = object[search].nrow
 if !nrow
   writeInfoLine: "View & Edit files"
-  appendInfoLine: "Message: Nothing to show. Please, make another query."
+  appendInfoLine: "Message: Nothing to show. Please, make another search."
   exitScript()
 endif
 
@@ -77,23 +77,23 @@ endif
 while pause
   row = if row > nrow then 1 else row fi
   adjust_sound_level = adjust_sound_level_constant
-  #Get info from the query table
-  text$ = object$[query, row, "text"]
-  tgPath$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
+  #Get info from the search table
+  text$ = object$[search, row, "text"]
+  tgPath$ = textgrid_folder$ + "/" + object$[search, row, "file_path"]
 
   if relative_to_TextGrid_paths
-    baseName$ = object$[query, row, "filename"]
+    baseName$ = object$[search, row, "filename"]
     tgName$ = baseName$ + ".TextGrid"
     sdPath$ = (tgPath$ - tgName$) + audio_folder$ + "/" + baseName$ + audio_extension$
   else
-    sdName$ = object$[query, row, "filename"] + audio_extension$
+    sdName$ = object$[search, row, "filename"] + audio_extension$
     sdPath$ = audio_folder$ + "/" + sdName$
   endif
 
-  tmin = object[query, row, "tmin"]
-  tmax = object[query, row, "tmax"]
+  tmin = object[search, row, "tmin"]
+  tmax = object[search, row, "tmax"]
   tmid = (tmax - tmin)*0.5 + tmin
-  tier$ = object$[query, row, "tier"]
+  tier$ = object$[search, row, "tier"]
 
   #Display
   tg = Read from file: tgPath$
@@ -125,11 +125,11 @@ while pause
 
   beginPause: "View & Edit files"
     if add_notes
-      sentence: "Notes", object$[query, row, "notes"]
+      sentence: "Notes", object$[search, row, "notes"]
     endif
     comment: "Case: 'row'/'nrow'"
     comment: "Text: " + if length(text$)> 25 then left$(text$, 25) + "..." else text$ fi
-    comment: "File name: " + object$[query, row, "filename"]
+    comment: "File name: " + object$[search, row, "filename"]
     natural: "Next case",  if (row + 1) > nrow then 1 else row + 1 fi
     if adjust_sound_level
       real: "Volume", volume
@@ -138,9 +138,9 @@ while pause
   endeditor
 
   if add_notes
-    selectObject: query
+    selectObject: search
     Set string value: row, "notes", notes$
-    Save as text file: queryDir$
+    Save as text file: searchDir$
   endif
 
   if clicked_finder = 2
@@ -156,7 +156,7 @@ while pause
   row = next_case
 
   if clicked_finder = 3
-    removeObject: query
+    removeObject: search
     pause = 0
   endif
 endwhile

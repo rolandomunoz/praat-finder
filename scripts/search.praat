@@ -21,13 +21,13 @@ for i to n
 endfor
 removeObject: tb_all_tiers
 
-beginPause: "Query by tier name"
-  optionMenu: "Tier name", number(config.init.return$["query.tier_name_option"])
+beginPause: "Search"
+  optionMenu: "Tier name", number(config.init.return$["search.tier_name_option"])
     for i to n
       option: tier_name$[i]
     endfor
-  sentence: "Search for", config.init.return$["query.search_for"]
-  optionMenu: "Mode", number(config.init.return$["query.mode"])
+  sentence: "Search for", config.init.return$["search.search_for"]
+  optionMenu: "Mode", number(config.init.return$["search.mode"])
     option: "is equal to"
     option: "is not equal to"
     option: "contains"
@@ -44,11 +44,11 @@ beginPause: "Query by tier name"
     option: "does not contain a word ending with"
     option: "matches (regex)"
     comment: "If the search is successful, then..."
-  optionMenu: "Do", number(config.init.return$["query.do"])
+  optionMenu: "Do", number(config.init.return$["search.do"])
     option: "Nothing"
     option: "View & Edit files..."
     option: "Extract files..."
-    option: "Filter query..."
+    option: "Filter search..."
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
 if clicked = 1
@@ -71,45 +71,45 @@ mode$[13] = "contains a word ending with"
 mode$[14] = "does not contain a word ending with"
 mode$[15] = "matches (regex)"
 
-@config.setField: "query.tier_name_option", string$(tier_name)
-@config.setField: "query.search_for", search_for$
-@config.setField: "query.mode", string$(mode)
-@config.setField: "query.do", string$(do)
+@config.setField: "search.tier_name_option", string$(tier_name)
+@config.setField: "search.search_for", search_for$
+@config.setField: "search.mode", string$(mode)
+@config.setField: "search.do", string$(do)
 @config.setField: "open_file.row", "1"
 
-# Make a query
+# Make a search
 tb_tier = Read from file: "../temp/" + "index_" + tier_name$[tier_name] + ".Table"
-tb_query = nowarn Extract rows where column (text): "text", mode$[mode], search_for$
-Rename: "query_" + search_for$
-Save as text file: "../temp/query.Table"
+tb_search = nowarn Extract rows where column (text): "text", mode$[mode], search_for$
+Rename: "search_" + search_for$
+Save as text file: "../temp/search.Table"
 
 # Print Search Summary content
-tb_query_unique = Collapse rows: "text", "", "", "", "", ""
+tb_search_unique = Collapse rows: "text", "", "", "", "", ""
 infoSearch$ = List: 1
 infoSearch$ = replace$(infoSearch$, "row	text", "Search Summary: ", 1)
-removeObject: tb_tier, tb_query_unique
-selectObject: tb_query
+removeObject: tb_tier, tb_search_unique
+selectObject: tb_search
 
 # Print
 ## Print Info
-writeInfoLine: "Query by tier name..."
+writeInfoLine: "Search"
 appendInfoLine: "Search pattern: ", search_for$
 appendInfoLine: "Tier name: ", tier_name$
-appendInfoLine: "Total number of occurrences: ", object[tb_query].nrow
+appendInfoLine: "Total number of occurrences: ", object[tb_search].nrow
 
 ## Print Search Summary
 appendInfoLine: "_________________________________________________"
 appendInfo: infoSearch$
 
-if object[tb_query].nrow
+if object[tb_search].nrow
   scriptName$[2] = "open_files.praat"
   scriptName$[3] = "extract_files.praat"
-  scriptName$[4] = "filter_query.praat"
+  scriptName$[4] = "filter_search.praat"
   if do > 1
     runScript: scriptName$[do]
   endif
 endif
 
 if clicked = 2
-  runScript: "query_by_tier_name.praat"
+  runScript: "search.praat"
 endif

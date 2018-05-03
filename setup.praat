@@ -17,7 +17,7 @@ Add menu command: "Objects", "Goodies", "Finder", "", 0, ""
 Add menu command: "Objects", "Goodies", "-", "Finder", 1, ""
 
 ### Query section
-Add menu command: "Objects", "Goodies", "Search...", "Finder", 1, "scripts/query_by_tier_name.praat"
+Add menu command: "Objects", "Goodies", "Search...", "Finder", 1, "scripts/search.praat"
 
 ### Do section
 Add menu command: "Objects", "Goodies", "Do", "Finder", 1, ""
@@ -27,7 +27,7 @@ Add menu command: "Objects", "Goodies", "View & Edit files...", "Do", 2, "script
 Add menu command: "Objects", "Goodies", "Extract files...", "Do", 2, "scripts/extract_files.praat"
 Add menu command: "Objects", "Goodies", "Open script template", "Do", 2, "scripts/open_script_template.praat"
 Add menu command: "Objects", "Goodies", "", "Do", 2, ""
-Add menu command: "Objects", "Goodies", "Filter search...", "Do", 2, "scripts/filter_query.praat"
+Add menu command: "Objects", "Goodies", "Filter search...", "Do", 2, "scripts/filter_search.praat"
 
 ### Share section
 Add menu command: "Objects", "Goodies", "Share", "Finder", 1, ""

@@ -22,7 +22,7 @@ beginPause: "Create index"
   comment: "Next step..."
   optionMenu: "Do", number(config.init.return$["create_index.do"])
     option: "Nothing"
-    option: "Query by tier name..."
+    option: "Search..."
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
 if clicked = 1
@@ -33,13 +33,13 @@ endif
 @config.setField: "create_index.do", string$(do)
 @config.setField: "create_index.recursive_search", string$(recursive_search)
 @config.setField: "create_index.empty_intervals", string$(include_empty_intervals)
-@config.setField: "query.tier_name_option", "1"
-@config.setField: "query.search_for", ""
-@config.setField: "query.mode", "1"
-@config.setField: "query.do", "1"
-@config.setField: "filter_query.tier_name_option", "1"
-@config.setField: "filter_query.search_for", ""
-@config.setField: "filter_query.do", "1"
+@config.setField: "search.tier_name_option", "1"
+@config.setField: "search.search_for", ""
+@config.setField: "search.mode", "1"
+@config.setField: "search.do", "1"
+@config.setField: "filter_search.tier_name_option", "1"
+@config.setField: "filter_search.search_for", ""
+@config.setField: "filter_search.do", "1"
 @config.setField: "open_file.row", "1"
 @config.setField: "sounds_dir", "."
 @config.setField: "extract_files.save_in", ""
@@ -161,11 +161,11 @@ Save as text file: "../temp/index.Table"
 writeInfoLine: "Create index"
 appendInfoLine: "Tiers:"
 for i to numberOfTiers
-  appendInfoLine: "  ", case$[i], " (targets = ", case[i], ")"
+  appendInfoLine: "  ", case$[i], " (labels = ", case[i], ")"
 endfor
 
 if do = 2
-  runScript: "query_by_tier_name.praat"
+  runScript: "search.praat"
 endif
 
 if clicked = 2

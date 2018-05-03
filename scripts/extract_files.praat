@@ -51,7 +51,7 @@ endif
 
 # Initial variables
 stdout_filename$ = filename$
-queryDir$ = "../temp/query.Table"
+searchDir$ = "../temp/search.Table"
 fileCounter = 0
 repetition_digits = 4
 audio_folder$ = if audio_folder$ == "" then "." else audio_folder$ fi
@@ -83,36 +83,36 @@ elsif startsWith(save_in$, ".")
   exitScript()
 endif
 
-## Check if a query is done
-if !fileReadable(queryDir$)
+## Check if a search is done
+if !fileReadable(searchDir$)
   writeInfoLine: "Extract Sound & TextGrid"
-  appendInfoLine: "Message: Make a query first"
+  appendInfoLine: "Message: Make a search first"
   exitScript()
 endif
 
-## Check if the query table have recorded cases
-query = Read from file: queryDir$
-nRows = object[query].nrow
+## Check if the search table have recorded cases
+search = Read from file: searchDir$
+nRows = object[search].nrow
 if !nRows
   writeInfoLine: "Extract Sound & TextGrid"
-  appendInfoLine: "Message: Nothing to show. Please, make another query"
+  appendInfoLine: "Message: Nothing to show. Please, make another search"
   exitScript()
 endif
 
 for row to nRows
   # Get audio and annotation files paths
-  fileBasename$ = object$[query, row, "filename"]
+  fileBasename$ = object$[search, row, "filename"]
   tg$ = fileBasename$ + ".TextGrid"
   sd$ = fileBasename$ + audio_extension$
-  tgPath$ = textgrid_folder$ + "/" + object$[query, row, "file_path"]
+  tgPath$ = textgrid_folder$ + "/" + object$[search, row, "file_path"]
 
   sdPath$ = if relativePath then (tgPath$ - tg$) + audio_folder$ else audio_folder$ fi
   sdPath$ = sdPath$ + "/" + sd$
   
   # Get matched text information
-  text$ = object$[query, row, "text"]
-  tmin = object[query, row, "tmin"]
-  tmax = object[query, row, "tmax"]
+  text$ = object$[search, row, "text"]
+  tmin = object[search, row, "tmin"]
+  tmax = object[search, row, "tmax"]
   tmid = (tmax - tmin)*0.5 + tmin
  
   # Open one by one all files
@@ -162,7 +162,7 @@ for row to nRows
   endif
 endfor
 
-removeObject: query
+removeObject: search
 writeInfoLine: "Extract Sound & TextGrid"
 appendInfoLine: "Number of created files: ", fileCounter * 2
 appendInfoLine: "Number of TextGrid files: ", fileCounter

@@ -10,9 +10,9 @@
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/>.
 #
-if !fileReadable("../temp/query.Table")
+if !fileReadable("../temp/search.Table")
   writeInfoLine: "Open script template"
-  appendInfoLine: "Message: Make a query first"
+  appendInfoLine: "Message: Make a search first"
   exitScript()
 endif
 
@@ -20,11 +20,11 @@ pref$ = readFile$("../preferences.txt")
 tgFolder$ = extractLine$(pref$, "textgrids_dir: ")
 
 preferencePath$ = defaultDirectory$ + "/../preferences.txt"
-queryPath$ = defaultDirectory$ + "/../temp/query.Table"
+searchPath$ = defaultDirectory$ + "/../temp/search.Table"
 
 script$ = readFile$("script_template_original.praat")
 script$ = replace$(script$, "<TextGrid_folder>", tgFolder$, 1)
-script$ = replace$(script$, "<query_path>", queryPath$, 1)
+script$ = replace$(script$, "<search_path>", searchPath$, 1)
 
 writeFile("../temp/script_template.praat", script$)
 Read from file: "../temp/script_template.praat"

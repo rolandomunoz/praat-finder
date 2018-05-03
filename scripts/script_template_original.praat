@@ -7,8 +7,8 @@ form Run script
   sentence TextGrid_folder <TextGrid_folder>
 endform
 
-# Read Query table
-table_index = Read from file: "<query_path>"
+# Read the Search table
+table_index = Read from file: "<search_path>"
 number_of_rows = Get number of rows
 
 # Get the directory for each TextGrid

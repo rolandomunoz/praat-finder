@@ -1,4 +1,4 @@
-# Import query table
+# Import search table
 #
 # Written by Rolando Munoz A. (14 Sep 2017)
 #
@@ -37,11 +37,11 @@ for i to numberOfColumns
 endfor
 
 if import
-  Save as text file: "../temp/query.Table"
-  writeInfoLine: "Import query"
+  Save as text file: "../temp/search.Table"
+  writeInfoLine: "Import search"
   appendInfoLine: "Message: Done!"
 else
-  writeInfoLine: "Import query"
+  writeInfoLine: "Import search"
   appendInfoLine: "Message: Cannot import table. Your table must contain (at least) the following columns:", newline$
   for i to numberOfColumns
     appendInfoLine: "- ", col$[i]
