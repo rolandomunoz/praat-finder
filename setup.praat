@@ -6,32 +6,41 @@ if praatVersion < 6039
   appendInfoLine: "Praat website: http://www.fon.hum.uva.nl/praat/"
 endif
 
-# Static menu
+# Return to default preferences
+pref$ = readFile$("preferences_default.txt")
+writeFile: "preferences.txt", pref$
+
+# Commands
+
+## Static menu
 Add menu command: "Objects", "Goodies", "Finder", "", 0, ""
-Add menu command: "Objects", "Goodies", "Create index...", "Finder", 1, "scripts/create_index.praat"
 Add menu command: "Objects", "Goodies", "-", "Finder", 1, ""
 
-## Query section
-Add menu command: "Objects", "Goodies", "Query by tier name...", "Finder", 1, "scripts/query_by_tier_name.praat"
-Add menu command: "Objects", "Goodies", "Export query...", "Finder", 1, "scripts/index_export.praat"
-Add menu command: "Objects", "Goodies", "Import query...", "Finder", 1, "scripts/index_import.praat"
+### Query section
+Add menu command: "Objects", "Goodies", "Search...", "Finder", 1, "scripts/query_by_tier_name.praat"
 
-## Do section
-Add menu command: "Objects", "Goodies", "-", "Finder", 1, ""
+### Do section
 Add menu command: "Objects", "Goodies", "Do", "Finder", 1, ""
+Add menu command: "Objects", "Goodies", "Create index...", "Do", 2, "scripts/create_index.praat"
+Add menu command: "Objects", "Goodies", "-", "Do", 2, ""
 Add menu command: "Objects", "Goodies", "View & Edit files...", "Do", 2, "scripts/open_files.praat"
 Add menu command: "Objects", "Goodies", "Extract files...", "Do", 2, "scripts/extract_files.praat"
 Add menu command: "Objects", "Goodies", "Open script template", "Do", 2, "scripts/open_script_template.praat"
 Add menu command: "Objects", "Goodies", "", "Do", 2, ""
-Add menu command: "Objects", "Goodies", "Filter query...", "Do", 2, "scripts/filter_query.praat"
+Add menu command: "Objects", "Goodies", "Filter search...", "Do", 2, "scripts/filter_query.praat"
 
-## About section
+### Share section
+Add menu command: "Objects", "Goodies", "Share", "Finder", 1, ""
+Add menu command: "Objects", "Goodies", "Export search...", "Share", 2, "scripts/index_export.praat"
+Add menu command: "Objects", "Goodies", "Import search...", "Share", 2, "scripts/index_import.praat"
+
+### About section
 Add menu command: "Objects", "Goodies", "-", "Finder", 1, ""
 Add menu command: "Objects", "Goodies", "About", "Finder", 1, "scripts/about.praat"
 
-# Dynamic menu
+## Dynamic menu
 Add action command: "Table", 1, "", 0, "", 0, "Finder", "", 0, ""
-Add action command: "Table", 1, "", 0, "", 0, "Import query", "Finder", 0, "scripts/index_import_from_praat_objects.praat"
+Add action command: "Table", 1, "", 0, "", 0, "Import search", "Finder", 0, "scripts/index_import_from_praat_objects.praat"
 
-## Create a local directory
+### Create a local directory
 createDirectory: "./temp"
