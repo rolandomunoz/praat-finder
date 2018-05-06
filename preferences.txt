@@ -1,20 +1,20 @@
-sounds_dir: .
-textgrids_dir: /media/rolando/EA46ADB846AD8643/Users/Public/Data/data_audio/PUCP_repositorio/swadesh_list/shipibo/F1-Shipibo-Konibo
+sounds_dir: /home/rolando/corpus
+textgrids_dir: /home/rolando/corpus
 sound_extension: .wav
 tier_number: 1
 create_index.recursive_search: 0
 create_index.empty_intervals: 0
-create_index.do: 2
-search.tier_name_option: 2
+create_index.do: 1
+search.tier_name_option: 1
 search.search_for: a
-search.mode: 5
-search.do: 4
-filter_search.tier_name_option: 2
-filter_search.search_for: b
-filter_search.do: 2
+search.mode: 1
+search.do: 1
+filter_search.tier_name_option: 1
+filter_search.search_for: 
+filter_search.do: 1
 open_file.margin: 0.1
 open_file.row: 1
 open_file.adjust_sound_level: 0
 extract_files.margin: 1
-extract_files.save_in: /home/rolando/Desktop/temp
+extract_files.save_in: 
 extract_files.keep_original_filename: 1
