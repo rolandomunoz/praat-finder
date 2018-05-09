@@ -17,4 +17,4 @@ This project is licensed under the GNU GPL terms - see the [LICENSE.md](https://
 
 ## How to cite this plug-in?
 
-`Muñoz A., Rolando (2018). Indexer[Praat plug-in]. Version 2.0.0, retrived 06 October 2018 from https://rolandomunoz.github.io/finder_main.html`
+ - `Muñoz Aramburú, R. (2018). Finder[Praat plug-in]. Version 2.0.1, retrived 09 april 2018 from https://rolandomunoz.github.io/finder_main.html`
