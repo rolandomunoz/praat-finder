@@ -1,4 +1,4 @@
-# Query a table
+# Search 
 #
 # Written by Rolando Munoz A. (aug 2017)
 #
@@ -13,6 +13,12 @@
 include ../procedures/config.proc
 
 @config.init: "../preferences.txt"
+
+if not fileReadable("../temp/index.Table")
+  writeInfoLine: "Search"
+  appendInfoLine: "Message: Create an index first. In the plug-in menu, go to ""Do > Create index..."""
+  exitScript()
+endif
 
 tb_all_tiers = Read from file: "../temp/tier_summary.Table"
 n = Object_'tb_all_tiers'.nrow
@@ -78,6 +84,7 @@ mode$[15] = "matches (regex)"
 @config.setField: "open_file.row", "1"
 
 # Make a search
+
 tb_tier = Read from file: "../temp/" + "index_" + tier_name$[tier_name] + ".Table"
 tb_search = nowarn Extract rows where column (text): "text", mode$[mode], search_for$
 Rename: "search_" + search_for$
