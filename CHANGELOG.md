@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrealised]
 
+## [2.0.1] 09-12-2018
+
+### Added
+  - Error message: Create an index before doing a search
+
+### Changed
+  - Minor changes in plug-in menu
+
 ## [2.0.0] 06-05-2018
 
 ### Added
