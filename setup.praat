@@ -14,7 +14,6 @@ endif
 
 ## Static menu
 Add menu command: "Objects", "Goodies", "Finder", "", 0, ""
-Add menu command: "Objects", "Goodies", "-", "Finder", 1, ""
 
 ### Query section
 Add menu command: "Objects", "Goodies", "Search...", "Finder", 1, "scripts/search.praat"
