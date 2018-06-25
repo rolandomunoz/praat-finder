@@ -61,22 +61,6 @@ if clicked = 1
   exitScript()
 endif
 
-mode$[1] = "is equal to"
-mode$[2] = "is not equal to"
-mode$[3] = "contains"
-mode$[4] = "does not contain"
-mode$[5] = "starts with"
-mode$[6] = "does not start with"
-mode$[7] = "ends with"
-mode$[8] = "does not end with"
-mode$[9] = "contains a word equal to"
-mode$[10] = "does not contain a word equal to"
-mode$[11] = "contains a word starting with"
-mode$[12] = "does not contain a word starting with"
-mode$[13] = "contains a word ending with"
-mode$[14] = "does not contain a word ending with"
-mode$[15] = "matches (regex)"
-
 @config.setField: "search.tier_name_option", string$(tier_name)
 @config.setField: "search.search_for", search_for$
 @config.setField: "search.mode", string$(mode)
@@ -86,7 +70,7 @@ mode$[15] = "matches (regex)"
 # Make a search
 
 tb_tier = Read from file: "../temp/" + "index_" + tier_name$[tier_name] + ".Table"
-tb_search = nowarn Extract rows where column (text): "text", mode$[mode], search_for$
+tb_search = nowarn Extract rows where column (text): "text", mode$, search_for$
 Rename: "search_" + search_for$
 Save as text file: "../temp/search.Table"
 
