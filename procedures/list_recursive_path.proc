@@ -1,7 +1,7 @@
 # Search for folders in a directory hierarchy. It uses the Depth-first Search algorithm
 #
 # Written by Rolando Munoz A. (13 Sep 2017)
-#
+# Modify by Rolando Munoz A. on (28 Jun 2018)
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -14,6 +14,39 @@
 #! ~~~params
 #! selection:
 #!   in:
+#!     - objectName$: the name of resulting object Strings
+#!     - filePath$: the path where your file are stored
+#!     - recursive: 1 if recursive search, else 0
+#!   out:
+#!     - strings: 1
+#! ~~~
+#! Emulate Create Strings as file list command with recursive search option
+#!
+procedure createStringAsFileList: .objectName$, .filePath$, .recursive
+  if .recursive
+    # Normalize file path
+    .filePath$ = replace$(.filePath$, "\", "/", 0)
+    if not index(.filePath$, "*")
+      .filePath$ = .filePath$ + if endsWith(.filePath$, "/") then "*" else  "/*" fi
+    endif
+    
+    # Get path and file
+    .file$ = replace_regex$(.filePath$, "(.*/)(.*)", "\2", 1)
+    .path$ = .filePath$ - .file$
+    .file$ = .file$
+
+    # Creat strings as file list
+    @findFiles: .path$, .file$
+    .return = findFiles.return
+    Rename: .objectName$
+  else
+    .return = Create Strings as file list: .objectName$, .filePath$
+  endif
+endproc
+
+#! ~~~params
+#! selection:
+#!   in:
 #!     - path$: the root file
 #!     - name$: the name pattern of the files
 #!   out:
@@ -21,14 +54,14 @@
 #! ~~~
 #! Search for files in a directory hierarchy. It uses the Depth-first Search algorithm
 #!
-procedure findFiles: .root_directory$, .name$
+procedure findFiles: .root_directory$, .file$
   @findDirectories: .root_directory$
   .return = Create Strings as tokens: "", " ,"
   Rename: "fileList"
   .tb = findDirectories.return
   for .i to Object_'.tb'.nrow
     .directory$ = object$[.tb, .i, "path"]
-    .string = Create Strings as file list: "fileList", .root_directory$ + "/" + .directory$ + "/" + .name$
+    .string = Create Strings as file list: "fileList", .root_directory$ + "/" + .directory$ + "/" + .file$
     .n = Get number of strings
     for .j to .n
       .filename$ = object$[.string, .j]
