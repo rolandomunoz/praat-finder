@@ -14,7 +14,6 @@ include ../procedures/config.proc
 include ../procedures/get_tier_number.proc
 
 @config.init: "../preferences.txt"
-recursive_search = number(config.init.return$["create_index.recursive_search"])
 
 beginPause: "Extract Sound & TextGrid"
   comment: "Input:"
