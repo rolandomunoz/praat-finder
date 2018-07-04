@@ -2,9 +2,11 @@
 
 This is a plug-in for finding TextGrid sections that contain a specific label. Once as search is done, you can report, visualize, edit or extract those sections.
 
-# Documentation
+## Documentation
 
-- [Getting Started](https://rolandomunoz.github.io/finder_manual.html)
+- [Website](https://rolandomunoz.github.io/plugin_finder.html)
+- [Getting Started](https://rolandomunoz.github.io/plugin_finder_gettingStarted.html)
+- [Manual](https://rolandomunoz.github.io/plugin_finder_manual.html)
 
 ## Author
 
@@ -17,4 +19,4 @@ This project is licensed under the GNU GPL terms - see the [LICENSE.md](https://
 
 ## How to cite this plug-in?
 
-`Muñoz A., Rolando (2018). Indexer[Praat plug-in]. Version 2.0.0, retrived 06 October 2018 from https://rolandomunoz.github.io/finder_main.html`
+ - `Muñoz Aramburú, R. (2018). Finder[Praat plug-in]. Version 2.0.1, retrived 09 april 2018 from https://rolandomunoz.github.io/finder_main.html`
