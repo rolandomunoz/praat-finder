@@ -6,9 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrealised]
 
+### Changed
+  - Update `recursive_search` procedures
+  
 ### Fixed
   - `About` information
-  
+
 ## [2.0.1] 09-12-2018
 
 ### Added
