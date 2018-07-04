@@ -56,13 +56,8 @@ endfor
 removeObject: indexList
 
 # List all the files in the root directory
-if recursive_search
-  @findFiles: textgrid_folder$, "*.TextGrid"
-  fileList = findFiles.return
-else
-  fileList = Create Strings as file list: "fileList", textgrid_folder$ + "/*.TextGrid"
-endif
-selectObject: fileList
+@createStringAsFileList: "fileList", textgrid_folder$ + "/*.TextGrid", recursive_search
+fileList = selected("Strings")
 nFiles = Get number of strings
 
 # If no file are listed, exit the script
