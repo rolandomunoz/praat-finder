@@ -16,11 +16,12 @@ include ../procedures/get_tier_number.proc
 @config.init: "../preferences.txt"
 
 beginPause: "View & Edit files"
+  comment: "Input:"
   comment: "The directories where your files are stored..."
-  sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
-  sentence: "Audio folder", config.init.return$["sounds_dir"]
-  comment: "Audio settings..."
-  word: "Audio extension", ".wav"
+  sentence: "Folder with annotation files", config.init.return$["textgrids_dir"]
+  sentence: "Folder with sound files", config.init.return$["sounds_dir"]
+  comment: "Sound settings..."
+  word: "Sound file extension", ".wav"
   boolean: "Adjust sound level", number(config.init.return$["open_file.adjust_sound_level"])
   comment: "Display settings..."
   real: "Margin", number(config.init.return$["open_file.margin"])
@@ -32,14 +33,14 @@ if clicked = 1
 endif
 
 # Save in preferences
-@config.setField: "textgrids_dir", textgrid_folder$
-@config.setField: "sounds_dir", audio_folder$
+@config.setField: "textgrids_dir", folder_with_annotation_files$
+@config.setField: "sounds_dir", folder_with_sound_files$
 @config.setField: "open_file.margin", string$(margin)
 @config.setField: "open_file.adjust_sound_level", string$(adjust_sound_level)
 
 # Initial variables
-audio_folder$ = if audio_folder$ == "" then "." else audio_folder$ fi
-relative_to_TextGrid_paths= if startsWith(audio_folder$, ".") then 1 else 0 fi
+folder_with_sound_files$ = if folder_with_sound_files$ == "" then "." else folder_with_sound_files$ fi
+relative_to_TextGrid_paths= if startsWith(folder_with_sound_files$, ".") then 1 else 0 fi
 row = number(config.init.return$["open_file.row"])
 pause = 1
 searchDir$ = "../temp/search.Table"
@@ -49,7 +50,7 @@ adjust_sound_level_constant = adjust_sound_level
 # Checking...
 
 ## Check dialogue box fields
-if textgrid_folder$ == ""
+if folder_with_annotation_files$ == ""
   writeInfoLine: "View & Edit files"
   appendInfoLine: "Please, complete the Textgrid folder field"
   runScript: "open_files.praat"
@@ -78,15 +79,15 @@ while pause
   adjust_sound_level = adjust_sound_level_constant
   #Get info from the search table
   text$ = object$[search, row, "text"]
-  tgPath$ = textgrid_folder$ + "/" + object$[search, row, "file_path"]
+  tgPath$ = folder_with_annotation_files$ + "/" + object$[search, row, "file_path"]
 
   if relative_to_TextGrid_paths
     baseName$ = object$[search, row, "filename"]
     tgName$ = baseName$ + ".TextGrid"
-    sdPath$ = (tgPath$ - tgName$) + audio_folder$ + "/" + baseName$ + audio_extension$
+    sdPath$ = (tgPath$ - tgName$) + folder_with_sound_files$ + "/" + baseName$ + sound_file_extension$
   else
-    sdName$ = object$[search, row, "filename"] + audio_extension$
-    sdPath$ = audio_folder$ + "/" + sdName$
+    sdName$ = object$[search, row, "filename"] + sound_file_extension$
+    sdPath$ = folder_with_sound_files$ + "/" + sdName$
   endif
 
   tmin = object[search, row, "tmin"]

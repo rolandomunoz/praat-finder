@@ -31,7 +31,7 @@ endfor
 removeObject: tb_all_tiers
 
 beginPause: "Filter search"
-  sentence: "TextGrid folder", config.init.return$["textgrids_dir"]
+  sentence: "Folder_with_annotation_files", config.init.return$["textgrids_dir"]
     optionMenu: "Tier name", number(config.init.return$["filter_search.tier_name_option"])
     for i to n
       option: tier_name$[i]
@@ -57,7 +57,7 @@ tier_name$ = tier_name$[tier_name]
 for i to Object_'search'.nrow
   getTierNumber.return[tier_name$] = 0
   file_path$ = object$[search, i, "file_path"]
-  file_path$ = textGrid_folder$ + "/" + file_path$
+  file_path$ = folder_with_annotation_files$ + "/" + file_path$
   tmin = object[search, i, "tmin"]
   tmax = object[search, i, "tmax"]
   tmid = (tmax + tmin)*0.5

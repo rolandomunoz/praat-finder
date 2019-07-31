@@ -16,7 +16,9 @@ include ../procedures/list_recursive_path.proc
 @config.init: "../preferences.txt"
 
 beginPause: "Create index"
-  sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
+  comment: "The directories where your files are stored..."
+  sentence: "Folder with annotation files", config.init.return$["textgrids_dir"]
+  word: "Annotation file extension:", "TextGrid"
   boolean: "Recursive search", number(config.init.return$["create_index.recursive_search"])
   boolean: "Include empty intervals", number(config.init.return$["create_index.empty_intervals"])
   comment: "Next step..."
@@ -29,7 +31,7 @@ if clicked = 1
   exitScript()
 endif
 
-@config.setField: "textgrids_dir", textgrid_folder$
+@config.setField: "textgrids_dir", folder_with_annotation_files$
 @config.setField: "create_index.do", string$(do)
 @config.setField: "create_index.recursive_search", string$(recursive_search)
 @config.setField: "create_index.empty_intervals", string$(include_empty_intervals)
@@ -56,10 +58,9 @@ endfor
 removeObject: indexList
 
 # List all the files in the root directory
-@createStringAsFileList: "fileList", textgrid_folder$ + "/*.TextGrid", recursive_search
+@createStringAsFileList: "fileList", folder_with_annotation_files$ + "/*.'annotation_file_extension$'", recursive_search
 fileList = selected("Strings")
 nFiles = Get number of strings
-
 # If no file are listed, exit the script
 if !nFiles
   removeObject: fileList
@@ -84,7 +85,7 @@ for i to number_of_steps
   file_max += step
   file_max = if file_max > nFiles then nFiles else file_max fi
   for file_number from file_min to file_max
-    tg = Read from file: textgrid_folder$ + "/" + object$[fileList, file_number]
+    tg = Read from file: folder_with_annotation_files$ + "/" + object$[fileList, file_number]
     filename$ = selected$("TextGrid")
     tb[file_number] = Down to Table: "no", 16, "yes", include_empty_intervals$
     Append column: "filename"
