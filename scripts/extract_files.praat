@@ -18,21 +18,17 @@ include ../procedures/get_tier_number.proc
 beginPause: "Extract Sound & TextGrid"
   comment: "Input:"
   comment: "The directories where your files are stored..."
-  sentence: "Textgrid folder", config.init.return$["textgrids_dir"]
-  sentence: "Audio folder", config.init.return$["sounds_dir"]
-  comment: "Audio settings..."
-  word: "Audio extension", ".wav"
+  sentence: "Folder with annotation files", config.init.return$["textgrids_dir"]
+  sentence: "Folder with sound files", config.init.return$["sounds_dir"]
+  comment: "Sound settings..."
+  word: "Sound file extension", ".wav"
   comment: "Ouput:"
-  comment: "The directory where the resulting files will be stored..."
-  sentence: "Save in", config.init.return$["extract_files.save_in"]
-  comment: "File name..."
-  optionMenu: "Basename", number(config.init.return$["extract_files.keep_original_filename"])
-  option: "Filename"
-  option: "Matched text"
-  option: "Filename + matched text"
-  option: "Matched text + filename"
-  sentence: "Filename", "<basename>"
-  comment: "Add a margin(in seconds) to the extracted files..."
+  comment: "Save in..."
+  text: "Save in", ""
+  comment: "Name format..."
+  comment: "Tag list: <basename>, <matched_text>, <repetition_id>, <number_id>"
+  sentence: "Name format", "<basename>_<repetition_id>"
+  comment: "Left and right margins (seconds)..."
   real: "Margin", number(config.init.return$["extract_files.margin"])
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
@@ -41,20 +37,19 @@ if clicked = 1
 endif
 
 # Save in preferences
-@config.setField: "sounds_dir", audio_folder$
-@config.setField: "textgrids_dir", textgrid_folder$
-@config.setField: "sound_extension", audio_extension$
-@config.setField: "extract_files.save_in", save_in$
+@config.setField: "sounds_dir", folder_with_sound_files$
+@config.setField: "textgrids_dir", folder_with_annotation_files$
+@config.setField: "sound_extension", sound_file_extension$
 @config.setField: "extract_files.file_name.margin", string$(margin)
 @config.setField: "extract_files.margin", string$(margin)
 
 # Initial variables
-stdout_filename$ = filename$
+stdout_filename$ = name_format$
 searchDir$ = "../temp/search.Table"
 fileCounter = 0
 repetition_digits = 4
-audio_folder$ = if audio_folder$ == "" then "." else audio_folder$ fi
-relativePath= if startsWith(audio_folder$, ".") then 1 else 0 fi
+folder_with_sound_files$ = if folder_with_sound_files$ == "" then "." else folder_with_sound_files$ fi
+relativePath= if startsWith(folder_with_sound_files$, ".") then 1 else 0 fi
 zero$ = ""
 
 for i to repetition_digits
@@ -63,7 +58,7 @@ endfor
 
 # Checking...
 ## Check dialogue box fields
-if textgrid_folder$ == ""
+if folder_with_annotation_files$ == ""
   writeInfoLine: "Extract Sound & TextGrid"
   appendInfoLine: "Please, complete the 'Textgrid folder' field"
   runScript: "extract_files.praat"
@@ -98,14 +93,16 @@ if !nRows
   exitScript()
 endif
 
+fileCounter= 0
 for row to nRows
   # Get audio and annotation files paths
-  fileBasename$ = object$[search, row, "filename"]
-  tg$ = fileBasename$ + ".TextGrid"
-  sd$ = fileBasename$ + audio_extension$
-  tgPath$ = textgrid_folder$ + "/" + object$[search, row, "file_path"]
+  basename$ = object$[search, row, "filename"]
+  
+  tg$ = basename$ + ".TextGrid"
+  sd$ = basename$ + sound_file_extension$
+  tgPath$ = folder_with_annotation_files$ + "/" + object$[search, row, "file_path"]
 
-  sdPath$ = if relativePath then (tgPath$ - tg$) + audio_folder$ else audio_folder$ fi
+  sdPath$ = if relativePath then (tgPath$ - tg$) + folder_with_sound_files$ else folder_with_sound_files$ fi
   sdPath$ = sdPath$ + "/" + sd$
   
   # Get matched text information
@@ -116,19 +113,9 @@ for row to nRows
  
   # Open one by one all files
   if fileReadable(tgPath$) and fileReadable(sdPath$)
+    fileCounter+=1
     tg = Read from file: tgPath$
     sd = Open long sound file: sdPath$
-
-    if basename = 1
-      stdout_basename$ = fileBasename$ + "_"
-    elsif basename = 2
-      stdout_basename$ = text$ + "_"
-    elsif basename = 3
-      stdout_basename$ = fileBasename$ + "_" + text$ + "_"
-    elsif basename = 4
-      stdout_basename$ = text$ + "_" + fileBasename$ + "_"
-    endif
-    stdout_basename$ = replace$(stdout_filename$, "<basename>", stdout_basename$, 0)
 
     leftMargin = if (tmin-margin) > 0 then margin else tmin fi
     rightMargin = if (object[sd].xmax - tmax) >= margin then margin else object[sd].xmax-tmax fi
@@ -144,28 +131,35 @@ for row to nRows
     selectObject: sd
     sd_extracted = Extract part: tmin-leftMargin, tmax+rightMargin, "no"
     
-    file_id = 0
-    repeat
-      file_id += 1
-      tmp_zero$ = left$(zero$, repetition_digits - length(string$(file_id)))
-      file_id$ = tmp_zero$ +  string$(file_id)
-      fileDir$ = save_in$ + "/" + stdout_basename$ + file_id$
-    until !fileReadable(fileDir$ + ".TextGrid")
+    stdout_current_basename$ = replace$(stdout_filename$, "<basename>", basename$, 0)
+    stdout_current_basename$ = replace$(stdout_current_basename$, "<matched_text>", text$, 0)
+    stdout_current_basename$ = replace$(stdout_current_basename$, "<number_id>", string$(fileCounter), 0)
+    if index(stdout_current_basename$, "<repetition_id>")
+      file_id = 0
+      repeat
+        file_id += 1
+        tmp_zero$ = left$(zero$, repetition_digits - length(string$(file_id)))
+        repetition_id$ = tmp_zero$ +  string$(file_id)
+        stdout_current_basename_test$= replace$(stdout_current_basename$, "<repetition_id>", repetition_id$, 0)
+        fileFullPath$ = save_in$ + "/" + stdout_current_basename_test$
+      until !fileReadable(fileFullPath$ + ".TextGrid")
+    else
+      fileFullPath$ = save_in$ + "/" + stdout_current_basename$
+    endif
     
     selectObject: sd_extracted
-    Save as WAV file: fileDir$ + ".wav"
+    Save as WAV file: fileFullPath$ + ".wav"
     selectObject: tg_extracted
-    Save as text file: fileDir$ + ".TextGrid"
+    Save as text file: fileFullPath$ + ".TextGrid"
     removeObject: tg, tg_extracted, sd, sd_extracted
-    fileCounter+=1
   endif
 endfor
 
 removeObject: search
 writeInfoLine: "Extract Sound & TextGrid"
-appendInfoLine: "Number of created files: ", fileCounter * 2
-appendInfoLine: "Number of TextGrid files: ", fileCounter
-appendInfoLine: "Number of audio files: ", fileCounter
+appendInfoLine: "Number of extracted files: ", fileCounter * 2
+appendInfoLine: "- Annotation files: ", fileCounter
+appendInfoLine: "- Sound files: ", fileCounter
 
 if clicked = 2
   runScript: "extract_files.praat"
