@@ -48,7 +48,7 @@ procedure createStringAsFileList: .objectName$, .filePath$, .recursive_search
     .tb_fileList= selected("Table")
     Formula: "path", ~replace$(self$["path"], .directoryPath$ + "/","",1)
     if windows
-      Formula: "path", ~replace$(self$["path"], "\","\",0)
+      Formula: "path", ~replace$(self$["path"], "/","\",0)
     endif
     @_tb2Strings: "path"
     Rename: .objectName$
@@ -75,7 +75,7 @@ procedure createStringsAsDirectoryList: .objectName$, .path$, .recursive_search
     .tb= selected("Table")
     Formula: "path", ~replace$(self$["path"], .path$ + "/","",1)
     if windows
-      Formula: "path", ~replace$(self$["path"], "\","\",0)
+      Formula: "path", ~replace$(self$["path"], "/","\",0)
     endif
     Remove row: 1; the first element does not count beacause it is the root path
     @_tb2Strings: "path"
