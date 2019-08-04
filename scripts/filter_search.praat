@@ -56,7 +56,7 @@ tier_name$ = tier_name$[tier_name]
 
 for i to Object_'search'.nrow
   getTierNumber.return[tier_name$] = 0
-  file_path$ = object$[search, i, "file_path"]
+  file_path$ = object$[search, i, "path"]
   file_path$ = folder_with_annotation_files$ + "/" + file_path$
   tmin = object[search, i, "tmin"]
   tmax = object[search, i, "tmax"]

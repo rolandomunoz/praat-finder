@@ -1,6 +1,7 @@
 # Index all the TextGrids in a Table object
 #
 # Written by Rolando Munoz A. (08 Sep 2017)
+# Last modified on 4 Aug 2019
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -85,13 +86,14 @@ for i to number_of_steps
   file_max += step
   file_max = if file_max > nFiles then nFiles else file_max fi
   for file_number from file_min to file_max
-    tg = Read from file: folder_with_annotation_files$ + "/" + object$[fileList, file_number]
-    filename$ = selected$("TextGrid")
+    tgPath$= folder_with_annotation_files$ + "/" + object$[fileList, file_number]
+    tg = Read from file: tgPath$
+    basename$ = selected$("TextGrid")
     tb[file_number] = Down to Table: "no", 16, "yes", include_empty_intervals$
-    Append column: "filename"
-    Append column: "file_path"
-    Formula: "filename", ~ filename$
-    Formula: "file_path", ~ object$[fileList, file_number]
+    Append column: "basename"
+    Append column: "path"
+    Formula: "basename", ~ basename$
+    Formula: "path", ~ object$[fileList, file_number]
     removeObject: tg
   endfor
 

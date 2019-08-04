@@ -4,7 +4,7 @@
 
 form Run script
   comment The directory where your TextGrid files are stored...
-  sentence TextGrid_folder <TextGrid_folder>
+  sentence Folder_with_annotation_files <TextGrid_folder>
 endform
 
 # Read the Search table
@@ -16,15 +16,14 @@ for i_row to number_of_rows
   selectObject: table_index
   
   # Get values from table
-  textgrid_name$ = Get value: i_row, "file_path"
   # text$ = Get value: i_row, "text"
   # tier$ = Get value: i_row, "tier"
   # notes$ = Get value: i_row, "notes"
   # tmin = Get value: i_row, "tmin"
   # tmax = Get value: i_row, "tmax"
 
-  textgrid_name$ = Get value: i_row, "file_path"
-  textgrid_path$ = textGrid_folder$ + "/"+ textgrid_name$
+  textgrid_name$ = Get value: i_row, "path"
+  textgrid_path$ = folder_with_annotation_files$ + "/"+ textgrid_name$
     
   ##########################################################################
   ###################### Paste your code here ##############################

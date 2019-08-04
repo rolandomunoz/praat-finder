@@ -79,14 +79,14 @@ while pause
   adjust_sound_level = adjust_sound_level_constant
   #Get info from the search table
   text$ = object$[search, row, "text"]
-  tgPath$ = folder_with_annotation_files$ + "/" + object$[search, row, "file_path"]
+  tgPath$ = folder_with_annotation_files$ + "/" + object$[search, row, "path"]
 
   if relative_to_TextGrid_paths
-    baseName$ = object$[search, row, "filename"]
-    tgName$ = baseName$ + ".TextGrid"
-    sdPath$ = (tgPath$ - tgName$) + folder_with_sound_files$ + "/" + baseName$ + sound_file_extension$
+    basename$ = object$[search, row, "basename"]
+    tgName$ = basename$ + ".TextGrid"
+    sdPath$ = (tgPath$ - tgName$) + folder_with_sound_files$ + "/" + basename$ + sound_file_extension$
   else
-    sdName$ = object$[search, row, "filename"] + sound_file_extension$
+    sdName$ = object$[search, row, "basename"] + sound_file_extension$
     sdPath$ = folder_with_sound_files$ + "/" + sdName$
   endif
 
@@ -129,7 +129,7 @@ while pause
     endif
     comment: "Case: 'row'/'nrow'"
     comment: "Text: " + if length(text$)> 25 then left$(text$, 25) + "..." else text$ fi
-    comment: "File name: " + object$[search, row, "filename"]
+    comment: "File name: " + object$[search, row, "basename"]
     natural: "Next case",  if (row + 1) > nrow then 1 else row + 1 fi
     if adjust_sound_level
       real: "Volume", volume

@@ -96,11 +96,11 @@ endif
 fileCounter= 0
 for row to nRows
   # Get audio and annotation files paths
-  basename$ = object$[search, row, "filename"]
+  basename$ = object$[search, row, "basename"]
   
   tg$ = basename$ + ".TextGrid"
   sd$ = basename$ + sound_file_extension$
-  tgPath$ = folder_with_annotation_files$ + "/" + object$[search, row, "file_path"]
+  tgPath$ = folder_with_annotation_files$ + "/" + object$[search, row, "path"]
 
   sdPath$ = if relativePath then (tgPath$ - tg$) + folder_with_sound_files$ else folder_with_sound_files$ fi
   sdPath$ = sdPath$ + "/" + sd$

@@ -21,8 +21,8 @@ col$[1] = "tmin"
 col$[2] = "tier"
 col$[3] = "text"
 col$[4] = "tmax"
-col$[5] = "filename"
-col$[6] = "file_path"
+col$[5] = "basename"
+col$[6] = "path"
 col$[7] = "notes"
 
 numberOfColumns = 7
