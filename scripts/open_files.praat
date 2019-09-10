@@ -16,12 +16,11 @@ include ../procedures/get_tier_number.proc
 @config.init: "../preferences.txt"
 
 beginPause: "View & Edit files"
-  comment: "Input:"
   comment: "The directories where your files are stored..."
   sentence: "Folder with annotation files", config.init.return$["textgrids_dir"]
   sentence: "Folder with sound files", config.init.return$["sounds_dir"]
   comment: "Sound settings..."
-  word: "Sound file extension", ".wav"
+  word: "Sound file extension", "wav"
   boolean: "Adjust sound level", number(config.init.return$["open_file.adjust_sound_level"])
   comment: "Display settings..."
   real: "Margin", number(config.init.return$["open_file.margin"])
@@ -84,7 +83,7 @@ while pause
   if relative_to_TextGrid_paths
     basename$ = object$[search, row, "basename"]
     tgName$ = basename$ + ".TextGrid"
-    sdPath$ = (tgPath$ - tgName$) + folder_with_sound_files$ + "/" + basename$ + sound_file_extension$
+    sdPath$ = (tgPath$ - tgName$) + folder_with_sound_files$ + "/" + basename$ + "." + sound_file_extension$
   else
     sdName$ = object$[search, row, "basename"] + sound_file_extension$
     sdPath$ = folder_with_sound_files$ + "/" + sdName$

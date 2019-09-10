@@ -31,7 +31,7 @@ endfor
 removeObject: tb_all_tiers
 
 beginPause: "Filter search"
-  sentence: "Folder_with_annotation_files", config.init.return$["textgrids_dir"]
+  sentence: "Folder with annotation files", config.init.return$["textgrids_dir"]
     optionMenu: "Tier name", number(config.init.return$["filter_search.tier_name_option"])
     for i to n
       option: tier_name$[i]

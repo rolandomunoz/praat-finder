@@ -17,17 +17,16 @@ include ../procedures/get_tier_number.proc
 
 beginPause: "Extract Sound & TextGrid"
   comment: "Input:"
-  comment: "The directories where your files are stored..."
-  sentence: "Folder with annotation files", config.init.return$["textgrids_dir"]
+  comment: "  The directories where your files are stored..."
+  sentence: "Folder with annotation files:", config.init.return$["textgrids_dir"]
   sentence: "Folder with sound files", config.init.return$["sounds_dir"]
-  comment: "Sound settings..."
-  word: "Sound file extension", ".wav"
+  comment: "  Sound settings..."
+  word: "Sound file extension", "wav"
   comment: "Ouput:"
-  comment: "Save in..."
-  text: "Save in", ""
+  sentence: "Save in", ""
   comment: "Name format..."
-  comment: "Tag list: <basename>, <matched_text>, <repetition_id>, <number_id>"
-  sentence: "Name format", "<basename>_<repetition_id>"
+  comment: "  Tags: [OriginalFileName], [MatchedText], [RepetitionID], [NumericID]"
+  sentence: "Name format", "[OriginalFileName]_[RepetitionID]"
   comment: "Left and right margins (seconds)..."
   real: "Margin", number(config.init.return$["extract_files.margin"])
 clicked = endPause: "Cancel", "Apply", "Ok", 3
@@ -99,7 +98,7 @@ for row to nRows
   basename$ = object$[search, row, "basename"]
   
   tg$ = basename$ + ".TextGrid"
-  sd$ = basename$ + sound_file_extension$
+  sd$ = basename$ + "." + sound_file_extension$
   tgPath$ = folder_with_annotation_files$ + "/" + object$[search, row, "path"]
 
   sdPath$ = if relativePath then (tgPath$ - tg$) + folder_with_sound_files$ else folder_with_sound_files$ fi
@@ -131,16 +130,16 @@ for row to nRows
     selectObject: sd
     sd_extracted = Extract part: tmin-leftMargin, tmax+rightMargin, "no"
     
-    stdout_current_basename$ = replace$(stdout_filename$, "<basename>", basename$, 0)
-    stdout_current_basename$ = replace$(stdout_current_basename$, "<matched_text>", text$, 0)
-    stdout_current_basename$ = replace$(stdout_current_basename$, "<number_id>", string$(fileCounter), 0)
-    if index(stdout_current_basename$, "<repetition_id>")
+    stdout_current_basename$ = replace$(stdout_filename$, "[OriginalFileName]", basename$, 0)
+    stdout_current_basename$ = replace$(stdout_current_basename$, "[MatchedText]", text$, 0)
+    stdout_current_basename$ = replace$(stdout_current_basename$, "[NumericID]", string$(fileCounter), 0)
+    if index(stdout_current_basename$, "[RepetitionID]")
       file_id = 0
       repeat
         file_id += 1
         tmp_zero$ = left$(zero$, repetition_digits - length(string$(file_id)))
         repetition_id$ = tmp_zero$ +  string$(file_id)
-        stdout_current_basename_test$= replace$(stdout_current_basename$, "<repetition_id>", repetition_id$, 0)
+        stdout_current_basename_test$= replace$(stdout_current_basename$, "[RepetitionID]", repetition_id$, 0)
         fileFullPath$ = save_in$ + "/" + stdout_current_basename_test$
       until !fileReadable(fileFullPath$ + ".TextGrid")
     else

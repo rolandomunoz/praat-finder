@@ -1,7 +1,7 @@
 # Index all the TextGrids in a Table object
 #
 # Written by Rolando Munoz A. (08 Sep 2017)
-# Last modified on 4 Aug 2019
+# Last modified on 9 Sep 2019
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,17 +14,21 @@
 include ../procedures/config.proc
 include ../procedures/list_recursive_path.proc
 
+tempObject = nocheck selected()
 @config.init: "../preferences.txt"
 
+if tempObject <> undefined
+  selectObject: tempObject
+endif
 beginPause: "Create index"
   comment: "The directories where your files are stored..."
   sentence: "Folder with annotation files", config.init.return$["textgrids_dir"]
   word: "Annotation file extension:", "TextGrid"
-  boolean: "Recursive search", number(config.init.return$["create_index.recursive_search"])
+  boolean: "Process subfolders as well", number(config.init.return$["create_index.process_subfolders_as_well"])
   boolean: "Include empty intervals", number(config.init.return$["create_index.empty_intervals"])
   comment: "Next step..."
   optionMenu: "Do", number(config.init.return$["create_index.do"])
-    option: "Nothing"
+    option: ""
     option: "Search..."
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
@@ -34,7 +38,7 @@ endif
 
 @config.setField: "textgrids_dir", folder_with_annotation_files$
 @config.setField: "create_index.do", string$(do)
-@config.setField: "create_index.recursive_search", string$(recursive_search)
+@config.setField: "create_index.process_subfolders_as_well", string$(process_subfolders_as_well)
 @config.setField: "create_index.empty_intervals", string$(include_empty_intervals)
 @config.setField: "search.tier_name_option", "1"
 @config.setField: "search.search_for", ""
@@ -59,7 +63,7 @@ endfor
 removeObject: indexList
 
 # List all the files in the root directory
-@createStringAsFileList: "fileList", folder_with_annotation_files$ + "/*.'annotation_file_extension$'", recursive_search
+@createStringAsFileList: "fileList", folder_with_annotation_files$ + "/*.'annotation_file_extension$'", process_subfolders_as_well
 fileList = selected("Strings")
 nFiles = Get number of strings
 # If no file are listed, exit the script
@@ -156,11 +160,14 @@ selectObject: index
 Save as text file: "../temp/index.Table"
 
 # Print in the Info window
-writeInfoLine: "Create index"
+writeInfoLine: "Create index... Done!"
+appendInfoLine: ""
 appendInfoLine: "Tiers:"
 for i to numberOfTiers
   appendInfoLine: "  ", case$[i], " (labels = ", case[i], ")"
 endfor
+
+removeObject: index
 
 if do = 2
   runScript: "search.praat"

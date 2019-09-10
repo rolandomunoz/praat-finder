@@ -1,7 +1,7 @@
 # Search 
 #
 # Written by Rolando Munoz A. (aug 2017)
-# Last modified on 4 Aug 2019
+# Last modified on 9 Sep 2019
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,7 +13,8 @@
 #
 include ../procedures/config.proc
 
-@config.init: "../preferences.txt"
+tempObject = nocheck selected()
+@config.init: "../preferences.txt" 
 
 if not fileReadable("../temp/index.Table")
   writeInfoLine: "Search"
@@ -22,15 +23,19 @@ if not fileReadable("../temp/index.Table")
 endif
 
 tb_all_tiers = Read from file: "../temp/tier_summary.Table"
-n = Object_'tb_all_tiers'.nrow
-for i to n
+numberOfRows = object[tb_all_tiers].nrow
+for i to numberOfRows
   tier_name$[i]= object$[tb_all_tiers, i, "tier"]
 endfor
 removeObject: tb_all_tiers
 
+if tempObject <> undefined
+  selectObject: tempObject
+endif
+
 beginPause: "Search"
   optionMenu: "Tier name", number(config.init.return$["search.tier_name_option"])
-    for i to n
+    for i to numberOfRows
       option: tier_name$[i]
     endfor
   sentence: "Search for", config.init.return$["search.search_for"]
@@ -52,10 +57,12 @@ beginPause: "Search"
     option: "matches (regex)"
     comment: "If the search is successful, then..."
   optionMenu: "Do", number(config.init.return$["search.do"])
-    option: "Nothing"
+    option: ""
     option: "View & Edit files..."
     option: "Extract files..."
     option: "Filter search..."
+    option: "Search report"  
+    option: "Frequency report"
 clicked = endPause: "Cancel", "Apply", "Ok", 3
 
 if clicked = 1
@@ -68,39 +75,40 @@ endif
 @config.setField: "search.do", string$(do)
 @config.setField: "open_file.row", "1"
 
-# Make a search
+# Scripts name
+scriptName$[2] = "open_files.praat"
+scriptName$[3] = "extract_files.praat"
+scriptName$[4] = "filter_search.praat"
+scriptName$[5] = "report_search.praat"
+scriptName$[6] = "report_frequency.praat"
 
-tb_tier = Read from file: "../temp/" + "index_" + tier_name$[tier_name] + ".Table"
+freqColumnName$ = "Frequency"
+
+# Make a search
+tierTable_path$ = "../temp/" + "index_" + tier_name$[tier_name] + ".Table"
+tb_tier = Read from file: tierTable_path$
 tb_search = nowarn Extract rows where column (text): "text", mode$, search_for$
-Rename: "search_" + search_for$
+numberOfCases = object[tb_search].nrow
+
 Save as text file: "../temp/search.Table"
 
-# Print Search Summary content
-tb_search_unique = Collapse rows: "text", "", "", "", "", ""
-infoSearch$ = List: 1
-infoSearch$ = replace$(infoSearch$, "row	text", "Search Summary: ", 1)
-removeObject: tb_tier, tb_search_unique
-selectObject: tb_search
+sep$ = if search_for$ == "" then "" else "-" fi
 
-# Print
 ## Print Info
-writeInfoLine: "Search"
-appendInfoLine: "Search pattern: ", search_for$
+writeInfoLine: "Search... Done!"
+appendInfoLine: "Search for: ", search_for$
 appendInfoLine: "Tier name: ", tier_name$
-appendInfoLine: "Total number of occurrences: ", object[tb_search].nrow
+appendInfoLine: "Total number of occurrences: ", numberOfCases
 
-## Print Search Summary
-appendInfoLine: "_________________________________________________"
-appendInfo: infoSearch$
-
-if object[tb_search].nrow
-  scriptName$[2] = "open_files.praat"
-  scriptName$[3] = "extract_files.praat"
-  scriptName$[4] = "filter_search.praat"
+# Do
+if numberOfCases
+  selectObject: tb_search
   if do > 1
     runScript: scriptName$[do]
   endif
 endif
+
+removeObject: tb_tier, tb_search
 
 if clicked = 2
   runScript: "search.praat"
