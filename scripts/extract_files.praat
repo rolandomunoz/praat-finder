@@ -1,6 +1,7 @@
 # Extract files from a table
 #
 # Written by Rolando Munoz A. (Aug 2017)
+# Last modified on 11 Sep 2019
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +27,7 @@ beginPause: "Extract Sound & TextGrid"
   sentence: "Save in", ""
   comment: "Name format..."
   comment: "  Tags: [OriginalFileName], [MatchedText], [RepetitionID], [NumericID]"
-  sentence: "Name format", "[OriginalFileName]_[RepetitionID]"
+  text: "Name format", "[OriginalFileName]-[RepetitionID]"
   comment: "Left and right margins (seconds)..."
   real: "Margin", number(config.init.return$["extract_files.margin"])
 clicked = endPause: "Cancel", "Apply", "Ok", 3
@@ -44,16 +45,13 @@ endif
 
 # Initial variables
 stdout_filename$ = name_format$
+
 searchDir$ = "../temp/search.Table"
 fileCounter = 0
-repetition_digits = 4
 folder_with_sound_files$ = if folder_with_sound_files$ == "" then "." else folder_with_sound_files$ fi
+leading_zeros$ = "0000"
 relativePath= if startsWith(folder_with_sound_files$, ".") then 1 else 0 fi
-zero$ = ""
-
-for i to repetition_digits
-  zero$ = zero$ + "0"
-endfor
+tg_file_extension$ = "TextGrid"
 
 # Checking...
 ## Check dialogue box fields
@@ -97,7 +95,7 @@ for row to nRows
   # Get audio and annotation files paths
   basename$ = object$[search, row, "basename"]
   
-  tg$ = basename$ + ".TextGrid"
+  tg$ = basename$ + "." + tg_file_extension$
   sd$ = basename$ + "." + sound_file_extension$
   tgPath$ = folder_with_annotation_files$ + "/" + object$[search, row, "path"]
 
@@ -113,6 +111,7 @@ for row to nRows
   # Open one by one all files
   if fileReadable(tgPath$) and fileReadable(sdPath$)
     fileCounter+=1
+    
     tg = Read from file: tgPath$
     sd = Open long sound file: sdPath$
 
@@ -129,23 +128,29 @@ for row to nRows
     ## Extract audio
     selectObject: sd
     sd_extracted = Extract part: tmin-leftMargin, tmax+rightMargin, "no"
+
+    # File names
+    @leading_zeros: fileCounter, leading_zeros$
+    numericID$ = leading_zeros.return$
     
-    stdout_current_basename$ = replace$(stdout_filename$, "[OriginalFileName]", basename$, 0)
+    stdout_current_basename$ = replace$(stdout_filename$, "[NumericID]", numericID$, 0)
+    stdout_current_basename$ = replace$(stdout_current_basename$, "[OriginalFileName]", basename$, 0)
     stdout_current_basename$ = replace$(stdout_current_basename$, "[MatchedText]", text$, 0)
-    stdout_current_basename$ = replace$(stdout_current_basename$, "[NumericID]", string$(fileCounter), 0)
+
     if index(stdout_current_basename$, "[RepetitionID]")
-      file_id = 0
+      repetitionID = 0
       repeat
-        file_id += 1
-        tmp_zero$ = left$(zero$, repetition_digits - length(string$(file_id)))
-        repetition_id$ = tmp_zero$ +  string$(file_id)
-        stdout_current_basename_test$= replace$(stdout_current_basename$, "[RepetitionID]", repetition_id$, 0)
+        repetitionID += 1
+        @leading_zeros: repetitionID, leading_zeros$
+        repetitionID$ = leading_zeros.return$
+        stdout_current_basename_test$= replace$(stdout_current_basename$, "[RepetitionID]", repetitionID$, 0)
         fileFullPath$ = save_in$ + "/" + stdout_current_basename_test$
       until !fileReadable(fileFullPath$ + ".TextGrid")
     else
       fileFullPath$ = save_in$ + "/" + stdout_current_basename$
     endif
     
+    # Save files
     selectObject: sd_extracted
     Save as WAV file: fileFullPath$ + ".wav"
     selectObject: tg_extracted
@@ -163,3 +168,12 @@ appendInfoLine: "- Sound files: ", fileCounter
 if clicked = 2
   runScript: "extract_files.praat"
 endif
+
+procedure leading_zeros: .number, .leadingZeros$
+  .number$ = string$(.number)
+  .numberOfDigits = length(.number$)
+  .numberOfLeadingZeros = length(.leadingZeros$)
+  .zeroLength = .numberOfLeadingZeros - .numberOfDigits
+  .tmp_zero$ = left$(.leadingZeros$, .zeroLength)
+  .return$ = .tmp_zero$ + .number$
+endproc
