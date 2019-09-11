@@ -1,12 +1,11 @@
 # Finder
 
-This is a plug-in for finding TextGrid sections that contain a specific label. Once as search is done, you can report, visualize, edit or extract those sections.
+Finder is a Praat plug-in for searching annotations in TextGrid files. When a search is completed, you can view and edit the results one-by-one using the Editor window. Alternatively, you can create new files from the matched parts. Use the script template for more specific tasks.
 
 ## Documentation
 
-- [Website](https://rolandomunoz.github.io/plugin_finder.html)
-- [Getting Started](https://rolandomunoz.github.io/plugin_finder_gettingStarted.html)
-- [Manual](https://rolandomunoz.github.io/plugin_finder_manual.html)
+- [Website](https://rolandomunoz.github.io/praat_tools/finder.html)
+- [Manual](https://rolandomunoz.github.io/man/finder_man.pdf)
 
 ## Author
 
