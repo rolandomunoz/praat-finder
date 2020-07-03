@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrealised]
 
+## [2.2] 09-12-2020
+
+### - Fixed
+  - `View & Edit files` and `Extract files` fully support any filename characters (white spaces and others).
+
+## [2.2] 02-04-2020
+
 ### Changed
   - Update `recursive_search` procedures
   
