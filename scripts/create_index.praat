@@ -1,7 +1,7 @@
 # Index all the TextGrids in a Table object
 #
 # Written by Rolando Munoz A. (08 Sep 2017)
-# Last modified on 9 Sep 2019
+# Last modified on 3 Jul 2020
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ for i to number_of_steps
   for file_number from file_min to file_max
     tgPath$= folder_with_annotation_files$ + "/" + object$[fileList, file_number]
     tg = Read from file: tgPath$
-    basename$ = selected$("TextGrid")
+    basename$ = replace_regex$(tgPath$, ".+/(.+)", "\1", 1) - ".'annotation_file_extension$'"
     tb[file_number] = Down to Table: "no", 16, "yes", include_empty_intervals$
     Append column: "basename"
     Append column: "path"
