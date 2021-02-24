@@ -84,8 +84,8 @@ endproc
 procedure normpath: .path$
 	# On Windows, it converts forward slashes to backward slashes
 	if windows
-		.return$ = replace(.path, "/", "\", 0)
+		.return$ = replace$(.path$, "/", "\", 0)
 	else
-		.return$ = replace(.path, "\", "/", 0)
+		.return$ = replace$(.path$, "\", "/", 0)
 	endif
 endproc
