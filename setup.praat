@@ -1,6 +1,6 @@
-# Copyright 2017 Rolando Munoz Aramburú
+# Copyright 2017-2021 Rolando Munoz Aramburú
 
-if praatVersion < 6039
+if praatVersion < 6139
   appendInfoLine: "Plug-in name: Finder"
   appendInfoLine: "Warning: This plug-in only works on Praat version 6.0.39 or later. Please, get a more recent version of Praat."
   appendInfoLine: "Praat website: http://www.fon.hum.uva.nl/praat/"
