@@ -1,0 +1,91 @@
+# Some common operation with paths. It is inspired in os.path package from python
+#
+# Written by Rolando Munoz A. (23 Feb 2020)
+# This script is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# A copy of the GNU General Public License is available at
+# <http://www.gnu.org/licenses/>.
+#
+procedure swap_extension: .path$, .new_extension$
+	@splitext_path: .path$
+	.root$ = splitext_path.return$#[1]
+	.return$ = .root$ + "." + .new_extension$
+endproc
+
+procedure dirname: .path$
+	@split_path: .path$
+	.return$ = split_path.return$#[1]
+endproc
+
+procedure basename: .path$
+	@split_path: .path$
+	.return$ = split_path.return$#[2]
+endproc
+
+procedure splitext_path: .path$
+	# Split the pathname path into a pair (root, ext) such that root + ext == path, and ext is empty or begins with a period and contains at most one period. Leading periods on the basename are ignored
+	@unixpath: .path$
+	@basename: unixpath.return$
+	if index(basename.return$, ".")
+		.ext$ = replace_regex$(basename.return$, "(.+)(\..+)", "\2", 0)
+		.root$ = unixpath.return$ - .ext$
+		if endsWith(.root$, "/")
+			.ext$ = ""
+			.root$ = unixpath.return$
+		endif
+	else
+		.ext$ = ""
+		.root$ = unixpath.return$
+	endif
+	.return$# = {.root$, .ext$}
+endproc
+
+procedure join_paths: .path1$, .path2$
+	.new_path$ = .path1$ + "/" + .path2$
+	@unixpath: .new_path$
+	.return$ = unixpath.return$
+endproc
+
+procedure join_many_paths: .paths$#
+	.new_path$ = ""
+	for .i to size(.paths$#)
+		.path$ = .paths$#[.i]
+		.new_path$+= .path$ + "/"
+	endfor
+	.new_path$ = .new_path$ - "/"
+	@unixpath: .new_path$
+	.return$ = unixpath.return$
+endproc
+
+procedure split_path: .path$
+	#Split the pathname path into a pair, (head, tail) where tail is the last pathname component and head is everything leading up to that. The tail part will never contain a slash; if path ends in a slash, tail will be empty
+	@unixpath: .path$
+	.normpath$ = unixpath.return$
+
+	if endsWith(.normpath$, "/")
+		.head$ = replace_regex$(.normpath$, "(.*)/", "\1", 0)
+		.return$# = {.head$, ""}
+	else
+		.head$ = replace_regex$(.normpath$, "(.*)/(.+)", "\1", 0)
+		.tail$ = replace_regex$(.normpath$, "(.*)/(.+)", "\2", 0)
+		.return$# = {.head$, .tail$ }
+	endif
+endproc
+
+procedure unixpath: .path$
+	# On Windows, it converts forward slashes to backward slashes
+	.temp_path$ = replace$(.path$, "\", "/", 0)
+	.return$ = replace_regex$(.temp_path$, "/+", "/", 0)
+endproc
+
+procedure normpath: .path$
+	# On Windows, it converts forward slashes to backward slashes
+	if windows
+		.return$ = replace(.path, "/", "\", 0)
+	else
+		.return$ = replace(.path, "\", "/", 0)
+	endif
+endproc
