@@ -8,11 +8,33 @@
 #
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/>.
-#
+
+procedure get_basename_without_extension: .path$
+	@basename: .path$
+	@splitext_path: basename.return$
+	.return$ = splitext_path.return$#[1]
+endproc
+
 procedure swap_extension: .path$, .new_extension$
 	@splitext_path: .path$
 	.root$ = splitext_path.return$#[1]
 	.return$ = .root$ + "." + .new_extension$
+endproc
+
+procedure get_pair_path: .path$, .target_extension$, .target_dirname$, .rel_dirname
+	@basename: .path$
+	@swap_extension: basename.return$, .target_extension$
+	.target_basename$ = swap_extension.return$		
+	
+	if .rel_dirname
+		@dirname: .path$
+		.dirname$ = dirname.return$
+		@join_many_paths: {.dirname$, .target_dirname$, .target_basename$}
+	else
+		# Relative to the audio directory
+		@join_many_paths: {.target_dirname$, .target_basename$}
+	endif
+	.return$ = join_many_paths.return$
 endproc
 
 procedure dirname: .path$
