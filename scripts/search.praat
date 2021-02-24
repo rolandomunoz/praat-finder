@@ -1,7 +1,7 @@
 # Search 
 #
 # Written by Rolando Munoz A. (aug 2017)
-# Last modified on 9 Sep 2019
+# Last modified on 24 Feb 2021
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
