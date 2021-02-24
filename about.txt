@@ -6,7 +6,7 @@ Last modified: 02-23-2020
 Description:
   - A tool search for TextGrid files. Once a label is match, do some actions.
 Depends:
-  - Praat: 6.0.39+
+  - Praat: 6.1.39+
 License: GPL3
 How to cite: 
  - Muñoz Aramburú, R. (2021). Finder[Praat plug-in]. Version 2.3, retrived 2 february 2021 from https://rolandomunoz.github.io/finder_main.html
