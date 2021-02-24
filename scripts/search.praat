@@ -11,9 +11,8 @@
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/>.
 #
-include ../procedures/config.proc
 
-tempObject = nocheck selected()
+tempObject# = selected#()
 @config.init: "../preferences.txt" 
 
 if not fileReadable("../temp/index.Table")
@@ -29,9 +28,7 @@ for i to numberOfRows
 endfor
 removeObject: tb_all_tiers
 
-if tempObject <> undefined
-  selectObject: tempObject
-endif
+selectObject: tempObject#
 
 beginPause: "Search"
   optionMenu: "Tier name", number(config.init.return$["search.tier_name_option"])
@@ -76,35 +73,29 @@ endif
 @config.setField: "open_file.row", "1"
 
 # Scripts name
-scriptName$[2] = "open_files.praat"
-scriptName$[3] = "extract_files.praat"
-scriptName$[4] = "filter_search.praat"
-scriptName$[5] = "report_search.praat"
-scriptName$[6] = "report_frequency.praat"
-
+scriptName$# = {"", "open_files.praat", "extract_files.praat", "filter_search.praat", "report_search.praat", "report_frequency.praat"}
 freqColumnName$ = "Frequency"
 
 # Make a search
-tierTable_path$ = "../temp/" + "index_" + tier_name$[tier_name] + ".Table"
-tb_tier = Read from file: tierTable_path$
+table_basename$ = "index_" + tier_name$[tier_name] + ".Table"
+table_path$ = "../temp/" + table_basename$
+tb_tier = Read from file: table_path$
 tb_search = nowarn Extract rows where column (text): "text", mode$, search_for$
-numberOfCases = object[tb_search].nrow
+n_cases = object[tb_search].nrow
 
 Save as text file: "../temp/search.Table"
-
-sep$ = if search_for$ == "" then "" else "-" fi
 
 ## Print Info
 writeInfoLine: "Search... Done!"
 appendInfoLine: "Search for: ", search_for$
 appendInfoLine: "Tier name: ", tier_name$
-appendInfoLine: "Total number of occurrences: ", numberOfCases
+appendInfoLine: "Total number of occurrences: ", n_cases
 
 # Do
-if numberOfCases
+if n_cases
   selectObject: tb_search
   if do > 1
-    runScript: scriptName$[do]
+    runScript: scriptName$#[do]
   endif
 endif
 
@@ -113,3 +104,5 @@ removeObject: tb_tier, tb_search
 if clicked = 2
   runScript: "search.praat"
 endif
+
+include ../procedures/config.proc
