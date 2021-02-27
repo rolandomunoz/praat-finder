@@ -9,6 +9,33 @@
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/>.
 
+procedure make_dirs: .path$
+  @iterate_path: .path$
+	for .i to size(iterate_path.return$#)
+		.path$= iterate_path.return$#[.i]
+		createDirectory(.path$)
+	endfor
+endproc
+
+procedure iterate_path: .path$
+	.objects# = selected#()
+	@unixpath: .path$
+	.str = Create Strings from tokens: "dirnames", unixpath.return$, "/"
+	.nstrings = Get number of strings
+	.dirnames$# = empty$#(.nstrings)
+	for .i to .nstrings
+		.name$ = object$[.str, .i]
+		if .i == 1
+			.dirnames$#[.i] = .name$
+		else
+			.dirnames$#[.i] = .dirnames$#[.i-1] + "/" + .name$
+		endif
+	endfor
+	removeObject: .str
+	selectObject: .objects#
+	.return$# = .dirnames$#
+endproc
+
 procedure basename_without_extension: .path$
 	@basename: .path$
 	@splitext_path: basename.return$
