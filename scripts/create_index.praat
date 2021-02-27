@@ -24,7 +24,7 @@ beginPause: "Create index"
 	optionMenu: "Do", number(config.init.return$["create_index.do"])
 		option: ""
 		option: "Search..."
-clicked = endPause: "Cancel", "Apply", "Ok", 3
+clicked = endPause: "Cancel", "Apply", "Ok", 3, 1
 
 if clicked = 1
 	exitScript()
