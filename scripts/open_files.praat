@@ -23,7 +23,7 @@ beginPause: "View & Edit files"
 	real: "Margin", number(config.init.return$["open_file.margin"])
 	boolean: "Add notes", 0
 	boolean: "Adjust sound level", number(config.init.return$["open_file.adjust_sound_level"])
-clicked = endPause: "Cancel", "Apply", "Ok", 3
+clicked = endPause: "Cancel", "Apply", "Ok", 3, 1
 
 if clicked = 1
 	exitScript()
