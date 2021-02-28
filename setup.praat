@@ -18,20 +18,19 @@ endif
 Add menu command: "Objects", "Goodies", "Finder", "", 0, ""
 
 ### Query section
+Add menu command: "Objects", "Goodies", "Create index...", "Finder", 1, "scripts/search.praat"
 Add menu command: "Objects", "Goodies", "Search...", "Finder", 1, "scripts/search.praat"
 
 ### Do section
-Add menu command: "Objects", "Goodies", "Do", "Finder", 1, ""
-Add menu command: "Objects", "Goodies", "Create index...", "Do", 2, "scripts/create_index.praat"
-Add menu command: "Objects", "Goodies", "-", "Do", 2, ""
-Add menu command: "Objects", "Goodies", "View & Edit files...", "Do", 2, "scripts/open_files.praat"
-Add menu command: "Objects", "Goodies", "Extract files...", "Do", 2, "scripts/extract_files-dialog.praat"
-Add menu command: "Objects", "Goodies", "Open script template", "Do", 2, "scripts/open_script_template.praat"
-Add menu command: "Objects", "Goodies", "-", "Do", 2, "scripts/open_files.praat"
-Add menu command: "Objects", "Goodies", "Search report", "Do", 2, "scripts/report_search.praat"
-Add menu command: "Objects", "Goodies", "Frequency report", "Do", 2, "scripts/report_frequency.praat"
-Add menu command: "Objects", "Goodies", "", "Do", 2, ""
-Add menu command: "Objects", "Goodies", "Filter search...", "Do", 2, "scripts/filter_search.praat"
+Add menu command: "Objects", "Goodies", "Tasks", "Finder", 1, ""
+Add menu command: "Objects", "Goodies", "View & Edit files...", "Tasks", 2, "scripts/open_files.praat"
+Add menu command: "Objects", "Goodies", "Extract files...", "Tasks", 2, "scripts/extract_files-dialog.praat"
+Add menu command: "Objects", "Goodies", "Open script template", "Tasks", 2, "scripts/open_script_template.praat"
+Add menu command: "Objects", "Goodies", "-", "Tasks", 2, "scripts/open_files.praat"
+Add menu command: "Objects", "Goodies", "Search report", "Tasks", 2, "scripts/report_search.praat"
+Add menu command: "Objects", "Goodies", "Frequency report", "Tasks", 2, "scripts/report_frequency.praat"
+Add menu command: "Objects", "Goodies", "", "Tasks", 2, ""
+Add menu command: "Objects", "Goodies", "Filter search...", "Tasks", 2, "scripts/filter_search.praat"
 
 ### Share section
 Add menu command: "Objects", "Goodies", "Share", "Finder", 1, ""
