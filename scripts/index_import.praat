@@ -17,20 +17,13 @@ endif
 tb = Read Table from tab-separated file: fileName$
 
 # Column names
-col$[1] = "tmin"
-col$[2] = "tier"
-col$[3] = "text"
-col$[4] = "tmax"
-col$[5] = "basename"
-col$[6] = "path"
-col$[7] = "notes"
+col$# = {"tmin", "tier", "text", "tmax", "path", "notes"}
 
-numberOfColumns = 7
 import = 1
-
+numberOfColumns = size(col$#)
 for i to numberOfColumns
-  isColumn= Get column index: col$[i]
-  if not isColumn
+  isColumn= Get column index: col$#[i]
+  if isColumn == 0
     import = 0
     i = numberOfColumns
   endif
@@ -44,6 +37,6 @@ else
   writeInfoLine: "Import search"
   appendInfoLine: "Message: Cannot import table. Your table must contain (at least) the following columns:", newline$
   for i to numberOfColumns
-    appendInfoLine: "- ", col$[i]
+    appendInfoLine: "('i') ", col$#[i]
   endfor
 endif
