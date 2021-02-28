@@ -1,7 +1,7 @@
 # Extract files from a table
 #
 # Written by Rolando Munoz A. (Aug 2017)
-# Las modified on 02 Feb 2021
+# Las modified on 27 Feb 2021
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -11,110 +11,33 @@
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/1>.
 #
-@config.init: "../preferences.txt"
+form Extract Sound & TextGrid
+	sentence sound_dirname .
+	word sound_extension wav
+	boolean relative_dirname 1
+	sentence search_table_path ../temp/search.Table
+	sentence dst_dirname C:\Users\lab\Desktop\test\folder_01-output
+	text name_format [Filename]-[DuplicateID]
+	real margin 0.1
+endform
 
-beginPause: "Extract Sound & TextGrid"
-	comment: "Input:"
-	comment: "	The directories where your files are stored..."
-	sentence: "Folder with annotation files:", config.init.return$["textgrids_dir"]
-	sentence: "Folder with sound files", config.init.return$["sounds_dir"]
-	comment: "	Sound settings..."
-	word: "Sound file extension", "wav"
-	comment: "Ouput:"
-	sentence: "Save in", ""
-	comment: "Name format..."
-	comment: "	Tags: [OriginalFileName], [MatchedText], [RepetitionID], [NumericID]"
-	text: "Name format", "[OriginalFileName]-[RepetitionID]"
-	comment: "Left and right margins (seconds)..."
-	real: "Margin", number(config.init.return$["extract_files.margin"])
-clicked = endPause: "Cancel", "Apply", "Ok", 3
-
-if clicked = 1
-	exitScript()
-endif
-
-# Save in preferences
-@config.setField: "sounds_dir", folder_with_sound_files$
-@config.setField: "textgrids_dir", folder_with_annotation_files$
-@config.setField: "sound_extension", sound_file_extension$
-@config.setField: "extract_files.file_name.margin", string$(margin)
-@config.setField: "extract_files.margin", string$(margin)
-
-# Initial variables
-sd_file_extension$ = sound_file_extension$
-
-searchDir$ = "../temp/search.Table"
-fileCounter = 0
-folder_with_sound_files$ = if folder_with_sound_files$ == "" then "." else folder_with_sound_files$ fi
-leading_zeros$ = "0000"
-relativePath= if startsWith(folder_with_sound_files$, ".") then 1 else 0 fi
-tg_file_extension$ = "TextGrid"
-
-# Checking
-## Check dialogue box fields
-if folder_with_annotation_files$ == ""
-	writeInfoLine: "Extract Sound & TextGrid"
-	appendInfoLine: "Please, complete the 'Textgrid folder' field"
-	runScript: "extract_files.praat"
-	exitScript()
-endif
-
-if save_in$ == ""
-	writeInfoLine: "Extract Sound & TextGrid"
-	appendInfoLine: "Please, complete the 'Save in' field"
-	runScript: "extract_files.praat"
-	exitScript()
-elsif startsWith(save_in$, ".")
-	writeInfoLine: "Extract Sound & TextGrid"
-	appendInfoLine: "We do not allow relative paths in the 'Save in' folder. Please, change the directory"
-	runScript: "extract_files.praat"
-	exitScript()
-endif
-
-## Check if a search is done
-if !fileReadable(searchDir$)
-	writeInfoLine: "Extract Sound & TextGrid"
-	appendInfoLine: "Message: Make a search first"
-	exitScript()
-endif
-
-## Check if the search table have recorded cases
-search = Read from file: searchDir$
-nRows = object[search].nrow
-if !nRows
-	writeInfoLine: "Extract Sound & TextGrid"
-	appendInfoLine: "Message: Nothing to show. Please, make another search"
-	exitScript()
-endif
+# [ID], [DuplicateID], [Filename], [Text]
+# main
+search = Read from file: search_table_path$
+nrows = object[search].nrow
+leading_zeros_default = 3
+leading_zeros = length(string$(nrows))
+leading_zeros = if leading_zeros_default > leading_zeros then leading_zeros_default else leading_zeros fi
 
 fileCounter= 0
-for row to nRows
+for row to nrows
 	# Get audio and annotation files paths
-	rel_path$ = object$[search, row, "basename"]
-	tg_rel_path$ = rel_path$ + "." + tg_file_extension$
-	sd_rel_path$ = rel_path$ + "." + sd_file_extension$
-	tg_path$ = folder_with_annotation_files$ + "/" + object$[search, row, "path"]
+	tg_path$ = object$[search, row, "path"]
+	@get_pair_path: tg_path$, sound_extension$, sound_dirname$, relative_dirname
+	sd_path$ = get_pair_path.return$
+	@basename_without_extension: tg_path$
+	root_name$ = basename_without_extension.return$
 	
-	@basename: tg_path$
-	@splitext_path: basename.return$
-	root_name$ = splitext_path.return$#[1]
-	
-	# Get audio path
-	if relativePath
-		# Relative to the audio path
-		@dirname: tg_path$
-		@basename: tg_path$
-		@swap_extension: basename.return$, sound_file_extension$
-		sd_basename$ = swap_extension.return$		
-		tg_dirname$ = dirname.return$
-		sd_rel_dirname$ = folder_with_sound_files$
-		@join_many_paths: {tg_dirname$, sd_rel_dirname$, sd_basename$}
-	else
-		# Relative to the audio directory
-		@join_many_paths: {folder_with_sound_files$, sd_rel_path$}
-	endif
-	sd_path$ = join_many_paths.return$
-
 	# Get matched text information
 	text$ = object$[search, row, "text"]
 	tmin = object[search, row, "tmin"]
@@ -140,31 +63,34 @@ for row to nRows
 
 		## Extract audio
 		selectObject: sd
-		sd_extracted = Extract part: tmin-leftMargin, tmax+rightMargin, "no"
+		sound_extensionracted = Extract part: tmin-leftMargin, tmax+rightMargin, "no"
 
 		# File names
-		@leading_zeros: fileCounter, leading_zeros$
-		numericID$ = leading_zeros.return$
+		@zfill: string$(fileCounter), leading_zeros
+		numericID$ = zfill.return$
 		
-		new_name$ = replace$(name_format$, "[NumericID]", numericID$, 0)
-		new_name$ = replace$(new_name$, "[OriginalFileName]", root_name$, 0)
-		new_name$ = replace$(new_name$, "[MatchedText]", text$, 0)
+		new_name$ = replace$(name_format$, "[ID]", numericID$, 0)
+		new_name$ = replace$(new_name$, "[Filename]", root_name$, 0)
+		new_name$ = replace$(new_name$, "[Text]", text$, 0)
 
-		if index(new_name$, "[RepetitionID]")
+		if index(new_name$, "[DuplicateID]")
 			repetitionID = 0
 			repeat
 				repetitionID += 1
-				@leading_zeros: repetitionID, leading_zeros$
-				repetitionID$ = leading_zeros.return$
-				new_name_test$= replace$(new_name$, "[RepetitionID]", repetitionID$, 0)
-				new_tg_path$ = save_in$ + "/" + new_name_test$ + ".TextGrid"
+				@zfill: string$(repetitionID), leading_zeros
+				repetitionID$ = zfill.return$
+				new_name_test$= replace$(new_name$, "[DuplicateID]", repetitionID$, 0)
+				new_tg_path$ = dst_dirname$ + "/" + new_name_test$ + ".TextGrid"
 			until !fileReadable(new_tg_path$)
 		else
-			new_tg_path$ = save_in$ + "/" + new_name$ + ".TextGrid"
+			new_tg_path$ = dst_dirname$ + "/" + new_name$ + ".TextGrid"
 		endif
 		
+		@dirname: new_tg_path$
+		@make_dirs: dirname.return$
+		
 		# Save files
-		selectObject: sd_extracted
+		selectObject: sound_extensionracted
 		
 		@swap_extension: new_tg_path$, "wav"
 		new_sd_path$ = swap_extension.return$
@@ -172,7 +98,7 @@ for row to nRows
 		Save as WAV file: new_sd_path$
 		selectObject: tg_extracted
 		Save as text file: new_tg_path$
-		removeObject: tg, tg_extracted, sd, sd_extracted
+		removeObject: tg, tg_extracted, sd, sound_extensionracted
 	endif
 endfor
 
@@ -182,19 +108,18 @@ appendInfoLine: "Number of extracted files: ", fileCounter * 2
 appendInfoLine: "- Annotation files: ", fileCounter
 appendInfoLine: "- Sound files: ", fileCounter
 
-if clicked = 2
-	runScript: "extract_files.praat"
-endif
-
-procedure leading_zeros: .number, .leadingZeros$
-	.number$ = string$(.number)
-	.numberOfDigits = length(.number$)
-	.numberOfLeadingZeros = length(.leadingZeros$)
-	.zeroLength = .numberOfLeadingZeros - .numberOfDigits
-	.tmp_zero$ = left$(.leadingZeros$, .zeroLength)
-	.return$ = .tmp_zero$ + .number$
+procedure zfill: .number$, .width
+	.digits = length(.number$)
+	if .digits < .width
+		.zeroes$ = ""
+		.max = (.width - .digits)
+		for .i to .max
+			.zeroes$ = .zeroes$ + "0"
+		endfor
+		.return$ = .zeroes$ + .number$
+	else
+		.return$ = .number$
+	endif
 endproc
 
-include ../procedures/config.proc
-include ../procedures/get_tier_number.proc
 include ../procedures/paths.proc
