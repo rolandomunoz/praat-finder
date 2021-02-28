@@ -18,7 +18,7 @@ endif
 Add menu command: "Objects", "Goodies", "Finder", "", 0, ""
 
 ### Query section
-Add menu command: "Objects", "Goodies", "Create index...", "Finder", 1, "scripts/search.praat"
+Add menu command: "Objects", "Goodies", "Create index...", "Finder", 1, "scripts/create_index.praat"
 Add menu command: "Objects", "Goodies", "Search...", "Finder", 1, "scripts/search.praat"
 
 ### Do section
