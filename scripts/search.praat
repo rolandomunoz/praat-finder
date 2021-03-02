@@ -60,7 +60,7 @@ beginPause: "Search"
 		option: "Filter search..."
 		option: "Search report"	
 		option: "Frequency report"
-clicked = endPause: "Cancel", "Apply", "Ok", 3
+clicked = endPause: "Cancel", "Apply", "Ok", 3, 1
 
 if clicked = 1
 	exitScript()

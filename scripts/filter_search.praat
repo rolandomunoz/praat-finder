@@ -40,7 +40,7 @@ beginPause: "Filter search"
 		option: "View & Edit files..."
 		option: "Extract files..."
 		option: "Filter search..."
-clicked = endPause: "Cancel", "Apply", "Ok", 3
+clicked = endPause: "Cancel", "Apply", "Ok", 3, 1
 
 if clicked = 1
 	exitScript()
