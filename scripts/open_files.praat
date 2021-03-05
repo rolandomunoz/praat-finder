@@ -126,7 +126,7 @@ while pause
 		if show_volumne_widget
 			real: "Volume", volume
 		endif
-	clicked_finder = endPause: "Continue", "Save", "Quit", 1
+	clicked_finder = endPause: "Continue", "Save", "Quit", 1, 3
 	endeditor
 
 	if add_notes
