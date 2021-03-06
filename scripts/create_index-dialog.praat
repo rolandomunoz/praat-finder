@@ -56,15 +56,13 @@ repeat
 	@config.set_value: "extract_files.save_in", ""
 	@config.write
 
-	if clicked == apply_btn or clicked == ok_btn
-		runScript: "create_index.praat", textGrid_directory$, annotation_file_extension$, process_subfolders_as_well, include_empty_intervals, temp_directory$
-		if not fileReadable(index_path$)
-			@warning_dialog: "No TextGrid files found"
-		else
-			if do == 2
-				runScript: "search.praat"
-			endif		
-		endif
+	runScript: "create_index.praat", textGrid_directory$, annotation_file_extension$, process_subfolders_as_well, include_empty_intervals, temp_directory$
+	if not fileReadable(index_path$)
+		@warning_dialog: "No TextGrid files found"
+	else
+		if do == 2
+			runScript: "search.praat"
+		endif		
 	endif
 
 until clicked == ok_btn

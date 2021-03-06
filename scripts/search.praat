@@ -35,8 +35,8 @@ endfor
 removeObject: tb_all_tiers
 
 selectObject: tempObject#
-@config.init: config_path$
 repeat
+	@config.init: config_path$
 	beginPause: "Search"
 		optionMenu: "Tier name", number(config.init.return$["search.tier_name_option"])
 			for i to numberOfRows
@@ -80,38 +80,34 @@ repeat
 	@config.set_value: "open_file.row", "1"
 	@config.write
 
-	if clicked == apply_btn or clicked == ok_btn
-		# Make a search
-		table_basename$ = "index_" + tier_name$[tier_name] + ".Table"
-		table_path$ = "../temp/'table_basename$'"
-		tb_tier = Read from file: table_path$
-		tb_search = nowarn Extract rows where column (text): "text", mode$, search_for$
-		n_cases = object[tb_search].nrow
+	# Make a search
+	table_basename$ = "index_" + tier_name$[tier_name] + ".Table"
+	table_path$ = "../temp/'table_basename$'"
+	tb_tier = Read from file: table_path$
+	tb_search = nowarn Extract rows where column (text): "text", mode$, search_for$
+	n_cases = object[tb_search].nrow
 
-		Save as text file: "../temp/search.Table"
+	Save as text file: "../temp/search.Table"
 
-		## Print Info
-		writeInfoLine: "Search... Done!"
-		appendInfoLine: "Search for: ", search_for$
-		appendInfoLine: "Tier name: ", tier_name$
-		appendInfoLine: "Total number of occurrences: ", n_cases
-		
-		# Do
-		if n_cases
-			selectObject: tb_search
-			if do > 1
-				runScript: scriptName$#[do]
-			endif
-		else
-			@warning_dialog: "No results found. Please, make another search."
+	## Print Info
+	writeInfoLine: "Search... Done!"
+	appendInfoLine: "Search for: ", search_for$
+	appendInfoLine: "Tier name: ", tier_name$
+	appendInfoLine: "Total number of occurrences: ", n_cases
+	
+	# Do
+	if n_cases
+		selectObject: tb_search
+		if do > 1
+			runScript: scriptName$#[do]
 		endif
-
-		removeObject: tb_tier, tb_search
+	else
+		@warning_dialog: "No results found. Please, make another search."
 	endif
 
+	removeObject: tb_tier, tb_search
+
 until clicked = ok_btn
-
-
 
 include ../procedures/config.proc
 include _warning_dialogs.praat

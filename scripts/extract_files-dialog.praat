@@ -44,7 +44,7 @@ repeat
 		comment: "Output:"
 		comment: "Save in:"
 		text: "dst_dirname", dst_dirname$
-		comment: "Filename format...                                          Hint: use these tags [ID], [DuplicateID], [Filename], [Text]"
+		comment: "Filename format...                                                (*) Use these tags: [ID] [DuplicateID] [Filename] [Text]"
 		text: "Filename format", filename_format$
 		comment: "Left and right margins (seconds)..."
 		real: "Margin", margin
