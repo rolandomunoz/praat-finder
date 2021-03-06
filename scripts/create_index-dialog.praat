@@ -1,7 +1,7 @@
 # Index all the TextGrids in a Table object
 #
 # Written by Rolando Munoz A. (08 Sep 2017)
-# Last modified on 24 Feb 2021
+# Las modified on 6 March 2021
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -11,162 +11,65 @@
 # A copy of the GNU General Public License is available at
 # <http://www.gnu.org/licenses/1>.
 #
-tempObject# = selected#()
-@config.init: "../preferences.txt"
-selectObject: tempObject#
 
-beginPause: "Create index"
-	comment: "The directories where your files are stored..."
-	text: "Folder with annotation files", config.init.return$["textgrids_dir"]
-	word: "Annotation file extension:", "TextGrid"
-	boolean: "Process subfolders as well", number(config.init.return$["create_index.process_subfolders_as_well"])
-	comment: "Next step..."
-	optionMenu: "Do", number(config.init.return$["create_index.do"])
-		option: ""
-		option: "Search..."
-clicked = endPause: "Cancel", "Apply", "Ok", 3, 1
+# Constants
+config_path$ = "../preferences.txt"
+temp_directory$ = "../temp"
+index_path$ = "'temp_directory$'/index.Table"
+cancel_btn = 1
+apply_btn = 2
+ok_btn = 3
 
-if clicked = 1
-	exitScript()
-endif
+repeat
+	@config.init: config_path$
+	beginPause: "Create index"
+		comment: "Folder with annotation files..."
+		text: "textGrid_directory", config.init.return$["textgrids_dir"]
+		word: "Annotation file extension:", "TextGrid"
+		boolean: "Process subfolders as well", number(config.init.return$["create_index.process_subfolders_as_well"])
+		boolean: "Include empty intervals", number(config.init.return$["create_index.include_empty_intervals"])
+		comment: "Next step..."
+		optionMenu: "Do", number(config.init.return$["create_index.do"])
+			option: ""
+			option: "Search..."
+	clicked = endPause: "Cancel","Apply", "Ok", 3, 1
 
-@config.setField: "textgrids_dir", folder_with_annotation_files$
-@config.setField: "create_index.do", string$(do)
-@config.setField: "create_index.process_subfolders_as_well", string$(process_subfolders_as_well)
-@config.setField: "search.tier_name_option", "1"
-@config.setField: "search.search_for", ""
-@config.setField: "search.mode", "1"
-@config.setField: "search.do", "1"
-@config.setField: "filter_search.tier_name_option", "1"
-@config.setField: "filter_search.search_for", ""
-@config.setField: "filter_search.do", "1"
-@config.setField: "open_file.row", "1"
-@config.setField: "sounds_dir", "."
-@config.setField: "extract_files.save_in", ""
-
-# Remove previous indexes if any
-indexList = Create Strings as file list: "fileList", "../temp/*.Table"
-nFiles = Get number of strings
-for i to nFiles
-	filename$ = object$[indexList, i]
-	deleteFile: "../temp/" + filename$
-endfor
-removeObject: indexList
-
-# List all the files in the root directory
-@createStringAsFileList: "fileList", folder_with_annotation_files$ + "/*.'annotation_file_extension$'", process_subfolders_as_well
-fileList = selected("Strings")
-nFiles = Get number of strings
-# If no file are listed, exit the script
-if not nFiles
-	removeObject: fileList
-	writeInfoLine: "The source folder does not contain any TextGrid file"
-	if clicked = 2
-		runScript: "create_index.praat"
+	# Stop
+	if clicked == cancel_btn
+		exitScript()
 	endif
-	exitScript()
-endif
-
-# Split the number of files in groups of 1000. (This is so because Praat only admits 40000 files loaded at the same time in Object window)
-step = 1000
-residual_step = if (nFiles mod step) > 0 then 1 else 0 fi
-number_of_steps = (nFiles div step) + residual_step
-
-file_min = 1 - step
-file_max = 0
-
-# Join all the TextGrids into index tables
-for i to number_of_steps
-	file_min += step
-	file_max += step
-	file_max = if file_max > nFiles then nFiles else file_max fi
-	for file_number from file_min to file_max
-		tg_path$= folder_with_annotation_files$ + "/" + object$[fileList, file_number]
-		tg = Read from file: tg_path$
-		tb[file_number] = Down to Table: "no", 16, "yes", "no"
-		Append column: "path"
-
-		@normpath: tg_path$
-		Formula: "path", ~ normpath.return$
-		removeObject: tg
-	endfor
-
-	# Select all Tables
-	for file_number from file_min to file_max
-		if file_number = 1
-			selectObject: tb[file_number]
-		else
-			plusObject: tb[file_number]
-		endif
-	endfor
 	
-	# Join all tables
-	index[i] = Append
+	# Set values
+	@config.set_value: "textgrids_dir", textGrid_directory$
+	@config.set_value: "create_index.do", string$(do)
+	@config.set_value: "create_index.process_subfolders_as_well", string$(process_subfolders_as_well)
+	@config.set_value: "create_index.include_empty_intervals", string$(include_empty_intervals)
+	@config.set_value: "search.tier_name_option", "1"
+	@config.set_value: "search.search_for", ""
+	@config.set_value: "search.mode", "1"
+	@config.set_value: "search.do", "1"
+	@config.set_value: "filter_search.tier_name_option", "1"
+	@config.set_value: "filter_search.search_for", ""
+	@config.set_value: "filter_search.do", "1"
+	@config.set_value: "open_file.row", "1"
+	@config.set_value: "sounds_dir", "."
+	@config.set_value: "extract_files.save_in", ""
+	@config.write
 
-	# Remove Tables
-	for file_number from file_min to file_max
-		removeObject: tb[file_number]
-	endfor
-endfor
-removeObject: fileList
-
-# Select all the index tables
-for i to number_of_steps
-	if i = 1
-		selectObject: index[i]
-	else
-		plusObject: index[i]
+	if clicked == apply_btn or clicked == ok_btn
+		runScript: "create_index.praat", textGrid_directory$, annotation_file_extension$, process_subfolders_as_well, include_empty_intervals, temp_directory$
+		if not fileReadable(index_path$)
+			@warning_dialog: "No TextGrid files found"
+		else
+			if do == 2
+				runScript: "search.praat"
+			endif		
+		endif
 	endif
-endfor
 
-# Merge all the index tables in a single index
-index = Append
-Rename: "index"
-
-# Remove all the previous index tables
-for i to number_of_steps
-	removeObject: index[i]
-endfor
-
-# Save indexes
-selectObject: index
-Append column: "notes"
-tb_tiers = Collapse rows: "tier", "", "", "", "", ""
-Save as text file: "../temp/tier_summary.Table"
-numberOfTiers = object[tb_tiers].nrow
-for i to numberOfTiers
-	tier_name$= object$[tb_tiers, i, "tier"]
-	selectObject: index
-	tb_extracted_tier = Extract rows where column (text): "tier", "is equal to", tier_name$
-	case$[i]= tier_name$
-	case[i]= object[tb_extracted_tier].nrow
-	Save as text file: "../temp/index_'tier_name$'.Table"
-	removeObject: tb_extracted_tier
-endfor
-removeObject: tb_tiers
-
-# Save the index
-selectObject: index
-Save as text file: "../temp/index.Table"
-
-# Print in the Info window
-writeInfoLine: "Create index... Done!"
-appendInfoLine: ""
-appendInfoLine: "Tiers:"
-for i to numberOfTiers
-	appendInfoLine: "	", case$[i], " (labels = ", case[i], ")"
-endfor
-
-removeObject: index
-
-if do = 2
-	runScript: "search.praat"
-endif
-
-if clicked = 2
-	runScript: "create_index.praat"
-endif
+until clicked == ok_btn
 
 include ../procedures/config.proc
 include ../procedures/list_recursive_path.proc
 include ../procedures/paths.proc
+include _warning_dialogs.praat
