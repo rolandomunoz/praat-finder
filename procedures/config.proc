@@ -1,81 +1,87 @@
-# Copyright 2017 Rolando Munoz
+# Copyright 2017-2021 Rolando Munoz
 
 #Description: This script stablish a protocol to retrive and modify field information from "preferences folder files". 
 
 #! ~~~ params
 #! in:
-#!   .file$: the file directory where local variables are stored
+#!	 .path$: the file directory where local variables are stored
 #! out:
-#!   .return$: a dictionary which contains the variables names and their values
+#!	 .return$: a dictionary which contains the variables names and their values
 #! selection:
-#!   in:
-#!     nothing
-#!   out:
-#!     nothing
+#!	 in:
+#!		 nothing
+#!	 out:
+#!		 nothing
 #! ~~~
 #!
 #! Read a file with local variables and store them in a dictionary
 #!
-procedure config.init: .file$
-  .strID = Read Strings from raw text file: .file$
-  .n = Get number of strings
-  for .i to .n
-    .line$ = Get string: .i
-    .fieldName$ = replace_regex$(.line$, ": .*", "",1)
-    .fieldContent$= replace_regex$(.line$, ".*: ", "", 1)    
-    .return$[.fieldName$] = .fieldContent$ 
-  endfor
-  removeObject: .strID
+procedure config.init: .path$
+	.lines$# = readLinesFromFile$#(.path$)
+	for .i to size(.lines$#)
+		.key$ = replace_regex$(.lines$#[.i], "(.+): (.*)", "\1",1)
+		.value$= replace_regex$(.lines$#[.i], "(.+): (.*)", "\2", 1)		
+		.return$[.key$] = .value$ 		
+	endfor
 endproc
 
 #! ~~~ params
 #! in:
-#!   .fieldName$: the name of the key
+#!	 .key$: the name of the key
 #! out:
-#!   .return$: the value
+#!	 .return$: the value
 #! selection:
-#!   in:
-#!     nothing
-#!   out:
-#!     nothing
+#!	 in:
+#!		 nothing
+#!	 out:
+#!		 nothing
 #! ~~~
 #!
 #! Get the value of the key
 #!
-procedure config.getField: .fieldName$
-  if variableExists("config.init.return$[""'.fieldName$'""]")
-    .return$ = config.init.return$[.fieldName$]
-  else
-    exitScript: "@config.getField: '.fieldName$' could not be found."
-  endif
+procedure config.get_value: .key$
+	if variableExists("config.init.return$[""'.key$'""]")
+		.return$ = config.init.return$[.key$]
+	else
+		exitScript: "@config.get_value: '.key$' does not exist."
+	endif
 endproc
 
 #! ~~~ params
 #! in:
-#!   .fieldName$: the name of the key
-#!   .fieldContent$: a string that will be stored in the key
+#!	 .key$: the name of the key
+#!	 .value$: the value content of a key
 #! selection:
-#!   in:
-#!     nothing
-#!   out:
-#!     nothing
+#!	 in:
+#!		 nothing
+#!	 out:
+#!		 nothing
 #! ~~~
 #!
 #! Get the value of the key
 #!
-procedure config.setField: .fieldName$, .fieldContent$
-  .file$ = config.init.file$
-  .strID = Read Strings from raw text file: .file$
-  .n = Get number of strings
-  for .i to .n
-    .line$ = Get string: .i
-    .f_fieldName$ = replace_regex$(.line$, ": .*", "",1)
-    if .f_fieldName$ == .fieldName$
-      .line$ = .f_fieldName$+ ": " + .fieldContent$
-      Set string: .i, .line$
-      Save as raw text file: .file$
-      .i = .n
-    endif
-  endfor
-  removeObject: .strID
+procedure config.set_value: .key$, .value$
+	.missing_key = 1
+	for .i to size(config.init.lines$#)
+		if startsWith(config.init.lines$#[.i]+":", .key$)
+			config.init.lines$#[.i] = .key$ + ": " + .value$
+			.missing_key = 0
+		endif
+	endfor
+	
+	if .missing_key == 1
+		exitScript: "@config.set_value: '.key$' does not exist"
+	endif
 endproc
+
+procedure config.write
+	first = 1
+	for .i to size(config.init.lines$#)
+		if first
+			writeFileLine: config.init.path$, config.init.lines$#[.i]
+			first = 0
+		else
+			appendFileLine: config.init.path$, config.init.lines$#[.i]			
+		endif
+	endfor
+endproc 
