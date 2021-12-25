@@ -37,7 +37,7 @@ repeat
 	if clicked == cancel_btn
 		exitScript()
 	endif
-	
+
 	textGrid_directory$ = folder_with_annotation_files$
 	# Set values
 	@config.set_value: "textgrids_dir", textGrid_directory$
