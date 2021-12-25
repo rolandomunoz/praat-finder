@@ -35,16 +35,14 @@ repeat
 
 	beginPause: "Extract files"
 		comment: "Input:"
-		comment: "Folder with sound files:"
-		text: "sound_dirname", sound_dirname$
+		text: "Folder with sound files", sound_dirname$
 		optionMenu: "Sound path", sound_path
 			option: "Relative to TextGrid paths"
 			option: "Absolute path"
 		word: "Sound file extension", sound_file_extension$
 		comment: "Output:"
-		comment: "Save in:"
-		text: "dst_dirname", dst_dirname$
-		comment: "Filename format...                                                (*) Use these tags: [ID] [DuplicateID] [Filename] [Text]"
+		text: "Save_in", dst_dirname$
+		comment: "(*) In Filename format use these tags: [ID] [DuplicateID] [Filename] [Text]"
 		text: "Filename format", filename_format$
 		comment: "Left and right margins (seconds)..."
 		real: "Margin", margin
@@ -57,8 +55,12 @@ repeat
 	if clicked == cancel_btn
 		exitScript()
 	endif
-	
+
 	if clicked == ok_btn or clicked == apply_btn
+		# Rename variables
+		sound_dirname$ = folder_with_sound_files$
+		dst_dirname$ = save_in$
+	
 		# Variables
 		relative_dirname = if sound_path > 1 then 0 else 1 fi
 		# Check dialog
