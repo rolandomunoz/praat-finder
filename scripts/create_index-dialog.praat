@@ -1,7 +1,7 @@
 # Index all the TextGrids in a Table object
 #
 # Written by Rolando Munoz A. (08 Sep 2017)
-# Las modified on 6 March 2021
+# Las modified on 12 December 2021
 #
 # This script is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,8 +23,7 @@ ok_btn = 3
 repeat
 	@config.init: config_path$
 	beginPause: "Create index"
-		comment: "Folder with annotation files..."
-		text: "textGrid_directory", config.init.return$["textgrids_dir"]
+		text: "Folder with annotation files", config.init.return$["textgrids_dir"]
 		word: "Annotation file extension:", "TextGrid"
 		boolean: "Process subfolders as well", number(config.init.return$["create_index.process_subfolders_as_well"])
 		boolean: "Include empty intervals", number(config.init.return$["create_index.include_empty_intervals"])
@@ -39,6 +38,7 @@ repeat
 		exitScript()
 	endif
 	
+	textGrid_directory$ = folder_with_annotation_files$
 	# Set values
 	@config.set_value: "textgrids_dir", textGrid_directory$
 	@config.set_value: "create_index.do", string$(do)
