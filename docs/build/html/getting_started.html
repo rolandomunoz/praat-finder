@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial &#8212; Finder v2.2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Finder plug-in" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=rolandomunoz&repo=plugin_finder&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requeriments">Requeriments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-and-installation">Download and installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Finder plug-in</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>Finder is a Praat plug-in designed to work with TextGrid files.
+By using this plug-in, you can explore the content of your TextGrid files, create transcription
+reports, do audio extraction, edit your transcriptions and other stuffs.</p>
+<p>In this tutorial, I will guide you through the basics of this tool and bring some ideas about
+how to use the Finder in a linguistic project.</p>
+<section id="requeriments">
+<h2>Requeriments<a class="headerlink" href="#requeriments" title="Permalink to this headline">¶</a></h2>
+<p>To follow this tutorial you will need:</p>
+<ul class="simple">
+<li><p>The latest release of Praat. You can download it from the <a class="reference external" href="https://www.fon.hum.uva.nl/praat/">Praat website</a>.</p></li>
+<li><p>The Finder plug-in. You can download it from GitHub in the following <a class="reference external" href="https://github.com/rolandomunoz/plugin_finder/releases/latest">link</a>
+(see the <a class="reference internal" href="#download-and-installation">Download and installation</a> section).</p></li>
+<li><p>Download the <a class="reference external" href="https://drive.google.com/open?id=1EwbBA1wTORFppY_-VQaw7QAB-SMJuIY6">corpus for spanish vowels</a> (optional)</p></li>
+</ul>
+</section>
+<section id="download-and-installation">
+<span id="id1"></span><h2>Download and installation<a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h2>
+<p>You can get the latest release of the plug-in in the following <a class="reference external" href="https://github.com/rolandomunoz/plugin_finder/releases/latest">link</a>. By clicking on it,
+you will be redirected to a GitHub website as shown in <a class="reference internal" href="#github-download"><span class="std std-numref">Fig. 1</span></a>.</p>
+<p>In the website, go to the <strong>Assets</strong> section and click on any of the two links: <code class="docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span> <span class="pre">(zip)</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span> <span class="pre">(tar.gz)</span></code>. By doing this, a compressed folder will be downloaded.</p>
+<figure class="align-center" id="id2">
+<span id="github-download"></span><img alt="_images/github-download.png" src="_images/github-download.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Download section on GitHub</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Once the download is finished, uncompress the folder. Then, copy the uncompressed folder to the Praat
+<strong>preferences folder</strong>. This is a directory created when you run Praat on your machine for the first
+time. According to the Praat
+manual, the <strong>preferences folder</strong> can be found in one of following directories depending on your
+operating system:</p>
+<ul class="simple">
+<li><p>On Windows, <code class="docutils literal notranslate"><span class="pre">C:\Users\your</span> <span class="pre">user</span> <span class="pre">name\Praat\</span></code></p></li>
+<li><p>On Mac, <code class="docutils literal notranslate"><span class="pre">/Users/your</span> <span class="pre">user</span> <span class="pre">name/Library/Preferences/Praat</span> <span class="pre">Prefs/</span></code></p></li>
+<li><p>On Linux, <code class="docutils literal notranslate"><span class="pre">/home/your</span> <span class="pre">user</span> <span class="pre">name/.praat-dir/</span></code></p></li>
+</ul>
+<p>In the <a class="reference internal" href="#win-praat-preferences"><span class="std std-numref">Fig. 2</span></a> there is a screenshot of the <strong>preferences folder</strong> in a computer with Windows 10. As you can see, the plug-in folder is also copied to this directory. In the <a class="reference internal" href="#plugin-folder"><span class="std std-numref">Fig. 3</span></a> there is a view of the plug-in folder.</p>
+<figure class="align-center" id="id3">
+<span id="win-praat-preferences"></span><img alt="_images/win-praat_preferences.png" src="_images/win-praat_preferences.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">The <strong>Praat Preferences</strong> directory on Windows 10</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id4">
+<span id="plugin-folder"></span><img alt="_images/plugin_folder.png" src="_images/plugin_folder.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">The plug-in folder</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When uncompressing the downloaded folder, some tools put the plug-in folder within another folder.
+If this is your case, copy only the subfolder to the <cite>preferences folder</cite>. You can check it by looking at the
+<cite>setup.praat</cite> file. The plug-in folder contains this file just under it.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you rename the plug-in’s folder, do not remove the preffix <cite>plugin</cite>. This word is
+necessary for Praat to recognize the plug-in.</p>
+</div>
+<p>Finally, check that Praat can recognize the plug-in. Start Praat and go to <code class="docutils literal notranslate"><span class="pre">Praat</span> <span class="pre">&gt;</span> <span class="pre">Goodies</span></code> in the menu bar. There, you should
+be able to see the <code class="docutils literal notranslate"><span class="pre">Finder</span></code> submenu as in the <a class="reference internal" href="#plugin-menu"><span class="std std-numref">Fig. 4</span></a>.</p>
+<figure class="align-center" id="id5">
+<span id="plugin-menu"></span><img alt="_images/finder_menu.png" src="_images/finder_menu.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">The plug-in menu</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Finder is a multipurpose tool. In this section we will review the following tasks:</p>
+<ul class="simple">
+<li><p>Create and index.</p></li>
+<li><p>Search into TextGrid files for interval or point items that match a specific text.</p></li>
+<li><p>Create reports of their annotation files. Create a table containing the number of occurrences
+of the transcribed items (e.g., words), or a table containing the time where certain items occurred.</p></li>
+<li><p>Select and visualize some specific items in your transcriptions.</p></li>
+<li><p>Extract intervals or point items along with their audio files and save them as new files.</p></li>
+<li><p>Make use of the script template function to script more specific tasks (advanced users)</p></li>
+</ul>
+<section id="step-1-creating-an-index">
+<h3>Step 1: Creating an index<a class="headerlink" href="#step-1-creating-an-index" title="Permalink to this headline">¶</a></h3>
+<p>Creating an index is the first step to do before any task. This consists in telling
+the plug-in where the annotation files are. By doing so, Praat will look for all
+TextGrid files under a certain directory and will index their content internally.
+This way, the plug-in will know the tier position, the type (inverval
+or point), also its content.</p>
+<p>First, let’s start by indexing the files within the folder <em>speaker_001</em> of the <strong>corpus for
+spanish vowels</strong>. In <a class="reference internal" href="#speaker-001-folder"><span class="std std-numref">Fig. 5</span></a> there is a screenshot of that folder.</p>
+<figure class="align-center" id="id6">
+<span id="speaker-001-folder"></span><img alt="_images/speaker_001-folder.png" src="_images/speaker_001-folder.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">A folder containing the audio and TextGrid files to be indexed.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>To index the said folder, go to the <code class="docutils literal notranslate"><span class="pre">Finder</span> <span class="pre">&gt;</span> <span class="pre">Create</span> <span class="pre">index...</span></code> command and click on it.
+A window as in <a class="reference internal" href="#index-window"><span class="std std-numref">Fig. 6</span></a> will pop-up. In <code class="docutils literal notranslate"><span class="pre">Folder</span> <span class="pre">with</span> <span class="pre">annotation</span> <span class="pre">files</span></code>
+provide the directory of the folder in your machine. Leave the other options as in
+<a class="reference internal" href="#index-window"><span class="std std-numref">Fig. 6</span></a> and press on <code class="docutils literal notranslate"><span class="pre">Ok</span></code></p>
+<figure class="align-center" id="id7">
+<span id="index-window"></span><img alt="_images/index_window.png" src="_images/index_window.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">index...</span></code> window</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>When the index is done, a message will appear in the <code class="docutils literal notranslate"><span class="pre">Praat</span> <span class="pre">Info</span></code> as in
+<a class="reference internal" href="#index-result-window"><span class="std std-numref">Fig. 7</span></a>. The message show a summary of all tiers in
+the TextGrid files. For example, the tier <code class="docutils literal notranslate"><span class="pre">segment</span></code> contains 20 labels.</p>
+<figure class="align-center" id="id8">
+<span id="index-result-window"></span><img alt="_images/index-result_window.png" src="_images/index-result_window.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">Praat</span> <span class="pre">Info</span></code> window showing the indexing results</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="indexing-textgrids-store-in-subfolders-under-the-same-directory">
+<h4>Indexing TextGrids store in subfolders under the same directory<a class="headerlink" href="#indexing-textgrids-store-in-subfolders-under-the-same-directory" title="Permalink to this headline">¶</a></h4>
+<p>It is common that TextGrid files are stored in various subfolders within a common directory.
+To index those files, check the <code class="docutils literal notranslate"><span class="pre">Process</span> <span class="pre">subfolders</span> <span class="pre">as</span> <span class="pre">well</span></code> of the <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">index</span></code> window
+(see <a class="reference internal" href="#index-window"><span class="std std-numref">Fig. 6</span></a>).</p>
+<p>Let’s index all TextGrids in the <strong>Corpus for Spanish Vowels</strong>. First, let’s identify the
+directory that contains those files. In my computer, the directory is
+<code class="docutils literal notranslate"><span class="pre">C:\Users\rolan\Desktop\spanish_vowels</span></code> as you can see in the
+<a class="reference internal" href="#corpus-for-spanish-vowel-folder"><span class="std std-numref">Fig. 8</span></a>.</p>
+<figure class="align-center" id="id9">
+<span id="corpus-for-spanish-vowel-folder"></span><img alt="_images/corpus_for_spanish_vowels-folder.png" src="_images/corpus_for_spanish_vowels-folder.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">The directory containing all TextGrid files in the <strong>Corpus for Spanish Vowels</strong></span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Once you have the directory path, copy it and go to the <code class="docutils literal notranslate"><span class="pre">Finder</span> <span class="pre">&gt;</span> <span class="pre">Create</span> <span class="pre">index...</span></code> command.
+Fill up the window with the path and check the <code class="docutils literal notranslate"><span class="pre">Process</span> <span class="pre">subfolders</span> <span class="pre">as</span> <span class="pre">well</span></code>
+option. Your window should looks similar to <a class="reference internal" href="#index-window2"><span class="std std-numref">Fig. 9</span></a>.</p>
+<figure class="align-center" id="id10">
+<span id="index-window2"></span><img alt="_images/index_window2.png" src="_images/index_window2.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">index...</span></code> window</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>After pressing on <code class="docutils literal notranslate"><span class="pre">Ok</span></code>, you should have the message in <a class="reference internal" href="#index-result-window2"><span class="std std-numref">Fig. 10</span></a></p>
+<figure class="align-center" id="id11">
+<span id="index-result-window2"></span><img alt="_images/index-result_window2.png" src="_images/index-result_window2.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">The <code class="docutils literal notranslate"><span class="pre">Praat</span> <span class="pre">Info</span></code> window showing the indexing results</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="querying-annotation-files">
+<h3>Querying annotation files<a class="headerlink" href="#querying-annotation-files" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="tasks">
+<h3>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2021, Rolando Muñoz Aramburú.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/getting_started.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

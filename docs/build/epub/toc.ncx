@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+  <head>
+    <meta name="dtb:uid" content="unknown"/>
+    <meta name="dtb:depth" content="3"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>Finder</text>
+  </docTitle>
+  <navMap>    
+    <navPoint id="navPoint1" playOrder="1">
+      <navLabel>
+        <text>Finder plug-in</text>
+      </navLabel>
+      <content src="index.xhtml" />  
+    </navPoint>
+    <navPoint id="navPoint2" playOrder="2">
+      <navLabel>
+        <text>Tutorial</text>
+      </navLabel>
+      <content src="getting_started.xhtml" />  
+      <navPoint id="navPoint3" playOrder="2">
+        <navLabel>
+          <text>Tutorial</text>
+        </navLabel>
+        <content src="getting_started.xhtml" />  
+      </navPoint>
+      <navPoint id="navPoint4" playOrder="3">
+        <navLabel>
+          <text>Download and installation</text>
+        </navLabel>
+        <content src="getting_started.xhtml#download-and-installation" />  
+      </navPoint>
+      <navPoint id="navPoint5" playOrder="4">
+        <navLabel>
+          <text>Getting started</text>
+        </navLabel>
+        <content src="getting_started.xhtml#getting-started" />  
+        <navPoint id="navPoint6" playOrder="4">
+          <navLabel>
+            <text>Getting started</text>
+          </navLabel>
+          <content src="getting_started.xhtml#getting-started" />  
+        </navPoint>
+        <navPoint id="navPoint7" playOrder="5">
+          <navLabel>
+            <text>Step 1: Creating an index</text>
+          </navLabel>
+          <content src="getting_started.xhtml#step-1-creating-an-index" />  
+        </navPoint>
+        <navPoint id="navPoint8" playOrder="6">
+          <navLabel>
+            <text>Querying annotation files</text>
+          </navLabel>
+          <content src="getting_started.xhtml#querying-annotation-files" />  
+        </navPoint>
+        <navPoint id="navPoint9" playOrder="7">
+          <navLabel>
+            <text>Tasks</text>
+          </navLabel>
+          <content src="getting_started.xhtml#tasks" />  
+        </navPoint>
+      </navPoint>
+    </navPoint>
+  </navMap>
+</ncx>
