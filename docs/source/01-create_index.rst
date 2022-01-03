@@ -15,10 +15,10 @@ spanish vowels**. In :numref:`speaker_001-folder` there is a screenshot of that 
 
    A folder containing the audio and TextGrid files to be indexed.
 
-To index the said folder, go to the ``Finder > Create index...`` command and click on it.
-A window as in :numref:`index_window` will pop-up. In ``Folder with annotation files``
-provide the directory of the folder in your machine. Leave the other options as in
-:numref:`index_window` and press on ``Ok``
+To index the said folder, go to the ``Finder > Create index...`` command. When you click on it,
+a window as in :numref:`index_window` pops up. In the field
+``Folder with annotation files`` provide the directory of the folder in your machine.
+Leave the other options as in :numref:`index_window` and press on ``Ok``
 
 .. _index_window:
 
@@ -75,3 +75,5 @@ After pressing on ``Ok``, you should have the message in :numref:`index-result_w
    :align: center
 
    The ``Praat Info`` window showing the indexing results
+
+Now you are ready to for :doc:`02-search`.

@@ -1,5 +1,5 @@
 Download and installation
-=========================
+-------------------------
 
 You can get the latest release of the plug-in in the following `link`_. By clicking on it,
 you will be redirected to a GitHub website as shown in :numref:`github-download`.
@@ -58,4 +58,3 @@ be able to see the ``Finder`` submenu as in the :numref:`plugin_menu`.
    The plug-in menu
 
 .. _link: https://github.com/rolandomunoz/plugin_finder/releases/latest
-

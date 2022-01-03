@@ -20,7 +20,7 @@ To follow this tutorial you will need:
 
 .. _Praat website: https://www.fon.hum.uva.nl/praat/
 .. _corpus for spanish vowels: https://drive.google.com/open?id=1EwbBA1wTORFppY_-VQaw7QAB-SMJuIY6
-.. _Download and installation: ../installation.rst
+.. _Download and installation: installation.rst
 .. _link: https://github.com/rolandomunoz/plugin_finder/releases/latest
 
 .. toctree::
