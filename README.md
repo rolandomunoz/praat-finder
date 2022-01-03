@@ -4,8 +4,7 @@ Finder is a Praat plug-in for searching annotations in TextGrid files. When a se
 
 ## Documentation
 
-- [Website](https://rolandomunoz.github.io/praat_tools/finder.html)
-- [Manual](https://rolandomunoz.github.io/man/finder_man.pdf)
+- [Tutorial](https://plugin-finder.readthedocs.io/en/latest/)
 
 ## Author
 
