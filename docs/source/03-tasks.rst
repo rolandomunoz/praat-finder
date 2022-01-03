@@ -3,8 +3,9 @@ Step 3: Tasks
 
 Create reports
 ~~~~~~~~~~~~~~
-Create reports of their annotation files. Create a table containing the number of occurrences
-  of the transcribed items (e.g., words), or a table containing the time where certain items occurred.
+* Create reports of their annotation files.
+* Create a table containing the number of occurrences of the transcribed items (e.g., words)
+* Table containing the time where certain items occurred.
 
 Data navigation
 ~~~~~~~~~~~~~~~

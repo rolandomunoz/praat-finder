@@ -38,8 +38,10 @@ the TextGrid files. For example, the tier ``segment`` contains 20 labels.
 
    The ``Praat Info`` window showing the indexing results
 
-TextGrids in subfolders
-~~~~~~~~~~~~~~~~~~~~~~~
+.. _TextGrids in subfolders:
+
+Index subfolders
+~~~~~~~~~~~~~~~~
 It is common that TextGrid files are stored in various subfolders within a common directory.
 To index those files, check the ``Process subfolders as well`` of the ``Create index`` window
 (see :numref:`index_window`).
