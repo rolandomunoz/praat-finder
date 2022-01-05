@@ -1,6 +1,9 @@
 Step 3: Tasks
 -------------
 
+Now that you know how to index files and search for items, you are ready for the action!
+Here is a list of things that you can do after completing those two steps.
+
 Create reports
 ~~~~~~~~~~~~~~
 * Create reports of their annotation files.
@@ -14,6 +17,8 @@ Select and visualize some specific items in your transcriptions.
 Extracting data
 ~~~~~~~~~~~~~~~
 Extract intervals or point items along with their audio files and save them as new files.
+
+See :doc:`extracting_data`.
 
 Running scripts
 ~~~~~~~~~~~~~~~

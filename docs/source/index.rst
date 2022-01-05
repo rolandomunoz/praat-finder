@@ -31,6 +31,7 @@ To follow this tutorial you will need:
    01-create_index
    02-search
    03-tasks
+   extracting_data
 
 Indices and tables
 ==================
