@@ -19,7 +19,7 @@ To follow this tutorial you will need:
 * Download the `corpus for spanish vowels`_ (optional)
 
 .. _Praat website: https://www.fon.hum.uva.nl/praat/
-.. _corpus for spanish vowels: https://drive.google.com/open?id=1EwbBA1wTORFppY_-VQaw7QAB-SMJuIY6
+.. _corpus for spanish vowels: https://drive.google.com/drive/folders/1cnwAIGQbTH8RY4tHBJAPnH_XgejFjYi9?usp=sharing
 .. _Download and installation: installation.rst
 .. _link: https://github.com/rolandomunoz/plugin_finder/releases/latest
 
