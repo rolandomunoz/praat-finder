@@ -1,7 +1,7 @@
 Plugin: Finder
 Author: Rolando Muñoz A. <rolando.ma@hotmail.com>
 Homepage: https://rolandomunoz.github.io/finder_main.html 
-Version: 2.4
+Version: 2.3
 Last modified: 02-23-2020
 Description:
   - A tool search for TextGrid files. Once a label is match, do some actions.
