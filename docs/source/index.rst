@@ -8,9 +8,8 @@ reports, do audio extraction, edit your transcriptions and other stuffs.
 In this tutorial, I will guide you through the basics of this tool and bring some ideas about
 how to use the Finder in a linguistic project.
 
-
 Requirements
-------------
+~~~~~~~~~~~~
 To follow this tutorial you will need:
 
 * The latest release of Praat. You can download it from the `Praat website`_.
@@ -31,7 +30,6 @@ To follow this tutorial you will need:
    01-create_index
    02-search
    03-tasks
-   extracting_data
 
 Indices and tables
 ==================

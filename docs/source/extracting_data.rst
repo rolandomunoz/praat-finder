@@ -1,18 +1,17 @@
 Extracting data
 ---------------
 
-When you make a Search, you can extract the audio and transcription parts that correspond
-to the found items. Each extracted item will be stored in file pairs: a sound file
+When you find items using the search function, you can extract the audio and transcription
+parts corresponding to them. Each extracted item will be stored in file pairs: a sound file
 in WAV format and its TextGrid.
 
 Extractig words as files
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-In this section, we will extract the transcribed words along with their
-audio files in a set of files. For this example, we will work with the files
-in the folder ``recording sessions`` of the **Corpus for Spanish Vowels**.
-As you can see in :numref:`corpus-recording_sessions`, TextGrids and sound files
-come in pairs.
+In this section, we will break up a set of audio files based on the TextGrid associated
+to them. For this example, we will work with the files in the folder ``recording sessions``
+of the **Corpus for Spanish Vowels**. As you can see in :numref:`corpus-recording_sessions`,
+TextGrids and sound files come in pairs.
 
 .. _corpus-recording_sessions:
 
