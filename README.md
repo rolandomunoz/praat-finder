@@ -12,9 +12,9 @@ Finder is a Praat plug-in for searching annotations in TextGrid files. When a se
 
 ## License
 
-This project is licensed under the GNU GPL terms - see the [LICENSE.md](https://gitlab.com/praat_plugins_rma/plugin_tokenizer/blob/master/LICENSE)
+This project is licensed under the GNU GPL terms - see the [LICENSE](https://www.gnu.org/licenses/gpl-3.0.txt)
  file for details.
 
 ## How to cite this plug-in?
 
- - `Muñoz Aramburú, R. (2020). Finder[Praat plug-in]. Version 2.2, retrived 3 july 2020 from https://rolandomunoz.github.io/finder_main.html`
+ - `Muñoz Aramburú, R. (2022). Finder[Praat plug-in]. Version 2.3, retrived 1 january 2022 from https://github.com/rolandomunoz/plugin_finder`
