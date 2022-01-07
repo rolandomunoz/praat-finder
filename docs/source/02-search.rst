@@ -7,8 +7,8 @@ to perform the activities described in :doc:`03-tasks`.
 
 Search the word *papa*
 ~~~~~~~~~~~~~~~~~~~~~~
-We will start by searching all occurrences of the word **papa**
-in the TextGrids of the **Corpus for Spanish Vowels**.
+We will start by searching all occurrences of the word *papa*
+in the TextGrids of the folder ``tutorial/vowels`` (**example files**).
 
 To start, index all the TextGrids as indicated in the :ref:`TextGrids in subfolders` section. Once
 this is done, go to the ``Finder > Search`` command and fill up the window with the same
@@ -39,8 +39,8 @@ of the word in our TextGrid files.
 
 Search all items
 ~~~~~~~~~~~~~~~~
-Imagine you want to search for all the transcribed items in the tier ``word`` of the
-**Corpus for Spanish Vowels**. The easy way is to search for all items
+Imagine you want to search for all the transcribed items in the tier ``word`` of the files
+in the ``tutorial/vowels`` folder. The easy way is to search for all items
 that are not empty. Go to the ``Finder > Search`` again. This time you do not need to create an index
 since the TextGrid files are already indexed.
 In the window, complete the fields as in :numref:`search-window2`, make sure to leave

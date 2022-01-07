@@ -9,9 +9,8 @@ Extractig words as files
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this section, we will break up a set of audio files based on the TextGrid associated
-to them. For this example, we will work with the files in the folder ``recording sessions``
-of the **Corpus for Spanish Vowels**. As you can see in :numref:`corpus-recording_sessions`,
-TextGrids and sound files come in pairs.
+to them. For this example, we will work with the files in the folder
+``tutorial/recording_sessions`` of the **example files**. As you can see in :numref:`corpus-recording_sessions`, the TextGrids and sound files come in pairs.
 
 .. _corpus-recording_sessions:
 

@@ -1,5 +1,5 @@
-Download and installation
--------------------------
+Installation
+------------
 
 You can get the latest release of the plug-in in the following `link`_. By clicking on it,
 you will be redirected to a GitHub website as shown in :numref:`github-download`.
