@@ -3,7 +3,7 @@ Step 2: Searching by text
 
 After indexing your TextGrid files (see :doc:`01-create_index`), you can search for specific words or patterns within them. This is essential for tasks discussed in :doc:`03-tasks`.
 
-* Searching for specific words
+**Searching for specific words**
 
     #. **Ensure TextGrids are indexed:** Make sure the target folder is already indexed (details in Step 1).
     #. **Open Search window:** Go to Finder > Search.
@@ -28,7 +28,7 @@ After indexing your TextGrid files (see :doc:`01-create_index`), you can search 
     
        Results in the ``Praat Info`` after running the ``Search`` command
 
-* Searching for all items:
+**Searching for all items:**
 
     For finding all non-empty items in a tier, follow the same steps as above, but leave the Search term field empty and choose ``is not equal to`` in the Mode options.
     
@@ -46,11 +46,11 @@ After indexing your TextGrid files (see :doc:`01-create_index`), you can search 
     
        Results in the ``Praat Info`` after running the ``Search`` command
 
-* Using Regular Expressions (advanced):
+**Using Regular Expressions (advanced):**
 
-    - Enable ``matches (regex)`` mode in the Search window.
-    - Use patterns like ``p[ae]pa`` to match both "papa" and "pepa".
-    - See the Praat `Regular Expressions Tutorial`_ for more details. 
+    * Enable ``matches (regex)`` mode in the Search window.
+    * Use patterns like ``p[ae]pa`` to match both "papa" and "pepa".
+    * See the Praat `Regular Expressions Tutorial`_ for more details. 
     
     .. _search-window3:
     
