@@ -10,10 +10,12 @@
 # <http://www.gnu.org/licenses/>.
 
 procedure make_dirs: .path$
-  @iterate_path: .path$
+    @iterate_path: .path$
 	for .i to size(iterate_path.return$#)
-		.path$= iterate_path.return$#[.i]
-		createDirectory(.path$)
+	    .path$= iterate_path.return$#[.i]
+            if .i != 1
+               createDirectory(.path$)
+            endif
 	endfor
 endproc
 
