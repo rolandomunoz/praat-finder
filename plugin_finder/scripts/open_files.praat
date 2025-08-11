@@ -118,9 +118,6 @@ repeat
 		Move cursor to: tmid
 
 		beginPause: "View & Edit files"
-			if add_notes
-				sentence: "Notes", object$[search, row, "notes"]
-			endif
 			comment: "Case: 'row'/'n_rows'"
 			comment: "Text: " + if length(text$)> 25 then left$(text$, 25) + "..." else text$ fi
 			comment: "File name: " + tg_basename$
@@ -128,14 +125,19 @@ repeat
 			if show_volumne_widget
 				real: "Volume", volume
 			endif
+			if add_notes
+				sentence: "Notes", object$[search, row, "notes"]
+			endif
 		clicked_finder = endPause: "Continue", "Save", "Quit", 1, 3
 		endeditor
 
-		if add_notes
-			selectObject: search
-			Set string value: row, "notes", notes$
-			Save as text file: table_dir$
-		endif
+        if clicked_finder != 3
+            if add_notes
+                selectObject: search
+                Set string value: row, "notes", notes$
+                Save as text file: table_dir$
+            endif
+        endif
 
 		if clicked_finder == 2
 			selectObject: tg
