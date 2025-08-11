@@ -147,7 +147,10 @@ repeat
 			removeObject: sd
 		endif
 		@config.set_value: "open_file.row", string$(row)
-		row = next_case
+
+        if clicked_finder != 3
+            row = next_case
+        endif
 
 		if clicked_finder == 3
 			removeObject: search
