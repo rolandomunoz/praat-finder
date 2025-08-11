@@ -97,11 +97,12 @@ repeat
 			if adjust_sound_level
 				sd = Read from file: sd_path$
 				Scale peak: volume
+                show_volumne_widget = 1
 			else
 				sd = Open long sound file: sd_path$
+                show_volumne_widget = 0
 			endif
 			plusObject: tg
-			show_volumne_widget = 1
 		else
 			show_volumne_widget = 0
 		endif
