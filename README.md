@@ -17,4 +17,4 @@ This project is licensed under the GNU GPL terms - see the [LICENSE](https://www
 
 ## How to cite this plug-in?
 
- - `Muñoz Aramburú, R. (2022). Finder[Praat plug-in]. Version 2.3, retrived 1 january 2022 from https://github.com/rolandomunoz/plugin_finder`
+ - `Muñoz Aramburú, R. (2025). Finder[Praat plug-in]. Version 2.3.2, retrived 11 August 2025 from https://github.com/rolandomunoz/plugin_finder`
